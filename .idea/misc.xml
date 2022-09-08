@@ -3,9 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/bonif/AndroidStudioProjects/SewaKendaraan/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.144" />
-        <entry key="..\:/Users/bonif/AndroidStudioProjects/SewaKendaraan/app/src/main/res/drawable/ic_lock_24.xml" value="0.144" />
-        <entry key="..\:/Users/bonif/AndroidStudioProjects/SewaKendaraan/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Kuliah/Semester 5/Pemprograman Platform/Project/SewaKendaraan/app/src/main/res/layout/activity_main.xml" value="0.176" />
+        <entry key="..\:/Kuliah/Semester 5/Pemprograman Platform/Project/SewaKendaraan/app/src/main/res/layout/activity_register.xml" value="0.25" />
       </map>
     </option>
   </component>
