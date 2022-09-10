@@ -29,12 +29,12 @@ class LoginActivity : AppCompatActivity(){
             val password: String = inputPassword.getEditText()?.getText().toString()
 
             if (username.isEmpty()) {
-                inputUsername.setError("Username must be filled with text")
+                inputUsername.setError("Required")
                 checkLoqin = false
             }
 
             if (password.isEmpty()) {
-                inputPassword.setError("Password must be filled with text")
+                inputPassword.setError("Required")
                 checkLoqin = false
             }
 
