@@ -141,13 +141,14 @@
             android:background="@drawable/check_toggle"
             android:textOff=""
             android:textOn=""
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"/>
+            android:layout_gravity="center_vertical"
+            />
 
         <TextView
             android:id="@+id/checkText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:text="By signing up, you agree to our privacy policy, user terms and merchant agreement" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
