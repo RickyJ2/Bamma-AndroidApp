@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
         btnNavRegister.setOnClickListener(View.OnClickListener {
             val moveRegister = Intent(this@MainActivity, Register::class.java)
             startActivity(moveRegister)
+
         })
     }
 }
