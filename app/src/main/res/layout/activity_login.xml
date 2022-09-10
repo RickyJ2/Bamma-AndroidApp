@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".LoginActivity">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="240dp"
         android:layout_height="240dp"
         android:layout_marginTop="80dp"
-        android:src="@drawable/SewaKendaraan"
+        android:src="@drawable/gambar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.573"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,6 +25,7 @@
         android:text="Welcome To My Journey"
         android:textColor="@color/black"
         android:textStyle="italic"
+        android:gravity="center"
         style="@style/TextAppearance.MaterialComponents.Headline5"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="@+id/imageView"
