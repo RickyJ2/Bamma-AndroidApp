@@ -1,8 +1,10 @@
 package com.example.sewakendaraan
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.example.sewakendaraan.databinding.ActivityHomeBinding
 
@@ -30,7 +32,15 @@ class Home : AppCompatActivity() {
             when(it.itemId){
                 R.id.home -> replaceFragment(HomeFragment())
                 R.id.profile -> replaceFragment(ProfileFragment())
-                R.id.settings -> replaceFragment(SettingsFragment())
+                R.id.settings -> {
+                    val builder: AlertDialog.Builder = AlertDialog.Builder(this@Home)
+                    builder.setMessage("Are you sure want to logout?")
+                        .setPositiveButton("YES", object : DialogInterface.OnClickListener{
+                            override fun onClick(dialogInterface: DialogInterface, i: Int){
+                                finishAndRemoveTask()
+                            }
+                        }).show()
+                }
 
                 else -> {
 
@@ -40,7 +50,6 @@ class Home : AppCompatActivity() {
             true
         }
     }
-
     private fun  replaceFragment(fragment: Fragment){
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
