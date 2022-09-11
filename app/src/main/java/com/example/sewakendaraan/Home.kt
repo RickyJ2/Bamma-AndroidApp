@@ -6,11 +6,11 @@ import androidx.fragment.app.Fragment
 import com.example.sewakendaraan.databinding.ActivityHomeBinding
 
 class Home : AppCompatActivity() {
-
     private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_home)
         setContentView(binding.root)

@@ -135,15 +135,15 @@
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
             android:orientation="horizontal">
+
             <ToggleButton
                 android:id="@+id/checkToggle"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_vertical"
                 android:background="@drawable/check_toggle"
                 android:textOff=""
-                android:textOn=""
-                android:layout_gravity="center_vertical"
-                />
+                android:textOn="" />
 
             <TextView
                 android:id="@+id/checkText"
