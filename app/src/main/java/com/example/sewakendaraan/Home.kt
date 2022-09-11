@@ -11,8 +11,6 @@ import com.example.sewakendaraan.databinding.ActivityHomeBinding
 class Home : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
-    private lateinit var welcomeTextView: TextView
-    lateinit var mBundle: Bundle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,12 +19,6 @@ class Home : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         setContentView(binding.root)
         replaceFragment(HomeFragment())
-
-        welcomeTextView = findViewById(R.id.tvWelcome)
-
-        if(intent.hasExtra("login")){
-            getBundle()
-        }
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
@@ -55,17 +47,5 @@ class Home : AppCompatActivity() {
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frameLayout,fragment)
         fragmentTransaction.commit()
-    }
-
-    fun getBundle(){
-        mBundle = intent.getBundleExtra("login")!!
-        if(!mBundle.isEmpty){
-            val mFragmentManager = supportFragmentManager
-            val mFragmentTransaction = mFragmentManager.beginTransaction()
-            val mFragment = HomeFragment()
-
-            mFragment.arguments = mBundle
-            mFragmentTransaction.add(R.id.frameLayout, mFragment).commit()
-        }
     }
 }

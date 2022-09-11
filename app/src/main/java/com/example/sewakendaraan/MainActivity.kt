@@ -58,12 +58,9 @@ class MainActivity : AppCompatActivity() {
                 "admin" && password ==
                 "admin"
             )checkLoqin = true
-            if (username == vUsername && password == vPassword)checkLoqin = true
+            else if (username == vUsername && password == vPassword)checkLoqin = true
             if (!checkLoqin) return@OnClickListener
             val moveHome = Intent(this@MainActivity, Home::class.java)
-            val mBundle2 = Bundle()
-            mBundle2.putString("username", username)
-            moveHome.putExtra("register", mBundle)
             startActivity(moveHome)
         })
     }
