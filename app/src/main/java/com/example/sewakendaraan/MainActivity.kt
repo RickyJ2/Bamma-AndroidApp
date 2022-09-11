@@ -5,11 +5,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.textfield.TextInputLayout
 
 class MainActivity : AppCompatActivity() {
     private lateinit var inputUsername: TextInputLayout
     private lateinit var inputPassword: TextInputLayout
+    private lateinit var layoutMain: ConstraintLayout
+    lateinit var mBundle: Bundle
+
+    lateinit var vUsername: String
+    lateinit var vPassword: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         inputUsername = findViewById(R.id.inputLayoutUsername)
         inputPassword = findViewById(R.id.inputLayoutPassword)
+        layoutMain = findViewById(R.id.main)
         val btnLogin: Button = findViewById(R.id.btnLogin)
 
         val btnNavRegister:Button = findViewById(R.id.registerNavBtn)
@@ -27,6 +34,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(moveRegister)
 
         })
+
+        if(intent.hasExtra("register")){
+            getBundle()
+        }
 
         btnLogin.setOnClickListener(View.OnClickListener {
             var checkLoqin = false
@@ -47,9 +58,19 @@ class MainActivity : AppCompatActivity() {
                 "admin" && password ==
                 "admin"
             )checkLoqin = true
+            if (username == vUsername && password == vPassword)checkLoqin = true
             if (!checkLoqin) return@OnClickListener
             val moveHome = Intent(this@MainActivity, Home::class.java)
             startActivity(moveHome)
         })
+    }
+
+    fun getBundle(){
+        mBundle = intent.getBundleExtra("register")!!
+        if(!mBundle.isEmpty){
+            vUsername = mBundle.getString("username")!!
+            vPassword = mBundle.getString("password")!!
+            inputUsername.getEditText()?.setText(vUsername)
+        }
     }
 }
