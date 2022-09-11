@@ -13,7 +13,7 @@ class Kendaraan (var namaPemilik: String, var kendaraan: String){
             Kendaraan("Hendra", "Porsche 718 Cayman"),
             Kendaraan("Ridho", "Toyota Supra"),
             Kendaraan("Santi", "Mercedes Benz Maybach"),
-            Kendaraan("Joshua", "Koenigsegg"),
+            Kendaraan("Joshua", "Koenigsegg")
         )
     }
 }
