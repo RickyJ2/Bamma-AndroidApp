@@ -37,6 +37,9 @@ class MainActivity : AppCompatActivity() {
 
         if(intent.hasExtra("register")){
             getBundle()
+        }else{
+            vUsername = "admin"
+            vPassword = "admin"
         }
 
         btnLogin.setOnClickListener(View.OnClickListener {
