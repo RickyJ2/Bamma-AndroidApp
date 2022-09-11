@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sewakendaraan.entity.Kendaraan
 
 class RVKendaraanAdapter(private val data: Array<Kendaraan>): RecyclerView.Adapter<RVKendaraanAdapter.viewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder{
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.rv_item_kendaraan, parent, false)
         return viewHolder(itemView)

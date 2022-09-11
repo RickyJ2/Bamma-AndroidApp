@@ -2,6 +2,7 @@ package com.example.sewakendaraan.entity
 
 class Kendaraan (var namaPemilik: String, var kendaraan: String){
     companion object{
+        @JvmField
         var listOfKendaraan = arrayOf(
             Kendaraan("Enrique", "Toyota Supra"),
             Kendaraan("Bonifasius", "Porsche 718 Cayman"),
