@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.example.sewakendaraan.databinding.ActivityHomeBinding
 
 class Home : AppCompatActivity() {
+
     private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
