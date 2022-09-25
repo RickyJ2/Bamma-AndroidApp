@@ -1,6 +1,6 @@
 package com.example.sewakendaraan.entity
 
-class Kendaraan (var namaPemilik: String, var kendaraan: String){
+/*class Kendaraan (var namaPemilik: String, var kendaraan: String){
     companion object{
         @JvmField
         var listOfKendaraan = arrayOf(
@@ -17,3 +17,4 @@ class Kendaraan (var namaPemilik: String, var kendaraan: String){
         )
     }
 }
+*/
