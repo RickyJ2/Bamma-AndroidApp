@@ -8,11 +8,15 @@
         <entry key="..\:/Kuliah/Semester 5/Pemprograman Platform/Project/SewaKendaraan/app/src/main/res/layout/activity_register.xml" value="0.264" />
         <entry key="..\:/Kuliah/Semester 5/Pemprograman Platform/Project/SewaKendaraan/app/src/main/res/layout/activity_splash_screen.xml" value="0.234375" />
         <entry key="..\:/Kuliah/Semester 5/Pemprograman Platform/Project/SewaKendaraan/app/src/main/res/layout/toggle_selector.xml" value="0.2203125" />
+        <entry key="app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.1105" />
+        <entry key="app/src/main/res/layout/activity_edit.xml" value="0.1833839918946302" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_user_adapter.xml" value="0.19022289766970618" />
+        <entry key="app/src/main/res/layout/fragment_first.xml" value="0.19022289766970618" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.2128623188405797" />
         <entry key="app/src/main/res/layout/rv_item_kendaraan.xml" value="0.1" />
