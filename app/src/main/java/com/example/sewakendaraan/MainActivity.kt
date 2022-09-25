@@ -3,16 +3,24 @@ package com.example.sewakendaraan
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.sewakendaraan.room.UserDB
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var inputUsername: TextInputLayout
     private lateinit var inputPassword: TextInputLayout
     private lateinit var layoutMain: ConstraintLayout
     lateinit var mBundle: Bundle
+    val db by lazy { UserDB(this) }
 
     lateinit var vUsername: String
     lateinit var vPassword: String
@@ -57,14 +65,21 @@ class MainActivity : AppCompatActivity() {
                 checkLoqin = false
             }
 
-            if (username ==
-                "admin" && password ==
-                "admin"
-            )checkLoqin = true
-            else if (username == vUsername && password == vPassword)checkLoqin = true
-            if (!checkLoqin) return@OnClickListener
+            if(!username.isEmpty() && !password.isEmpty()) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    val users = db.userDao().getUsernamePassword(username, password)
+                    Log.d("MainActivity", "dbResponses: $users")
+                    if(users != null){
+                        val moveHome = Intent(this@MainActivity, Home::class.java)
+                        startActivity(moveHome)
+                    }
+                    finish()
+                }
+            }
+
+           /* if (!checkLoqin) return@OnClickListener
             val moveHome = Intent(this@MainActivity, Home::class.java)
-            startActivity(moveHome)
+            startActivity(moveHome)*/
         })
     }
 

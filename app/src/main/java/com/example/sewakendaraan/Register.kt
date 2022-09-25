@@ -4,17 +4,20 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.sewakendaraan.databinding.ActivityRegisterBinding
+import com.example.sewakendaraan.room.User
+import com.example.sewakendaraan.room.UserDB
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
 class Register : AppCompatActivity() {
     private lateinit var  binding: ActivityRegisterBinding
+    val db by lazy {UserDB(this)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,16 +26,6 @@ class Register : AppCompatActivity() {
         setContentView(view)
         setTitle("Register")
         supportActionBar?.hide()
-
-      /*  inputUsername = findViewById(R.id.inputLayoutUsername)
-        inputEmail = findViewById(R.id.inputLayoutEmail)
-        inputPassword = findViewById(R.id.inputLayoutPassword)
-        inputHandphone = findViewById(R.id.inputLayoutHandphone)
-        inputDateofBirth = findViewById(R.id.inputLayoutDateOfBirth)
-        layoutRegister = findViewById(R.id.register)
-        val toggleBtn: ToggleButton = findViewById(R.id.checkToggle)
-        val btnRegister: Button = findViewById(R.id.registerBtn)
-        val btnNavLogin: Button = findViewById(R.id.loginNavBtn)*/
 
         val datePicker =
             MaterialDatePicker.Builder.datePicker()
@@ -99,6 +92,12 @@ class Register : AppCompatActivity() {
 
             if(!checkRegister) return@OnClickListener
             val moveLogin = Intent(this@Register, MainActivity::class.java)
+            CoroutineScope(Dispatchers.IO).launch {
+                db.userDao().addUser(
+                    User(0, email, username, password, dateOfBirth, handphone)
+                )
+                finish()
+            }
             val mBundle = Bundle()
             mBundle.putString("username", username)
             mBundle.putString("password", password)
