@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
                         editor.apply()
                         val moveHome = Intent(this@MainActivity, Home::class.java)
                         val mBundleL = Bundle()
-                        mBundleL.putInt("user_id", users.id)
+                        mBundleL.putString("username", username)
                         moveHome.putExtra("login", mBundleL)
                         startActivity(moveHome)
                     }else{
@@ -143,7 +143,7 @@ class MainActivity : AppCompatActivity() {
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
 
         val broadcastIntent : Intent = Intent(this, NotificationReceiver::class.java)
-        broadcastIntent.putExtra("toastMessage", "hello")
+        broadcastIntent.putExtra("toastMessage", vUsername)
         val actionIntent = PendingIntent.getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT)
         val picture = BitmapFactory.decodeResource(resources, R.drawable.welcome)
 
