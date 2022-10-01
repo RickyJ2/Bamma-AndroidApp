@@ -19,12 +19,18 @@ import androidx.fragment.app.Fragment
 import com.example.sewakendaraan.databinding.ActivityHomeBinding
 import com.example.sewakendaraan.notification.NotificationReceiver
 import com.example.sewakendaraan.room.Constant
+import com.example.sewakendaraan.room.UserDB
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class Home : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
     lateinit var mBundle: Bundle
+
     lateinit var vUsername: String
+    var vId: Int = 0
 
     private val CHANNEL_ID_1 = "channel_notification_01"
     private val notification1 = 101
@@ -42,15 +48,13 @@ class Home : AppCompatActivity() {
             getBundle()
             sendNotification1()
             sendNotification2()
-        }else{
-            vUsername = "admin"
         }
-
         replaceFragment(HomeFragment())
         binding.bottomNavigationView.background = null
         binding.addFB.setOnClickListener{
             val fragment: Fragment = EditKendaraanFragment()
             val args = Bundle()
+            args.putInt("user_id", vId)
             args.putInt("arg_id", 0)
             args.putInt("arg_type", Constant.TYPE_CREATE)
             fragment.arguments = args
@@ -72,7 +76,7 @@ class Home : AppCompatActivity() {
     }
     private fun  replaceFragment(fragment: Fragment){
         val args = Bundle()
-        args.putString("username", vUsername)
+        args.putInt("user_id", vId)
         fragment.arguments = args
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
@@ -82,6 +86,7 @@ class Home : AppCompatActivity() {
     fun getBundle(){
         mBundle = intent.getBundleExtra("login")!!
         if(!mBundle.isEmpty){
+            vId = mBundle.getInt("user_id")!!
             vUsername = mBundle.getString("username")!!
         }
     }
@@ -110,7 +115,7 @@ class Home : AppCompatActivity() {
 
     private fun sendNotification1(){
         Log.d("MainActivity", "dbResponses: Send")
-        val intent : Intent = Intent(this, MainActivity::class.java).apply {
+        val intent : Intent = Intent(this, Home::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
@@ -143,7 +148,7 @@ class Home : AppCompatActivity() {
 
     private fun sendNotification2(){
         Log.d("MainActivity", "dbResponses: Send")
-        val intent : Intent = Intent(this, MainActivity::class.java).apply {
+        val intent : Intent = Intent(this, Home::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
