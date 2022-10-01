@@ -2,4 +2,5 @@
     <string name="app_name">SewaKendaraan</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="long_text">Hallo... Terima Kasih sudah</string>
 </resources>
