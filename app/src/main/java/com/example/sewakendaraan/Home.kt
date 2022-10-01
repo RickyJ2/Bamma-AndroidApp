@@ -29,7 +29,7 @@ class Home : AppCompatActivity() {
         replaceFragment(HomeFragment())
         binding.bottomNavigationView.background = null
         binding.addFB.setOnClickListener{
-            replaceFragment(tambahKendaraanFragment())
+            replaceFragment(EditKendaraanFragment())
         }
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
