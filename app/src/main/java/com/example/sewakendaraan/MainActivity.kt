@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
                         editor.apply()
                         val moveHome = Intent(this@MainActivity, Home::class.java)
                         val mBundleL = Bundle()
-                        mBundleL.putString("username", username)
+                        mBundleL.putInt("user_id", users.id)
                         moveHome.putExtra("login", mBundleL)
                         startActivity(moveHome)
                     }else{

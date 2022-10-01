@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sewakendaraan.kendaraanRoom.Kendaraan
 import com.example.sewakendaraan.kendaraanRoom.KendaraanDB
 import com.example.sewakendaraan.room.Constant
+import com.example.sewakendaraan.room.UserDB
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +23,8 @@ import kotlinx.coroutines.withContext
 import org.w3c.dom.Text
 
 class HomeFragment : Fragment() {
-    var vUsername: String = "admin"
+    lateinit var vUsername: String
+    var vId: Int = 0
     val args = Bundle()
     lateinit var kendaraanAdapter: RVKendaraanAdapter
 
@@ -36,10 +38,19 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val context = context as Home
+        val db by lazy { UserDB(context) }
         val tvWelcome: TextView = context.findViewById(R.id.tvWelcome) as TextView
-        val args = arguments
-        vUsername = args!!.getString("username").toString()
-        tvWelcome.text = "Welcome, $vUsername!"
+        val arg = arguments
+        vId = arg!!.getInt("user_id")
+        args.putInt("user_id", vId)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val users = db.userDao().getUser(vId)
+            if (users != null) {
+                vUsername = users.username
+                tvWelcome.text = "Welcome, $vUsername!"
+            }
+        }
         setupRecyclerView()
     }
     private fun setupRecyclerView(){

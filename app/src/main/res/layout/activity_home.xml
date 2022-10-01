@@ -18,9 +18,10 @@
             <FrameLayout
                 android:id="@+id/frameLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:paddingBottom="100dp"
-                android:clipToPadding="false">
+                android:clipToPadding="false"
+                android:scrollbars="vertical">
             </FrameLayout>
 
         <com.google.android.material.bottomappbar.BottomAppBar

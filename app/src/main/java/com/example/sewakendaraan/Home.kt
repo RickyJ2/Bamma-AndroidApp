@@ -13,7 +13,7 @@ class Home : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
     lateinit var mBundle: Bundle
-    lateinit var vUsername: String
+    var vId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,8 +23,6 @@ class Home : AppCompatActivity() {
         setContentView(binding.root)
         if(intent.hasExtra("login")){
             getBundle()
-        }else{
-            vUsername = "admin"
         }
 
         replaceFragment(HomeFragment())
@@ -53,7 +51,7 @@ class Home : AppCompatActivity() {
     }
     private fun  replaceFragment(fragment: Fragment){
         val args = Bundle()
-        args.putString("username", vUsername)
+        args.putInt("user_id", vId)
         fragment.arguments = args
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
@@ -63,7 +61,7 @@ class Home : AppCompatActivity() {
     fun getBundle(){
         mBundle = intent.getBundleExtra("login")!!
         if(!mBundle.isEmpty){
-            vUsername = mBundle.getString("username")!!
+            vId = mBundle.getInt("user_id")!!
         }
     }
 }

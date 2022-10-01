@@ -45,12 +45,12 @@ class ProfileFragment : Fragment() {
         val updateProfileBtn: Button = context.findViewById(R.id.updateProfileBtn)
 
         val args = arguments
-        vUsername = args!!.getString("username").toString()
+        vId = args!!.getInt("user_id")
 
         CoroutineScope(Dispatchers.Main).launch {
-            val users = db.userDao().getUsername(vUsername)
+            val users = db.userDao().getUser(vId)
             if (users != null) {
-                vId = users.id
+                vUsername  = users.username
                 vEmail = users.email
                 vPassword = users.password
                 vHandphone = users.handphone
@@ -96,7 +96,7 @@ class ProfileFragment : Fragment() {
     private fun  replaceFragment(fragment: Fragment){
         val context = context as Home
         val args = Bundle()
-        args.putString("username", vUsername)
+        args.putInt("user_id", vId)
         fragment.arguments = args
         val fragmentManager = context.supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()

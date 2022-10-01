@@ -22,6 +22,7 @@ import kotlinx.coroutines.launch
 
 
 class SettingFragment : Fragment() {
+    var vId: Int = 0
     private var vUsername: String = "admin"
     private var vEmail: String = "admin@email.com"
 
@@ -67,10 +68,11 @@ class SettingFragment : Fragment() {
         val tvUsername : TextView = context.findViewById(R.id.tvUsername)
         val tvEmail: TextView = context.findViewById(R.id.tvEmail)
         val args = arguments
-        vUsername = args!!.getString("username").toString()
+        vId = args!!.getInt("user_id")
         CoroutineScope(Dispatchers.Main).launch {
-            val users = db.userDao().getUsername(vUsername)
+            val users = db.userDao().getUser(vId)
             if (users != null) {
+                vUsername = users.username
                 vEmail = users.email
                 tvUsername.text = vUsername
                 tvEmail.text = vEmail
@@ -85,7 +87,7 @@ class SettingFragment : Fragment() {
     private fun  replaceFragment(fragment: Fragment){
         val context = context as Home
         val args = Bundle()
-        args.putString("username", vUsername)
+        args.putInt("user_id", vId)
         fragment.arguments = args
         val fragmentManager = context.supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
