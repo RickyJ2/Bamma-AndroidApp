@@ -27,7 +27,10 @@ class Home : AppCompatActivity() {
         }
 
         replaceFragment(HomeFragment())
-
+        binding.bottomNavigationView.background = null
+        binding.addFB.setOnClickListener{
+            replaceFragment(tambahKendaraanFragment())
+        }
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.home -> replaceFragment(HomeFragment())
@@ -35,7 +38,6 @@ class Home : AppCompatActivity() {
                 else -> {
 
                 }
-
             }
             true
         }
