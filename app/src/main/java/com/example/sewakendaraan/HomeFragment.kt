@@ -1,18 +1,31 @@
 package com.example.sewakendaraan
 
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sewakendaraan.kendaraanRoom.Kendaraan
+import com.example.sewakendaraan.kendaraanRoom.KendaraanDB
+import com.example.sewakendaraan.room.Constant
+import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.w3c.dom.Text
 
 class HomeFragment : Fragment() {
     var vUsername: String = "admin"
+    val args = Bundle()
+    lateinit var kendaraanAdapter: RVKendaraanAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -24,17 +37,82 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val context = context as Home
         val tvWelcome: TextView = context.findViewById(R.id.tvWelcome) as TextView
-
         val args = arguments
         vUsername = args!!.getString("username").toString()
         tvWelcome.text = "Welcome, $vUsername!"
-       /* val layoutManager = LinearLayoutManager(context)
-        val adapter: RVKendaraanAdapter = RVKendaraanAdapter((Kendaraan.listOfKendaraan))
+        setupRecyclerView()
+    }
+    private fun setupRecyclerView(){
+        val context = context as Home
+        kendaraanAdapter = RVKendaraanAdapter(arrayListOf(), object : RVKendaraanAdapter.OnAdapterListener{
+            override fun onClick(kendaraan: Kendaraan){
+                argEdit(kendaraan.id, Constant.TYPE_READ)
+            }
+            override fun onUpdate(kendaraan: Kendaraan){
+                argEdit(kendaraan.id, Constant.TYPE_UPDATE)
+            }
+            override fun onDelete(kendaraan: Kendaraan) {
+                deleteDialog(kendaraan)
+            }
+        })
+        rvKendaraan.apply{
+            layoutManager = LinearLayoutManager(context)
+            adapter = kendaraanAdapter
+        }
+    }
 
-        val rvKendaraan : RecyclerView = view.findViewById(R.id.rvKendaraan)
+    private fun deleteDialog(kendaraan: Kendaraan){
+        val context = context as Home
+        val db by lazy { KendaraanDB(context) }
+        val alertDialog = AlertDialog.Builder(context)
+        alertDialog.apply {
+            setTitle("Confirmation")
+            setMessage("Are you sure to delete this data from ${kendaraan.jenisKendaraan}?")
+            setNegativeButton("Cancel", DialogInterface.OnClickListener{
+                dialogInterface, i ->
+                    dialogInterface.dismiss()
+            })
+            setPositiveButton("Delete", DialogInterface.OnClickListener{
+                dialogInterface, i ->
+                    dialogInterface.dismiss()
+                    CoroutineScope(Dispatchers.IO).launch {
+                        db.kendaraanDao().deleteKendaraan(kendaraan)
+                        loadData()
+                    }
+            })
+        }
+        alertDialog.show()
+    }
 
-        rvKendaraan.layoutManager = layoutManager
-        rvKendaraan.setHasFixedSize(true)
-        rvKendaraan.adapter = adapter*/
+    override fun onStart() {
+        super.onStart()
+        loadData()
+    }
+
+    fun loadData(){
+        val context = context as Home
+        val db by lazy { KendaraanDB(context) }
+        CoroutineScope(Dispatchers.IO).launch {
+            val kendaraan = db.kendaraanDao().getKendaraan()
+            withContext(Dispatchers.Main){
+                kendaraanAdapter.setData(kendaraan)
+            }
+        }
+    }
+
+    fun argEdit(kendaraanId: Int, fragmentType: Int){
+        args.putInt("arg_id", kendaraanId)
+        args.putInt("arg_type", fragmentType)
+        replaceFragment(EditKendaraanFragment())
+    }
+    private fun  replaceFragment(fragment: Fragment){
+        val context = context as Home
+        fragment.arguments = args
+        val fragmentManager = context.supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.frameLayout,fragment)
+        fragmentTransaction.commit()
     }
 }
+
+

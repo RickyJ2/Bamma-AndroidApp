@@ -11,6 +11,7 @@ import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -68,10 +69,10 @@ class MainActivity : AppCompatActivity() {
 
         if(intent.hasExtra("register")){
             getBundle()
+            sendNotification1()
         }else{
             vUsername = "admin"
             vPassword = "admin"
-            sendNotification1()
         }
 
         btnLogin.setOnClickListener(View.OnClickListener {
@@ -131,11 +132,11 @@ class MainActivity : AppCompatActivity() {
             val notificationManager: NotificationManager =
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel1)
-
         }
     }
 
     private fun sendNotification1(){
+        Log.d("MainActivity", "dbResponses: Send")
         val intent : Intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }

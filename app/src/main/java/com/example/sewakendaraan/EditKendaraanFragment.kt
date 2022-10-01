@@ -5,20 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.sewakendaraan.kendaraanRoom.Kendaraan
 import com.example.sewakendaraan.kendaraanRoom.KendaraanDB
 import com.example.sewakendaraan.room.Constant
 import kotlinx.android.synthetic.main.fragment_edit_kendaraan.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class EditKendaraanFragment : Fragment() {
 
     val db by lazy { activity?.let { KendaraanDB(it) } }
     private var kendaraanId: Int = 0
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        //setupView()
-        //setupListener()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,6 +25,59 @@ class EditKendaraanFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_edit_kendaraan, container, false)
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val args = arguments
+        val argsType = args!!.getInt("arg_type")
+        kendaraanId = args!!.getInt("arg_id")
+        setupView(argsType)
+        setupListener()
+    }
 
+    fun setupView(argsType: Int){
+        when(argsType){
+            Constant.TYPE_CREATE ->{
+                button_update.visibility = View.GONE
+            }
+            Constant.TYPE_READ -> {
+                button_save.visibility = View.GONE
+                button_update.visibility = View.GONE
+                getKendaraan()
+            }
+            Constant.TYPE_UPDATE -> {
+                button_save.visibility = View.GONE
+                getKendaraan()
+            }
+        }
+    }
+    private fun setupListener(){
+        val context = context as Home
+        val db by lazy { KendaraanDB(context) }
+        button_save.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                db.kendaraanDao().addKendaraan(
+                    Kendaraan(0,edit_namaPemilik.text.toString(),
+                        edit_jenisKendaraan.text.toString())
+                )
+            }
+        }
+        button_update.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                db.kendaraanDao().updateKendaraan(
+                    Kendaraan(kendaraanId, edit_namaPemilik.text.toString(),
+                        edit_jenisKendaraan.text.toString())
+                )
 
+            }
+        }
+    }
+    fun getKendaraan(){
+        val context = context as Home
+        val db by lazy { KendaraanDB(context) }
+        CoroutineScope(Dispatchers.Main).launch {
+            val kendaraan = db.kendaraanDao().getKendaraan(kendaraanId)
+            edit_namaPemilik.setText(kendaraan.namaPemilik)
+            edit_jenisKendaraan.setText(kendaraan.jenisKendaraan)
+        }
+    }
 }

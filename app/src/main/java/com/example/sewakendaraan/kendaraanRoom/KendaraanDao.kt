@@ -8,16 +8,16 @@ interface KendaraanDao {
     suspend fun addKendaraan(kendaraan: Kendaraan)
 
     @Update
-    suspend fun updateNote(kendaraan: Kendaraan)
+    suspend fun updateKendaraan(kendaraan: Kendaraan)
 
 
     @Delete
-    suspend fun deleteNote(kendaraan: Kendaraan)
+    suspend fun deleteKendaraan(kendaraan: Kendaraan)
 
 
     @Query("SELECT * FROM kendaraan")
-    suspend fun getNotes() : List<Kendaraan>
+    suspend fun getKendaraan() : List<Kendaraan>
 
     @Query("SELECT * FROM kendaraan WHERE id =:kendaraan_id")
-    suspend fun getNote(kendaraan_id: Int) : List<Kendaraan>
+    suspend fun getKendaraan(kendaraan_id: Int) : Kendaraan
 }

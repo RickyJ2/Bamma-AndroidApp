@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.example.sewakendaraan.databinding.ActivityHomeBinding
+import com.example.sewakendaraan.room.Constant
 
 class Home : AppCompatActivity() {
 
@@ -29,7 +30,15 @@ class Home : AppCompatActivity() {
         replaceFragment(HomeFragment())
         binding.bottomNavigationView.background = null
         binding.addFB.setOnClickListener{
-            replaceFragment(EditKendaraanFragment())
+            val fragment: Fragment = EditKendaraanFragment()
+            val args = Bundle()
+            args.putInt("arg_id", 0)
+            args.putInt("arg_type", Constant.TYPE_CREATE)
+            fragment.arguments = args
+            val fragmentManager = supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.frameLayout,fragment)
+            fragmentTransaction.commit()
         }
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){

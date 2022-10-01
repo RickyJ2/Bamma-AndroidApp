@@ -9,18 +9,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sewakendaraan.kendaraanRoom.Kendaraan
 import kotlinx.android.synthetic.main.rv_item_kendaraan.view.*
 
-class RVKendaraanAdapter(private val data: ArrayList<Kendaraan>, private val listener: OnAdapterListener): RecyclerView.Adapter<RVKendaraanAdapter.viewHolder>() {
+class RVKendaraanAdapter(private val data: ArrayList<Kendaraan>, private val listener: OnAdapterListener): RecyclerView.Adapter<RVKendaraanAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder{
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder{
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.rv_item_kendaraan, parent, false)
-        return viewHolder(itemView)
+        return ViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: viewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = data[position]
-        holder.itemView.tvNamaPemilik.text = currentItem.namaPemilik
-        holder.itemView.tvJenisKendaraan.text = currentItem.jenisKendaraan
-        holder.itemView.iconEdit.setOnClickListener{
+        holder.view.tvNamaPemilik.text = currentItem.namaPemilik
+        holder.view.tvJenisKendaraan.text = currentItem.jenisKendaraan
+        holder.view.iconEdit.setOnClickListener{
             listener.onUpdate(currentItem)
         }
         holder.itemView.iconDelete.setOnClickListener{
@@ -31,7 +31,7 @@ class RVKendaraanAdapter(private val data: ArrayList<Kendaraan>, private val lis
     override fun getItemCount(): Int {
         return data.size
     }
-    inner class viewHolder( val view: View) :
+    inner class ViewHolder( val view: View) :
         RecyclerView.ViewHolder(view)
 
     @SuppressLint("NotifyDataSetChanged")
