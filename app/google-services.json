@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "595981689050",
-    "project_id": "sewakendaraan-cbbf6",
-    "storage_bucket": "sewakendaraan-cbbf6.appspot.com"
+    "project_number": "441381394812",
+    "project_id": "sewakendaraan-c23d4",
+    "storage_bucket": "sewakendaraan-c23d4.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:595981689050:android:bd8ac22895efc1de2345e3",
+        "mobilesdk_app_id": "1:441381394812:android:e8515956ef2322369e6cf9",
         "android_client_info": {
           "package_name": "com.example.sewakendaraan"
         }
       },
       "oauth_client": [
         {
-          "client_id": "595981689050-jv0inukr2hitbnpmtdj28fpkjjc2bbve.apps.googleusercontent.com",
+          "client_id": "441381394812-ip5v3508n2m2n5rnnslcrhtfcgb783uf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDexPIv8araypKMpjgxSMtcJ6Ukv79puds"
+          "current_key": "AIzaSyD5aNfBCr5zA4HZ6njWt1xTiMCOKy-1gWg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "595981689050-jv0inukr2hitbnpmtdj28fpkjjc2bbve.apps.googleusercontent.com",
+              "client_id": "441381394812-ip5v3508n2m2n5rnnslcrhtfcgb783uf.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
