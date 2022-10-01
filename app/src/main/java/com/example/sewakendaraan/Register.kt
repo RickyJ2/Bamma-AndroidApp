@@ -96,7 +96,6 @@ class Register : AppCompatActivity() {
                 db.userDao().addUser(
                     User(0, email, username, password, dateOfBirth, handphone)
                 )
-                finish()
             }
             val mBundle = Bundle()
             mBundle.putString("username", username)

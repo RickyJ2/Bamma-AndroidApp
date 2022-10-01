@@ -81,13 +81,5 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_margin="10dp"
             />
-    </androidx.constraintlayout.widget.ConstraintLayout><![CDATA[
-
-
-
-    />
-
-
-
-]]>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
