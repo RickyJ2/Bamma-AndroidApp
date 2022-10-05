@@ -11,86 +11,78 @@ import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Button
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.example.sewakendaraan.databinding.ActivityMainBinding
 import com.example.sewakendaraan.notification.NotificationReceiver
 import com.example.sewakendaraan.room.UserDB
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var inputUsername: TextInputLayout
-    private lateinit var inputPassword: TextInputLayout
+    private lateinit var  binding: ActivityMainBinding
+
     private lateinit var layoutMain: ConstraintLayout
     lateinit var mBundle: Bundle
     val db by lazy { UserDB(this) }
+
     private val myPreference = "myPref"
     private val usernameKey = "nameKey"
     private val passwordKey = "passKey"
     var sharedPreferences: SharedPreferences? = null
 
     lateinit var vUsername: String
-    lateinit var vPassword: String
 
     private val CHANNEL_ID_1 = "channel_notification_01"
     private val notification = 101
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
         setTitle("Sewa Kendaraan")
         createNotificationChannel()
         supportActionBar?.hide()
-        inputUsername = findViewById(R.id.inputLayoutUsername)
-        inputPassword = findViewById(R.id.inputLayoutPassword)
-        layoutMain = findViewById(R.id.main)
-        val btnLogin: Button = findViewById(R.id.btnLogin)
-        val btnNavRegister:Button = findViewById(R.id.registerNavBtn)
 
         sharedPreferences = getSharedPreferences(myPreference, Context.MODE_PRIVATE)
         if(sharedPreferences!!.contains(usernameKey)){
-            inputUsername?.editText?.setText(sharedPreferences!!.getString(usernameKey,""))
+            binding.inputLayoutUsername?.editText?.setText(sharedPreferences!!.getString(usernameKey,""))
         }
         if(sharedPreferences!!.contains(passwordKey)){
-            inputPassword?.editText?.setText(sharedPreferences!!.getString(passwordKey,""))
+            binding.inputLayoutPassword?.editText?.setText(sharedPreferences!!.getString(passwordKey,""))
         }
-        btnNavRegister.setOnClickListener(View.OnClickListener {
+        binding.registerNavBtn.setOnClickListener(View.OnClickListener {
             val moveRegister = Intent(this@MainActivity, Register::class.java)
             startActivity(moveRegister)
         })
-
 
         if(intent.hasExtra("register")){
             getBundle()
             sendNotification1()
         }else{
             vUsername = "admin"
-            vPassword = "admin"
         }
 
-        btnLogin.setOnClickListener(View.OnClickListener {
-            val username: String = inputUsername.getEditText()?.getText().toString()
-            val password: String = inputPassword.getEditText()?.getText().toString()
+        binding.btnLogin.setOnClickListener(View.OnClickListener {
+            val username: String = binding.inputLayoutUsername.getEditText()?.getText().toString()
+            val password: String = binding.inputLayoutPassword.getEditText()?.getText().toString()
 
             if (username.isEmpty()) {
-                inputUsername.setError("Required")
+                binding.inputLayoutUsername.setError("Required")
             }
 
             if (password.isEmpty()) {
-                inputPassword.setError("Required")
+                binding.inputLayoutPassword.setError("Required")
             }
 
             if(!username.isEmpty() && !password.isEmpty()) {
                 CoroutineScope(Dispatchers.Main).launch {
                     val users = db.userDao().getUsernamePassword(username, password)
-                    //Log.d("MainActivity", "dbResponses: $users")
                     if (users != null){
                         val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
                         editor.putString(usernameKey,username)
@@ -115,8 +107,8 @@ class MainActivity : AppCompatActivity() {
         mBundle = intent.getBundleExtra("register")!!
         if(!mBundle.isEmpty){
             vUsername = mBundle.getString("username")!!
-            vPassword = mBundle.getString("password")!!
-            inputUsername.getEditText()?.setText(vUsername)
+            binding.inputLayoutUsername.getEditText()?.setText(vUsername)
+            binding.inputLayoutPassword.getEditText()?.setText("")
         }
     }
 
@@ -137,10 +129,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun sendNotification1(){
-        Log.d("MainActivity", "dbResponses: Send")
-        val intent : Intent = Intent(this, MainActivity::class.java).apply {
+        val intent : Intent = Intent()
+        /*val intent : Intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
+        }*/
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
 
         val broadcastIntent : Intent = Intent(this, NotificationReceiver::class.java)
@@ -160,7 +152,7 @@ class MainActivity : AppCompatActivity() {
             .setCategory(NotificationCompat.CATEGORY_MESSAGE)
             .setColor(Color.BLUE)
             .setAutoCancel(true)
-            .setOnlyAlertOnce(true)
+            .setOnlyAlertOnce(false)
             .setContentIntent(pendingIntent)
             .addAction(R.mipmap.ic_launcher, "Toast", actionIntent)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)

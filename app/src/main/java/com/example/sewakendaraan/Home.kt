@@ -4,30 +4,30 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import com.example.sewakendaraan.databinding.ActivityHomeBinding
+import com.example.sewakendaraan.kendaraanRoom.KendaraanDB
 import com.example.sewakendaraan.notification.NotificationReceiver
 import com.example.sewakendaraan.room.Constant
 import com.example.sewakendaraan.room.UserDB
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class Home : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
     lateinit var mBundle: Bundle
+
+    val db by lazy { UserDB(this) }
 
     lateinit var vUsername: String
     var vId: Int = 0
@@ -42,14 +42,15 @@ class Home : AppCompatActivity() {
         supportActionBar?.hide()
         createNotificationChannel()
         binding = ActivityHomeBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_home)
-        setContentView(binding.root)
+        val view = binding.root
+        setContentView(view)
         if(intent.hasExtra("login")){
             getBundle()
             sendNotification1()
             sendNotification2()
         }
         replaceFragment(HomeFragment())
+
         binding.bottomNavigationView.background = null
         binding.addFB.setOnClickListener{
             val fragment: Fragment = EditKendaraanFragment()
@@ -87,7 +88,7 @@ class Home : AppCompatActivity() {
         mBundle = intent.getBundleExtra("login")!!
         if(!mBundle.isEmpty){
             vId = mBundle.getInt("user_id")!!
-            vUsername = mBundle.getString("username")!!
+            vUsername = mBundle.getString("username").toString()
         }
     }
 
@@ -114,10 +115,14 @@ class Home : AppCompatActivity() {
     }
 
     private fun sendNotification1(){
-        Log.d("MainActivity", "dbResponses: Send")
-        val intent : Intent = Intent(this, Home::class.java).apply {
+        val intent : Intent = Intent()
+        /*val intent : Intent = Intent(this, Home::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
+        }*/
+        val mBundleL = Bundle()
+        mBundleL.putInt("user_id", vId)
+        intent.putExtra("login", mBundleL)
+
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
 
         val broadcastIntent : Intent = Intent(this, NotificationReceiver::class.java)
@@ -147,10 +152,14 @@ class Home : AppCompatActivity() {
     }
 
     private fun sendNotification2(){
-        Log.d("MainActivity", "dbResponses: Send")
-        val intent : Intent = Intent(this, Home::class.java).apply {
+        val intent : Intent = Intent()
+        /*val intent : Intent = Intent(this, Home::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
+        }*/
+        val mBundleL = Bundle()
+        mBundleL.putInt("user_id", vId)
+        intent.putExtra("login", mBundleL)
+
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
 
         val broadcastIntent : Intent = Intent(this, NotificationReceiver::class.java)

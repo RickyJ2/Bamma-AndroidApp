@@ -99,7 +99,6 @@ class Register : AppCompatActivity() {
             }
             val mBundle = Bundle()
             mBundle.putString("username", username)
-            mBundle.putString("password", password)
             moveLogin.putExtra("register", mBundle)
             startActivity(moveLogin)
         })
