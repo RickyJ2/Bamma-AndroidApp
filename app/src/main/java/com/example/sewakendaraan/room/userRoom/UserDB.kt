@@ -1,4 +1,4 @@
-package com.example.sewakendaraan.room
+package com.example.sewakendaraan.room.userRoom
 
 import android.content.Context
 import androidx.room.Database
@@ -24,6 +24,7 @@ abstract class UserDB: RoomDatabase() {
                 context.applicationContext,
                 UserDB::class.java,
                 "user12345.db"
-            ).build()
+            )
+            .build()
     }
 }

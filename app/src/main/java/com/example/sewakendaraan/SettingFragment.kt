@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sewakendaraan.entity.SettingItem
-import com.example.sewakendaraan.room.UserDB
+import com.example.sewakendaraan.room.userRoom.UserDB
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -67,8 +67,7 @@ class SettingFragment : Fragment() {
 
         val tvUsername : TextView = context.findViewById(R.id.tvUsername)
         val tvEmail: TextView = context.findViewById(R.id.tvEmail)
-        val args = arguments
-        vId = args!!.getInt("user_id")
+        vId = context.vId
         CoroutineScope(Dispatchers.Main).launch {
             val users = db.userDao().getUser(vId)
             if (users != null) {
@@ -87,7 +86,6 @@ class SettingFragment : Fragment() {
     private fun  replaceFragment(fragment: Fragment){
         val context = context as Home
         val args = Bundle()
-        args.putInt("user_id", vId)
         fragment.arguments = args
         val fragmentManager = context.supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()

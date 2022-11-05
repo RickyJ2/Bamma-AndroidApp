@@ -5,6 +5,7 @@
     android:id="@+id/register"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="@color/white"
     tools:context=".Register">
 
     <TextView
@@ -115,12 +116,9 @@
             android:hint="Date of Birth"
             app:errorEnabled="true"
             app:startIconDrawable="@drawable/ic_baseline_calendar_today_24"
-            android:layout_marginBottom="0dp"
-            app:endIconMode="custom"
-            app:endIconDrawable="@drawable/ic_baseline_info_24"
-            app:errorIconDrawable="@null"
-            >
+            android:layout_marginBottom="0dp">
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputDateOfBirth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="date"

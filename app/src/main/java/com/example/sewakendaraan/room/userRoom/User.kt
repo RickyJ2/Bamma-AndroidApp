@@ -1,8 +1,7 @@
-package com.example.sewakendaraan.room
+package com.example.sewakendaraan.room.userRoom
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.*
 
 @Entity
 data class User (

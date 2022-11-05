@@ -4,9 +4,8 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sewakendaraan.kendaraanRoom.Kendaraan
+import com.example.sewakendaraan.room.kendaraanRoom.Kendaraan
 import kotlinx.android.synthetic.main.rv_item_kendaraan.view.*
 
 class RVKendaraanAdapter(private val data: ArrayList<Kendaraan>, private val listener: OnAdapterListener): RecyclerView.Adapter<RVKendaraanAdapter.ViewHolder>() {

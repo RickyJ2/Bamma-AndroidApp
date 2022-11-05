@@ -1,4 +1,4 @@
-package com.example.sewakendaraan.kendaraanRoom
+package com.example.sewakendaraan.room.kendaraanRoom
 
 import android.content.Context
 import androidx.room.Database

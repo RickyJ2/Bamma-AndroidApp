@@ -1,4 +1,4 @@
-package com.example.sewakendaraan.kendaraanRoom
+package com.example.sewakendaraan.room.kendaraanRoom
 
 import androidx.room.*
 

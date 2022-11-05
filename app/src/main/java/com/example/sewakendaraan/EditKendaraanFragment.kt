@@ -5,11 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import com.example.sewakendaraan.kendaraanRoom.Kendaraan
-import com.example.sewakendaraan.kendaraanRoom.KendaraanDB
+import com.example.sewakendaraan.room.kendaraanRoom.Kendaraan
+import com.example.sewakendaraan.room.kendaraanRoom.KendaraanDB
 import com.example.sewakendaraan.room.Constant
-import com.example.sewakendaraan.room.UserDB
 import kotlinx.android.synthetic.main.fragment_edit_kendaraan.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +17,6 @@ class EditKendaraanFragment : Fragment() {
 
     val db by lazy { activity?.let { KendaraanDB(it) } }
     private var kendaraanId: Int = 0
-    var vId: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +30,6 @@ class EditKendaraanFragment : Fragment() {
         val args = arguments
         val argsType = args!!.getInt("arg_type")
         kendaraanId = args!!.getInt("arg_id")
-        vId = args!!.getInt("user_id")
 
         setupView(argsType)
         setupListener()
@@ -89,7 +85,6 @@ class EditKendaraanFragment : Fragment() {
     private fun  replaceFragment(fragment: Fragment){
         val context = context as Home
         val args = Bundle()
-        args.putInt("user_id", vId)
         fragment.arguments = args
         val fragmentManager = context.supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()

@@ -1,17 +1,17 @@
 package com.example.sewakendaraan
 
 import android.os.Bundle
-import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
-import com.example.sewakendaraan.room.User
-import com.example.sewakendaraan.room.UserDB
+import android.widget.ImageView
+import com.example.sewakendaraan.room.userRoom.User
+import com.example.sewakendaraan.room.userRoom.UserDB
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,31 +26,39 @@ class ProfileFragment : Fragment() {
     private var vHandphone: String = "0812345678"
     private var vDateOfBirth: String = "01/01/2001"
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val context = context as Home
+
+        val editProfileImageButton: ImageView = context.findViewById(R.id.editProfilePictureButton)
+        editProfileImageButton.setOnClickListener {
+            replaceFragment(CameraFragment())
+        }
+
         val db by lazy { UserDB(context) }
 
         val inputLayoutUsername: TextInputLayout = context.findViewById(R.id.inputLayoutUsername)
         val inputLayoutEmail: TextInputLayout = context.findViewById(R.id.inputLayoutEmail)
         val inputLayoutHandphone: TextInputLayout = context.findViewById(R.id.inputLayoutHandphone)
-        val inputLayoutDateOfBirth: TextInputLayout = context.findViewById(R.id.inputLayoutDateOfBirth)
+        val inputLayoutDateOfBirth: TextInputLayout =
+            context.findViewById(R.id.inputLayoutDateOfBirth)
         val updateProfileBtn: Button = context.findViewById(R.id.updateProfileBtn)
 
-        val args = arguments
-        vId = args!!.getInt("user_id")
+        vId = context.vId
 
         CoroutineScope(Dispatchers.Main).launch {
             val users = db.userDao().getUser(vId)
             if (users != null) {
-                vUsername  = users.username
+                vUsername = users.username
                 vEmail = users.email
                 vPassword = users.password
                 vHandphone = users.handphone
@@ -79,7 +87,7 @@ class ProfileFragment : Fragment() {
         }
 
 
-        updateProfileBtn.setOnClickListener{
+        updateProfileBtn.setOnClickListener {
             vUsername = inputLayoutUsername.editText?.text.toString()
             vEmail = inputLayoutEmail.editText?.text.toString()
             vDateOfBirth = inputLayoutDateOfBirth.editText?.text.toString()
@@ -95,9 +103,6 @@ class ProfileFragment : Fragment() {
     }
     private fun  replaceFragment(fragment: Fragment){
         val context = context as Home
-        val args = Bundle()
-        args.putInt("user_id", vId)
-        fragment.arguments = args
         val fragmentManager = context.supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frameLayout,fragment)

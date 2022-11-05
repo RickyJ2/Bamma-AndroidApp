@@ -8,19 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.sewakendaraan.kendaraanRoom.Kendaraan
-import com.example.sewakendaraan.kendaraanRoom.KendaraanDB
+import com.example.sewakendaraan.room.kendaraanRoom.Kendaraan
+import com.example.sewakendaraan.room.kendaraanRoom.KendaraanDB
 import com.example.sewakendaraan.room.Constant
-import com.example.sewakendaraan.room.UserDB
+import com.example.sewakendaraan.room.userRoom.UserDB
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.w3c.dom.Text
 
 class HomeFragment : Fragment() {
     lateinit var vUsername: String
@@ -40,9 +37,7 @@ class HomeFragment : Fragment() {
         val context = context as Home
         val db by lazy { UserDB(context) }
         val tvWelcome: TextView = context.findViewById(R.id.tvWelcome) as TextView
-        val arg = arguments
-        vId = arg!!.getInt("user_id")
-        args.putInt("user_id", vId)
+        vId = context.vId
 
         CoroutineScope(Dispatchers.Main).launch {
             val users = db.userDao().getUser(vId)
@@ -112,7 +107,6 @@ class HomeFragment : Fragment() {
     }
 
     fun argEdit(kendaraanId: Int, fragmentType: Int){
-        args.putInt("arg_id", kendaraanId)
         args.putInt("arg_type", fragmentType)
         replaceFragment(EditKendaraanFragment())
     }
