@@ -1,0 +1,25 @@
+{
+  "results": [
+    {
+      "geometry": {
+        "location" : {
+          "lat" : -7.779433,
+          "lng" : 110.415782
+        }
+      },
+      "name": "Outlet BAMMA 1",
+      "vicinity" : "Jl. Babasari No.43, Janti, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281"
+    },
+    {
+      "geometry": {
+        "location" : {
+          "lat" : -7.780615,
+          "lng" : 110.414080
+        }
+      },
+      "name": "Outlet BAMMA 2",
+      "vicinity" : "Jl. Babasari No.44, Janti, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281"
+    }
+  ],
+  "status": "OK"
+}

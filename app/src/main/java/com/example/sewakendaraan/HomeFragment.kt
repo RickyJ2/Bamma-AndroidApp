@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,6 +47,11 @@ class HomeFragment : Fragment() {
                 tvWelcome.text = "Welcome, $vUsername!"
             }
         }
+        val imageMap: ImageButton = context.findViewById(R.id.imageView3)
+        imageMap.setOnClickListener{
+            replaceFragment(MapLocationFragment())
+        }
+
         setupRecyclerView()
     }
     private fun setupRecyclerView(){

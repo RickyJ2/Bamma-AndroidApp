@@ -24,7 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/ic_baseline_cancel_24"
-            android:backgroundTint="#5E5D5D"/>
+            android:backgroundTint="@color/white"/>
 
         <ImageButton
             android:id="@+id/cameraBtn"
@@ -34,7 +34,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@drawable/ic_baseline_camera_24"
-            android:backgroundTint="#5E5D5D"/>
+            android:backgroundTint="@color/white"/>
         <ImageButton
             android:id="@+id/cameraSwitchBtn"
             android:layout_width="60dp"
@@ -43,7 +43,7 @@
             app:layout_constraintStart_toEndOf="@+id/cameraBtn"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@drawable/ic_baseline_cameraswitch_24"
-            android:backgroundTint="#5E5D5D"
+            android:backgroundTint="@color/white"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
