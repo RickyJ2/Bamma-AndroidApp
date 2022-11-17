@@ -58,7 +58,7 @@ class SettingFragment : Fragment() {
             builder.setMessage("Are you sure want to logout?")
                 .setPositiveButton("YES", object : DialogInterface.OnClickListener{
                     override fun onClick(dialogInterface: DialogInterface, i: Int){
-                        val logout = Intent(context, MainActivity::class.java)
+                        val logout = Intent(context, LoginActivity::class.java)
                         startActivity(logout)
                         context.finishAndRemoveTask()
                     }

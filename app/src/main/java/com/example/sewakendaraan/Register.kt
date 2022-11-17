@@ -55,7 +55,7 @@ class Register : AppCompatActivity() {
 
         //Move to Login Activity
         binding.loginNavBtn.setOnClickListener(View.OnClickListener {
-            val moveLogin = Intent(this@Register, MainActivity::class.java)
+            val moveLogin = Intent(this@Register, LoginActivity::class.java)
             startActivity(moveLogin)
         })
 
@@ -138,7 +138,7 @@ class Register : AppCompatActivity() {
             }
 
             if(!checkRegister)return@OnClickListener
-            val moveLogin = Intent(this@Register, MainActivity::class.java)
+            val moveLogin = Intent(this@Register, LoginActivity::class.java)
             CoroutineScope(Dispatchers.IO).launch {
                 db.userDao().addUser(
                     User(0, email, username, password, dateOfBirth, handphone)

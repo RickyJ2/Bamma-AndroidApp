@@ -3,4 +3,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="long_text">Hallo... Terima Kasih sudah menggunakan layanan BAMMA</string>
+    <string name="forgotPassword"><font color="#757575"><a href="#">forgot password?</a></font></string>
+    <string name="register"><u>Register</u></string>
+    <string name="login"><u>Login</u></string>
+    <string name="agreement">By signing up, you agree to our <font color="#7B70FA"><a href="#">privacy policy</a></font>,<font color="#7B70FA"><a href="#">user terms</a></font> and <font color="#7B70FA"><a href="#">merchant agreement</a></font></string>
 </resources>

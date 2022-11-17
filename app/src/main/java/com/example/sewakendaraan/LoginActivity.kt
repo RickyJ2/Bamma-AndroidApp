@@ -23,7 +23,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
     private lateinit var  binding: ActivityMainBinding
 
     private lateinit var layoutMain: ConstraintLayout
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
 
         //register button
         binding.registerNavBtn.setOnClickListener(View.OnClickListener {
-            val moveRegister = Intent(this@MainActivity, Register::class.java)
+            val moveRegister = Intent(this@LoginActivity, Register::class.java)
             startActivity(moveRegister)
         })
 
@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
                     sendNotification1(username)
                     sendNotification2(username)
 
-                    val moveHome = Intent(this@MainActivity, Home::class.java)
+                    val moveHome = Intent(this@LoginActivity, Home::class.java)
                     val mBundleL = Bundle()
                     mBundleL.putInt("user_id", users.id)
                     moveHome.putExtra("login", mBundleL)
