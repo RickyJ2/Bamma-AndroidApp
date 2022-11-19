@@ -11,32 +11,37 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sewakendaraan.databinding.FragmentProfileBinding
+import com.example.sewakendaraan.databinding.FragmentSettingBinding
 import com.example.sewakendaraan.entity.SettingItem
 import com.example.sewakendaraan.room.userRoom.UserDB
+import com.example.sewakendaraan.room.userRoom.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
 class SettingFragment : Fragment() {
-    var vId: Int = 0
-    private var vUsername: String = "admin"
-    private var vEmail: String = "admin@email.com"
+    private var _binding: FragmentSettingBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var mUserViewModel: UserViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_setting, container, false)
+        _binding = FragmentSettingBinding.inflate(inflater, container, false)
+        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val context = context as Home
-        val db by lazy { UserDB(context) }
 
         val layoutManager = LinearLayoutManager(context)
         val rvSetting : RecyclerView = context.findViewById(R.id.rvSetting)
@@ -52,8 +57,7 @@ class SettingFragment : Fragment() {
             )
         )
 
-        val logoutBtn : Button = context.findViewById(R.id.logoutBtn)
-        logoutBtn.setOnClickListener {
+        binding.logoutBtn.setOnClickListener{
             val builder: AlertDialog.Builder = AlertDialog.Builder(context)
             builder.setMessage("Are you sure want to logout?")
                 .setPositiveButton("YES", object : DialogInterface.OnClickListener{
@@ -65,21 +69,10 @@ class SettingFragment : Fragment() {
                 }).show()
         }
 
-        val tvUsername : TextView = context.findViewById(R.id.tvUsername)
-        val tvEmail: TextView = context.findViewById(R.id.tvEmail)
-        vId = context.vId
-        CoroutineScope(Dispatchers.Main).launch {
-            val users = db.userDao().getUser(vId)
-            if (users != null) {
-                vUsername = users.username
-                vEmail = users.email
-                tvUsername.text = vUsername
-                tvEmail.text = vEmail
-            }
-        }
+        binding.tvUsername.text = mUserViewModel.readLoginData?.value?.username.toString()
+        binding.tvEmail.text = mUserViewModel.readLoginData?.value?.email.toString()
 
-        val editIcon : ImageView = context.findViewById(R.id.editIcon)
-        editIcon.setOnClickListener{
+        binding.editIcon.setOnClickListener{
             replaceFragment(ProfileFragment())
         }
     }

@@ -9,20 +9,13 @@ import com.example.sewakendaraan.room.Constant
 class Home : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
-    lateinit var mBundle: Bundle
-
-    var vId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
-
         binding = ActivityHomeBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        if(intent.hasExtra("login")){
-            getBundle()
-        }
+
         replaceFragment(HomeFragment())
 
         binding.bottomNavigationView.background = null
@@ -52,11 +45,5 @@ class Home : AppCompatActivity() {
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frameLayout,fragment)
         fragmentTransaction.commit()
-    }
-    fun getBundle(){
-        mBundle = intent.getBundleExtra("login")!!
-        if(!mBundle.isEmpty){
-            vId = mBundle.getInt("user_id")!!
-        }
     }
 }
