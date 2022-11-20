@@ -1,8 +1,10 @@
 package com.example.sewakendaraan
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sewakendaraan.databinding.FragmentProfileBinding
 import com.example.sewakendaraan.databinding.FragmentSettingBinding
 import com.example.sewakendaraan.entity.SettingItem
+import com.example.sewakendaraan.entity.sharedPreferencesKey
 import com.example.sewakendaraan.room.userRoom.UserDB
 import com.example.sewakendaraan.room.userRoom.UserViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -28,14 +31,12 @@ import kotlinx.coroutines.launch
 class SettingFragment : Fragment() {
     private var _binding: FragmentSettingBinding? = null
     private val binding get() = _binding!!
-    private lateinit var mUserViewModel: UserViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentSettingBinding.inflate(inflater, container, false)
-        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         return binding.root
     }
 
@@ -63,14 +64,20 @@ class SettingFragment : Fragment() {
                 .setPositiveButton("YES", object : DialogInterface.OnClickListener{
                     override fun onClick(dialogInterface: DialogInterface, i: Int){
                         val logout = Intent(context, LoginActivity::class.java)
+
+                        val spLogin: SharedPreferences = context.getSharedPreferences(sharedPreferencesKey.loginPrefKey, Context.MODE_PRIVATE)
+                        val editorLogin: SharedPreferences.Editor = spLogin!!.edit()
+                        editorLogin.putInt(sharedPreferencesKey.idKey, -1)
+                        editorLogin.apply()
+
                         startActivity(logout)
                         context.finishAndRemoveTask()
                     }
                 }).show()
         }
 
-        binding.tvUsername.text = mUserViewModel.readLoginData?.value?.username.toString()
-        binding.tvEmail.text = mUserViewModel.readLoginData?.value?.email.toString()
+        binding.tvUsername.text = context.mUserViewModel.readLoginData?.value?.username.toString()
+        binding.tvEmail.text = context.mUserViewModel.readLoginData?.value?.email.toString()
 
         binding.editIcon.setOnClickListener{
             replaceFragment(ProfileFragment())

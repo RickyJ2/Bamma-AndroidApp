@@ -123,25 +123,23 @@ class LoginActivity : AppCompatActivity() {
         editor.apply()
     }
     private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Notification Title"
-            val descriptionText = "Notification Description"
+        val name = "Notification Title"
+        val descriptionText = "Notification Description"
 
-            val channel1 = NotificationChannel(CHANNEL_ID_1,name,
-                NotificationManager.IMPORTANCE_DEFAULT).apply {
-                description = descriptionText
-            }
-
-            val channel2 = NotificationChannel(CHANNEL_ID_2,name,
-                NotificationManager.IMPORTANCE_DEFAULT).apply {
-                description = descriptionText
-            }
-
-            val notificationManager: NotificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel1)
-            notificationManager.createNotificationChannel(channel2)
+        val channel1 = NotificationChannel(CHANNEL_ID_1,name,
+            NotificationManager.IMPORTANCE_DEFAULT).apply {
+            description = descriptionText
         }
+
+        val channel2 = NotificationChannel(CHANNEL_ID_2,name,
+            NotificationManager.IMPORTANCE_DEFAULT).apply {
+            description = descriptionText
+        }
+
+        val notificationManager: NotificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel1)
+        notificationManager.createNotificationChannel(channel2)
     }
     private fun sendNotification1(vUsername: String){
         val intent : Intent = Intent()

@@ -1,7 +1,6 @@
 package com.example.sewakendaraan.room.userRoom
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -24,14 +23,14 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
         }
     }
     fun updateUser(user: User){
-        viewModelScope.launch(Dispatchers.IO) {
+        runBlocking {
             repository.updateUser(user)
         }
-        setUserData()
+        setUserData(readLoginData.value!!.id)
     }
-    fun setUserData(){
-        viewModelScope.launch(Dispatchers.Main){
-            setReadLoginData(readLoginData.value?.let { repository.userData(it.id) })
+    fun setUserData(id: Int){
+        runBlocking {
+            setReadLoginData(repository.userData(id))
         }
     }
     fun setLogin(username: String, password: String) {

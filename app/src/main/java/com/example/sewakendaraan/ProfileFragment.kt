@@ -25,28 +25,26 @@ import java.util.*
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
-    private lateinit var mUserViewModel: UserViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val context = context as Home
         binding.editProfilePictureButton.setOnClickListener{
             replaceFragment(CameraFragment())
         }
 
-        binding.inputLayoutUsername.editText?.setText(mUserViewModel.readLoginData?.value?.username)
-        binding.inputLayoutEmail.editText?.setText(mUserViewModel.readLoginData?.value?.email)
-        binding.inputLayoutHandphone.editText?.setText(mUserViewModel.readLoginData?.value?.username)
-        binding.inputLayoutDateOfBirth.editText?.setText(mUserViewModel.readLoginData?.value?.dateofbirth)
+        binding.inputLayoutUsername.editText?.setText(context.mUserViewModel.readLoginData?.value?.username)
+        binding.inputLayoutEmail.editText?.setText(context.mUserViewModel.readLoginData?.value?.email)
+        binding.inputLayoutHandphone.editText?.setText(context.mUserViewModel.readLoginData?.value?.handphone)
+        binding.inputLayoutDateOfBirth.editText?.setText(context.mUserViewModel.readLoginData?.value?.dateofbirth)
 
         binding.inputLayoutDateOfBirth.editText?.setOnFocusChangeListener{ _, hasFocus ->
             if(hasFocus){
@@ -81,20 +79,21 @@ class ProfileFragment : Fragment() {
         }
     }
     private fun updateUser(){
+        val context = context as Home
         val username: String = binding.inputLayoutUsername.editText?.text.toString()
         val email: String = binding.inputLayoutEmail.editText?.text.toString()
         val handphone: String = binding.inputLayoutHandphone.editText?.text.toString()
         val dateOfBirth: String = binding.inputLayoutDateOfBirth.editText?.text.toString()
 
         val user = User(
-            0,
+            context.mUserViewModel.readLoginData.value!!.id,
             username,
             email,
-            mUserViewModel.readLoginData?.value?.password.toString(),
+            context.mUserViewModel.readLoginData?.value?.password.toString(),
             handphone,
             dateOfBirth
         )
-        mUserViewModel.updateUser(user)
+        context.mUserViewModel.updateUser(user)
     }
     private fun  replaceFragment(fragment: Fragment){
         val context = context as Home

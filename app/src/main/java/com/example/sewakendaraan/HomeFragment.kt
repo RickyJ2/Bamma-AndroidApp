@@ -26,7 +26,6 @@ class HomeFragment : Fragment() {
     val args = Bundle()
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var mUserViewModel: UserViewModel
     lateinit var kendaraanAdapter: RVKendaraanAdapter
 
     override fun onCreateView(
@@ -35,13 +34,13 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.tvWelcome.text = "Welcome, ${mUserViewModel.readLoginData?.value?.username.toString()}"
+        val context = context as Home
+        binding.tvWelcome.text = "Welcome, ${context.mUserViewModel.readLoginData?.value?.username.toString()}"
 
         binding.imageView3.setOnClickListener{
             replaceFragment(MapLocationFragment())
