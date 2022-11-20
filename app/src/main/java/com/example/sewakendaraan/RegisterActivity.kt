@@ -135,8 +135,8 @@ class RegisterActivity : AppCompatActivity() {
             username,
             email,
             password,
-            handphone,
-            dateOfBirth
+            dateOfBirth,
+            handphone
         )
         mUserViewModel.addUser(user)
     }

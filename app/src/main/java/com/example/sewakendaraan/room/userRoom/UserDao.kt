@@ -10,7 +10,7 @@ interface UserDao {
     @Update
     suspend fun updateUser(user: User)
     @Query("SELECT * FROM user WHERE id =:idValue")
-    fun userData(idValue: Int): LiveData<User>?
+    suspend fun userData(idValue: Int): User?
     @Query("SELECT * FROM user WHERE username =:usernameValue AND password =:passwordValue")
-    suspend fun ceklogin(usernameValue: String, passwordValue: String): User?
+    suspend fun login(usernameValue: String, passwordValue: String): User?
 }
