@@ -18,6 +18,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
 import com.example.sewakendaraan.databinding.ActivityLoginBinding
+import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.idKey
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.loginPrefKey
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.passwordKey
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.usernameKey
@@ -27,11 +28,11 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var  binding: ActivityLoginBinding
     private lateinit var mUserViewModel: UserViewModel
-    private lateinit var layoutMain: ConstraintLayout
 
     private val CHANNEL_ID_1 = "channel_notification_01"
     private val notification1 = 101
@@ -45,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(view)
         title = "Login"
 
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
 
         createNotificationChannel()
 
@@ -70,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
             }else{
                 mUserViewModel.setLogin(username, password)
                 if(mUserViewModel.readLoginData?.value != null){
-                    savePreferences(username, password)
+                    savePreferences(username, password, mUserViewModel.readLoginData.value!!.id)
                     sendNotification1(username)
                     sendNotification2(username)
                     val moveHome = Intent(this@LoginActivity, Home::class.java)
@@ -113,11 +114,12 @@ class LoginActivity : AppCompatActivity() {
             binding.inputLayoutPassword.editText?.setText(spLogin!!.getString(passwordKey,""))
         }
     }
-    private fun savePreferences(username: String, password: String){
+    private fun savePreferences(username: String, password: String, id: Int){
         val spLogin: SharedPreferences = getSharedPreferences(loginPrefKey, Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = spLogin!!.edit()
         editor.putString(usernameKey,username)
         editor.putString(passwordKey, password)
+        editor.putInt(idKey, id)
         editor.apply()
     }
     private fun createNotificationChannel() {

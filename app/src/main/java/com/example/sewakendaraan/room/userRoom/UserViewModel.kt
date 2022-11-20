@@ -7,9 +7,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class UserViewModel(application: Application): AndroidViewModel(application) {
-    private var userTemp: User? = null
     private val repository: UserRepository
     val readLoginData: LiveData<User>
         get() = repository.readLoginData
@@ -30,20 +30,16 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
         setUserData()
     }
     fun setUserData(){
-        viewModelScope.launch(Dispatchers.IO) {
-            userTemp = readLoginData.value?.let { repository.userData(it.id) }
+        viewModelScope.launch(Dispatchers.Main){
+            setReadLoginData(readLoginData.value?.let { repository.userData(it.id) })
         }
-        setReadLoginData()
     }
     fun setLogin(username: String, password: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            userTemp = repository.setLogin(username, password)
-            Log.d("Login123", "Text " + userTemp?.username.toString())
+        runBlocking {
+            setReadLoginData(repository.setLogin(username, password))
         }
-        Log.d("Login123", "Text2 " + userTemp?.username.toString())
-        setReadLoginData()
     }
-    private fun setReadLoginData(){
-        repository.setReadLoginData(userTemp)
+    private fun setReadLoginData(user: User?){
+        repository.setReadLoginData(user)
     }
 }

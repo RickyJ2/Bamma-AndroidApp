@@ -5,5 +5,6 @@ class sharedPreferencesKey {
         const val loginPrefKey = "loginPref"
         const val usernameKey = "nameKey"
         const val passwordKey = "passKey"
+        const val idKey = "idkey"
     }
 }
