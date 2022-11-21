@@ -7,12 +7,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.widget.doAfterTextChanged
@@ -23,12 +20,8 @@ import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.loginPref
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.passwordKey
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.usernameKey
 import com.example.sewakendaraan.notification.NotificationReceiver
-import com.example.sewakendaraan.room.userRoom.UserViewModel
+import com.example.sewakendaraan.viewModel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var  binding: ActivityLoginBinding

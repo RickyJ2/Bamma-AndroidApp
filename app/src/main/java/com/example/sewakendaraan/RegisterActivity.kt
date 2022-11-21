@@ -10,7 +10,6 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.View
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -22,7 +21,7 @@ import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.passwordK
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.usernameKey
 import com.example.sewakendaraan.notification.NotificationReceiver
 import com.example.sewakendaraan.room.userRoom.User
-import com.example.sewakendaraan.room.userRoom.UserViewModel
+import com.example.sewakendaraan.viewModel.UserViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat

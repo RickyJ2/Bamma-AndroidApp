@@ -5,20 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import androidx.lifecycle.ViewModelProvider
-import com.example.sewakendaraan.databinding.FragmentHomeBinding
 import com.example.sewakendaraan.databinding.FragmentProfileBinding
 import com.example.sewakendaraan.room.userRoom.User
-import com.example.sewakendaraan.room.userRoom.UserDB
-import com.example.sewakendaraan.room.userRoom.UserViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.fragment_profile.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 

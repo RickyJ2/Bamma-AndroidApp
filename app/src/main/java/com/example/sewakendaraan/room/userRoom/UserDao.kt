@@ -1,6 +1,5 @@
 package com.example.sewakendaraan.room.userRoom
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao

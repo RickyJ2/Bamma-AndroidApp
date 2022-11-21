@@ -1,11 +1,11 @@
-package com.example.sewakendaraan.room.userRoom
+package com.example.sewakendaraan.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.example.sewakendaraan.repository.UserRepository
+import com.example.sewakendaraan.room.userRoom.User
+import com.example.sewakendaraan.room.userRoom.UserDB
 import kotlinx.coroutines.runBlocking
 
 class UserViewModel(application: Application): AndroidViewModel(application) {
@@ -17,16 +17,19 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
         val userDao = UserDB.getDatabase(application).userDao()
         repository = UserRepository(userDao)
     }
-    fun addUser(user: User){
-        viewModelScope.launch(Dispatchers.IO) {
+    fun addUser(user: User): String{
+        /*viewModelScope.launch(Dispatchers.IO) {
             repository.addUser(user)
-        }
+        }*/
+        return repository.addUser(user)
     }
-    fun updateUser(user: User){
-        runBlocking {
+    fun updateUser(user: User): String{
+        /*runBlocking {
             repository.updateUser(user)
-        }
+        }*/
+        val msg  = repository.updateUser(user)
         setUserData(readLoginData.value!!.id)
+        return msg
     }
     fun setUserData(id: Int){
         runBlocking {

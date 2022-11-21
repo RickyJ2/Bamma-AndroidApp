@@ -9,23 +9,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sewakendaraan.databinding.FragmentProfileBinding
 import com.example.sewakendaraan.databinding.FragmentSettingBinding
 import com.example.sewakendaraan.entity.SettingItem
 import com.example.sewakendaraan.entity.sharedPreferencesKey
-import com.example.sewakendaraan.room.userRoom.UserDB
-import com.example.sewakendaraan.room.userRoom.UserViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 class SettingFragment : Fragment() {
