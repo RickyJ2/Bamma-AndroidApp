@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 data class Kendaraan (
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val namaPemilik: String,
-    val jenisKendaraan: String
+    val nama: String,
+    val alamat: String,
+    val harga: Int
 )

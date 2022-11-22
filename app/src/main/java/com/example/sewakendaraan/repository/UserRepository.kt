@@ -20,9 +20,6 @@ class UserRepository {
     init {
         _readLoginData.value = null
     }
-    fun setReadLoginData(user: User?){
-        _readLoginData.value = user
-    }
     fun addUser(user: User){
         //userDao.addUser(user)
         RClient.instances.addUser(user.username, user.email, user.password, user.dateOfBirth, user.handphone).enqueue(

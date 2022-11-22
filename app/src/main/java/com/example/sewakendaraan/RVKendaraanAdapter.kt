@@ -17,8 +17,9 @@ class RVKendaraanAdapter(private val data: ArrayList<Kendaraan>, private val lis
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = data[position]
-        holder.view.tvNamaPemilik.text = currentItem.namaPemilik
-        holder.view.tvJenisKendaraan.text = currentItem.jenisKendaraan
+        holder.view.tvNamaMobil.text = currentItem.nama
+        holder.view.tvAlamat.text = currentItem.alamat
+        holder.view.tvHarga.text = currentItem.harga.toString()
         holder.view.iconEdit.setOnClickListener{
             listener.onUpdate(currentItem)
         }

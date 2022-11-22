@@ -38,7 +38,4 @@ class UserViewModel(application: Application): AndroidViewModel(application) {
         Log.d("VM", readLoginData.value.toString())
 
     }
-    private fun setReadLoginData(user: User?){
-        repository.setReadLoginData(user)
-    }
 }

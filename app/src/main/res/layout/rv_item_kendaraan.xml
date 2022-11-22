@@ -8,18 +8,7 @@
     android:padding="20dp">
 
     <TextView
-        android:id="@+id/tvNamaPemilik"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="Nama Pemilik"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvJenisKendaraan"
-        app:layout_constraintVertical_bias="0.0" />
-    <TextView
-        android:id="@+id/tvJenisKendaraan"
+        android:id="@+id/tvNamaMobil"
         style="@style/TextAppearance.MaterialComponents.Headline5"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -28,7 +17,33 @@
         android:text="Kendaraan"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/iconEdit"
+        app:layout_constraintBottom_toTopOf="@+id/detailLayout"
         app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:id="@+id/detailLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <TextView
+            android:id="@+id/tvAlamat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Alamat" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/tvHarga"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="24dp"
+            android:text="harga"/>
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/iconEdit"
         android:layout_width="wrap_content"

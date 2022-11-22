@@ -12,23 +12,32 @@
         android:padding="20dp">
 
         <EditText
-        android:id="@+id/edit_namaPemilik"
+        android:id="@+id/edit_namaMobil"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Nama Pemilik"
+        android:hint="Nama Mobil"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
         <EditText
-            android:id="@+id/edit_jenisKendaraan"
+            android:id="@+id/edit_Alamat"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Jenis Kendaraan"
+            android:hint="Alamat"
             android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_namaPemilik" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_namaMobil" />
+        <EditText
+            android:id="@+id/edit_harga"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Harga"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_Alamat" />
         <Button
             android:id="@+id/button_save"
             android:layout_width="0dp"
@@ -36,7 +45,7 @@
             android:text="SAVE"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_jenisKendaraan"
+            app:layout_constraintTop_toBottomOf="@+id/edit_harga"
             android:layout_marginTop="20dp"
             />
         <Button

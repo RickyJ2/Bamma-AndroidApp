@@ -32,4 +32,32 @@ interface api {
         @Field("dateOfBirth") dateofbirth:String?,
         @Field("handphone") handphone:String?,
     ):Call<ResponseDataUser>
+
+    //api DaftarMobil
+    @GET("daftarMobil/show")
+    fun showAllDaftarMobil():
+            Call<ResponseDaftarMobil>
+    @GET("daftarMobil/{id}")
+    fun showDaftarMobil(
+        @Path("id") id:Int? = null):
+            Call<ResponseDaftarMobil>
+    @FormUrlEncoded
+    @POST("daftarMobil/add")
+    fun addDaftarMobil(
+        @Field("nama") nama:String?,
+        @Field("alamat") alamat:String?,
+        @Field("harga") harga:Int?,
+    ):Call<CreateResponse>
+    @FormUrlEncoded
+    @PUT("daftarMobil/{id}")
+    fun updateDaftarMobil(
+        @Path("id") id:Int?,
+        @Field("nama") nama:String?,
+        @Field("alamat") alamat:String?,
+        @Field("harga") harga:Int?,
+    ):Call<CreateResponse>
+    @DELETE("daftarMobil/{id}")
+    fun deleteDaftarMobil(
+        @Path("id") id:Int? = null):
+            Call<CreateResponse>
 }
