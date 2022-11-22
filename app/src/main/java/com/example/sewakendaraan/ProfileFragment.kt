@@ -34,7 +34,7 @@ class ProfileFragment : Fragment() {
         binding.inputLayoutUsername.editText?.setText(context.mUserViewModel.readLoginData?.value?.username)
         binding.inputLayoutEmail.editText?.setText(context.mUserViewModel.readLoginData?.value?.email)
         binding.inputLayoutHandphone.editText?.setText(context.mUserViewModel.readLoginData?.value?.handphone)
-        binding.inputLayoutDateOfBirth.editText?.setText(context.mUserViewModel.readLoginData?.value?.dateofbirth)
+        binding.inputLayoutDateOfBirth.editText?.setText(context.mUserViewModel.readLoginData?.value?.dateOfBirth)
 
         binding.inputLayoutDateOfBirth.editText?.setOnFocusChangeListener{ _, hasFocus ->
             if(hasFocus){

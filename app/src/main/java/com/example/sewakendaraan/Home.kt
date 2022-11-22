@@ -13,6 +13,7 @@ import com.example.sewakendaraan.entity.sharedPreferencesKey
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.idKey
 import com.example.sewakendaraan.room.Constant
 import com.example.sewakendaraan.viewModel.UserViewModel
+import kotlinx.coroutines.runBlocking
 
 class Home : AppCompatActivity() {
 
@@ -59,7 +60,9 @@ class Home : AppCompatActivity() {
             Toast.makeText(this@Home, "Login Failed", Toast.LENGTH_SHORT).show()
             startActivity(moveLogin)
         }else{
-            mUserViewModel.setUserData(id)
+            runBlocking {
+                mUserViewModel.setUserData(id)
+            }
         }
     }
     private fun  replaceFragment(fragment: Fragment){

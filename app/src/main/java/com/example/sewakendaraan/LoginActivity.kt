@@ -9,11 +9,13 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
+import com.example.sewakendaraan.api.RClient
 import com.example.sewakendaraan.databinding.ActivityLoginBinding
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.idKey
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.loginPrefKey
@@ -22,6 +24,7 @@ import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.usernameK
 import com.example.sewakendaraan.notification.NotificationReceiver
 import com.example.sewakendaraan.viewModel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.runBlocking
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var  binding: ActivityLoginBinding
@@ -62,7 +65,11 @@ class LoginActivity : AppCompatActivity() {
             if(!inputcheck()){
                 return@OnClickListener
             }else{
-                mUserViewModel.setLogin(username, password)
+                Log.d("setLogin", "Start")
+                runBlocking{
+                    mUserViewModel.setLogin(username, password)
+                }
+                Log.d("setLogin", "End")
                 if(mUserViewModel.readLoginData?.value != null){
                     savePreferences(username, password, mUserViewModel.readLoginData.value!!.id)
                     sendNotification1(username)

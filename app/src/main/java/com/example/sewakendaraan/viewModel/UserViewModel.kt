@@ -1,45 +1,42 @@
 package com.example.sewakendaraan.viewModel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.sewakendaraan.repository.UserRepository
 import com.example.sewakendaraan.room.userRoom.User
-import com.example.sewakendaraan.room.userRoom.UserDB
-import kotlinx.coroutines.runBlocking
 
 class UserViewModel(application: Application): AndroidViewModel(application) {
-    private val repository: UserRepository
+    private val repository: UserRepository = UserRepository()
     val readLoginData: LiveData<User>
         get() = repository.readLoginData
 
-    init{
-        val userDao = UserDB.getDatabase(application).userDao()
-        repository = UserRepository(userDao)
-    }
-    fun addUser(user: User): String{
+    /*init{
+        //val userDao = UserDB.getDatabase(application).userDao()
+    }*/
+    fun addUser(user: User){
         /*viewModelScope.launch(Dispatchers.IO) {
             repository.addUser(user)
         }*/
-        return repository.addUser(user)
+        repository.addUser(user)
     }
-    fun updateUser(user: User): String{
+    fun updateUser(user: User){
         /*runBlocking {
             repository.updateUser(user)
         }*/
-        val msg  = repository.updateUser(user)
-        setUserData(readLoginData.value!!.id)
-        return msg
+        repository.updateUser(user)
+        Log.d("VM", readLoginData.value.toString())
     }
     fun setUserData(id: Int){
-        runBlocking {
-            setReadLoginData(repository.userData(id))
-        }
+        repository.userData(id)
+        Log.d("VM", readLoginData.value.toString())
+
     }
     fun setLogin(username: String, password: String) {
-        runBlocking {
-            setReadLoginData(repository.setLogin(username, password))
-        }
+        repository.setLogin(username, password)
+        Log.d("VM", readLoginData.value.toString())
+
     }
     private fun setReadLoginData(user: User?){
         repository.setReadLoginData(user)
