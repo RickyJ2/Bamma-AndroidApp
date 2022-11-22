@@ -6,16 +6,17 @@
     android:layout_height="match_parent"
     android:id="@+id/main"
     android:backgroundTint="@color/white"
-    tools:context=".MainActivity">
+    tools:context=".LoginActivity"
+    tools:ignore="HardcodedText">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="240dp"
-        android:layout_height="240dp"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
         android:layout_marginTop="80dp"
         android:src="@drawable/ic_baseline_directions_car_24"
+        app:tint="@color/Purple_Bamma"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.573"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="image" />
@@ -25,16 +26,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:fontFamily="@font/inter_black"
         android:text="BAMMA"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        style="@style/TextAppearance.MaterialComponents.Headline5"
+        android:textColor="@color/Purple_Bamma"
+        android:textSize="38sp"
+        android:paddingTop="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintBottom_toBottomOf="@+id/imageView" />
-
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/loginFormLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -50,14 +52,17 @@
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="Username"
+            android:textColorHint="@color/GrayHelperText_Bamma"
             app:errorEnabled="true"
-            app:startIconDrawable="@drawable/ic_username_24"
+            app:startIconDrawable="@drawable/ic_baseline_person_24"
             android:layout_marginBottom="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"/>
+                android:fontFamily="@font/inter"
+                android:inputType="text"
+                tools:ignore="TextContrastCheck"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -67,28 +72,40 @@
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="Password"
+            android:textColorHint="@color/GrayHelperText_Bamma"
             app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/black"
-            app:startIconDrawable="@drawable/ic_lock_24"
-            app:helperText="Forgot Password?">
+            app:passwordToggleTint="@color/GrayHelperText_Bamma"
+            app:startIconDrawable="@drawable/ic_baseline_lock_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/inter"
                 android:inputType="textPassword"
-                />
+                tools:ignore="TextContrastCheck" />
+            <Button
+                android:id="@+id/forgotPasswordBtn"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/forgotPassword"
+                android:layout_gravity="end"
+                android:textAllCaps="false"/>
         </com.google.android.material.textfield.TextInputLayout>
+
         <Button
             android:id="@+id/btnLogin"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="16dp"
-            android:paddingTop="16dp"
             android:layout_marginTop="16dp"
+            android:backgroundTint="@color/Purple_Bamma"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            app:cornerRadius="10dp"
             android:text="Login"
-            android:backgroundTint="#7B70FA"
-            style="@style/Widget.MaterialComponents.Button"
-            />
+            android:textColor="@color/white"
+            tools:ignore="TextContrastCheck"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -105,7 +122,9 @@
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Register"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/register"
+                android:textColor="@color/Purple_Bamma"
                 android:textAllCaps="false"/>
         </LinearLayout>
     </LinearLayout>

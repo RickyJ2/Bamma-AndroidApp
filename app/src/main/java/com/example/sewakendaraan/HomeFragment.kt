@@ -6,14 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.sewakendaraan.databinding.FragmentHomeBinding
 import com.example.sewakendaraan.room.kendaraanRoom.Kendaraan
 import com.example.sewakendaraan.room.kendaraanRoom.KendaraanDB
 import com.example.sewakendaraan.room.Constant
-import com.example.sewakendaraan.room.userRoom.UserDB
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,37 +19,28 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class HomeFragment : Fragment() {
-    lateinit var vUsername: String
-    var vId: Int = 0
     val args = Bundle()
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
     lateinit var kendaraanAdapter: RVKendaraanAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val context = context as Home
-        val db by lazy { UserDB(context) }
-        val tvWelcome: TextView = context.findViewById(R.id.tvWelcome) as TextView
-        vId = context.vId
+        binding.tvWelcome.text = "Welcome, ${context.mUserViewModel.readLoginData?.value?.username.toString()}"
 
-        CoroutineScope(Dispatchers.Main).launch {
-            val users = db.userDao().getUser(vId)
-            if (users != null) {
-                vUsername = users.username
-                tvWelcome.text = "Welcome, $vUsername!"
-            }
-        }
-        val imageMap: ImageButton = context.findViewById(R.id.imageView3)
-        imageMap.setOnClickListener{
+        binding.imageView3.setOnClickListener{
             replaceFragment(MapLocationFragment())
         }
-
         setupRecyclerView()
     }
     private fun setupRecyclerView(){

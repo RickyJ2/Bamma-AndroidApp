@@ -5,71 +5,53 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
+import com.example.sewakendaraan.databinding.FragmentProfileBinding
 import com.example.sewakendaraan.room.userRoom.User
-import com.example.sewakendaraan.room.userRoom.UserDB
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.fragment_profile.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ProfileFragment : Fragment() {
-    private var vId: Int = 0
-    private var vUsername: String = "admin"
-    private var vEmail: String = "admin@email.com"
-    private var vPassword: String = "admin"
-    private var vHandphone: String = "0812345678"
-    private var vDateOfBirth: String = "01/01/2001"
-
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val context = context as Home
-
-        val editProfileImageButton: ImageView = context.findViewById(R.id.editProfilePictureButton)
-        editProfileImageButton.setOnClickListener {
+        binding.editProfilePictureButton.setOnClickListener{
             replaceFragment(CameraFragment())
         }
 
-        val db by lazy { UserDB(context) }
+        binding.inputLayoutUsername.editText?.setText(context.mUserViewModel.readLoginData?.value?.username)
+        binding.inputLayoutEmail.editText?.setText(context.mUserViewModel.readLoginData?.value?.email)
+        binding.inputLayoutHandphone.editText?.setText(context.mUserViewModel.readLoginData?.value?.handphone)
+        binding.inputLayoutDateOfBirth.editText?.setText(context.mUserViewModel.readLoginData?.value?.dateOfBirth)
 
-        val inputLayoutUsername: TextInputLayout = context.findViewById(R.id.inputLayoutUsername)
-        val inputLayoutEmail: TextInputLayout = context.findViewById(R.id.inputLayoutEmail)
-        val inputLayoutHandphone: TextInputLayout = context.findViewById(R.id.inputLayoutHandphone)
-        val inputLayoutDateOfBirth: TextInputLayout =
-            context.findViewById(R.id.inputLayoutDateOfBirth)
-        val updateProfileBtn: Button = context.findViewById(R.id.updateProfileBtn)
-
-        vId = context.vId
-
-        CoroutineScope(Dispatchers.Main).launch {
-            val users = db.userDao().getUser(vId)
-            if (users != null) {
-                vUsername = users.username
-                vEmail = users.email
-                vPassword = users.password
-                vHandphone = users.handphone
-                vDateOfBirth = users.dateofbirth
-                inputLayoutUsername.editText?.setText(vUsername)
-                inputLayoutEmail.editText?.setText(vEmail)
-                inputLayoutHandphone.editText?.setText(vHandphone)
-                inputLayoutDateOfBirth.editText?.setText(vDateOfBirth)
+        binding.inputLayoutDateOfBirth.editText?.setOnFocusChangeListener{ _, hasFocus ->
+            if(hasFocus){
+                datePicker()
             }
         }
+        binding.inputLayoutDateOfBirth.editText?.setOnClickListener{
+            datePicker()
+        }
 
+        binding.updateProfileBtn.setOnClickListener{
+            updateUser()
+            replaceFragment(SettingFragment())
+        }
+    }
+    private fun datePicker(){
+        val context = context as Home
         val datePicker =
             MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Select your birth of date")
@@ -85,21 +67,23 @@ class ProfileFragment : Fragment() {
             val sdf = SimpleDateFormat(myFormat, Locale.US)
             inputLayoutDateOfBirth.editText?.setText(sdf.format(datePicker.selection))
         }
+    }
+    private fun updateUser(){
+        val context = context as Home
+        val username: String = binding.inputLayoutUsername.editText?.text.toString()
+        val email: String = binding.inputLayoutEmail.editText?.text.toString()
+        val handphone: String = binding.inputLayoutHandphone.editText?.text.toString()
+        val dateOfBirth: String = binding.inputLayoutDateOfBirth.editText?.text.toString()
 
-
-        updateProfileBtn.setOnClickListener {
-            vUsername = inputLayoutUsername.editText?.text.toString()
-            vEmail = inputLayoutEmail.editText?.text.toString()
-            vDateOfBirth = inputLayoutDateOfBirth.editText?.text.toString()
-            vHandphone = inputLayoutHandphone.editText?.text.toString()
-
-            CoroutineScope(Dispatchers.IO).launch {
-                db.userDao().updateUser(
-                    User(vId, vEmail, vUsername, vPassword, vDateOfBirth, vHandphone)
-                )
-            }
-            replaceFragment(SettingFragment())
-        }
+        val user = User(
+            context.mUserViewModel.readLoginData.value!!.id,
+            username,
+            email,
+            context.mUserViewModel.readLoginData?.value?.password.toString(),
+            handphone,
+            dateOfBirth
+        )
+        context.mUserViewModel.updateUser(user)
     }
     private fun  replaceFragment(fragment: Fragment){
         val context = context as Home

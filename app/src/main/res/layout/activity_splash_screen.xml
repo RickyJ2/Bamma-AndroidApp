@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashScreen">
+    tools:context=".SplashScreenActivity"
+    tools:ignore="HardcodedText">
 
     <ImageView
         android:id="@+id/SplashScreenImg"
@@ -15,6 +16,20 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        />
+        app:tint="@color/Purple_Bamma"
+        android:contentDescription="SplashScreenLogo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:fontFamily="@font/inter_black"
+        android:text="BAMMA"
+        android:textAlignment="center"
+        android:textColor="@color/Purple_Bamma"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SplashScreenImg" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,33 +7,28 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.widget.doAfterTextChanged
-import com.example.sewakendaraan.databinding.ActivityMainBinding
+import androidx.lifecycle.ViewModelProvider
+import com.example.sewakendaraan.api.RClient
+import com.example.sewakendaraan.databinding.ActivityLoginBinding
+import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.idKey
+import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.loginPrefKey
+import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.passwordKey
+import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.usernameKey
 import com.example.sewakendaraan.notification.NotificationReceiver
-import com.example.sewakendaraan.room.userRoom.UserDB
+import com.example.sewakendaraan.viewModel.UserViewModel
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var  binding: ActivityMainBinding
-
-    private lateinit var layoutMain: ConstraintLayout
-    lateinit var mBundle: Bundle
-    val db by lazy { UserDB(this) }
-
-    private val myPreference = "myPref"
-    private val usernameKey = "nameKey"
-    private val passwordKey = "passKey"
-    var sharedPreferences: SharedPreferences? = null
+class LoginActivity : AppCompatActivity() {
+    private lateinit var  binding: ActivityLoginBinding
+    private lateinit var mUserViewModel: UserViewModel
 
     private val CHANNEL_ID_1 = "channel_notification_01"
     private val notification1 = 101
@@ -42,35 +37,53 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
         title = "Login"
-        supportActionBar?.hide()
+
+        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
 
         createNotificationChannel()
 
-        //SharedPreferences akun login terakhir kali
-        sharedPreferences = getSharedPreferences(myPreference, Context.MODE_PRIVATE)
-        if(sharedPreferences!!.contains(usernameKey)){
-            binding.inputLayoutUsername.editText?.setText(sharedPreferences!!.getString(usernameKey,""))
-        }
-        if(sharedPreferences!!.contains(passwordKey)){
-            binding.inputLayoutPassword.editText?.setText(sharedPreferences!!.getString(passwordKey,""))
-        }
+        //SharedPreferences akun login terakhir kali atau dari register
+        loadPreferences()
 
         //register button
         binding.registerNavBtn.setOnClickListener(View.OnClickListener {
-            val moveRegister = Intent(this@MainActivity, Register::class.java)
-            startActivity(moveRegister)
+            val moveRegisterActivity = Intent(this@LoginActivity, RegisterActivity::class.java)
+            startActivity(moveRegisterActivity)
         })
 
-        //checking bundle from register activity
-        if(intent.hasExtra("register")){
-            getBundle()
-        }
-
         //Validate
+        validation()
+        //Login
+        binding.btnLogin.setOnClickListener(View.OnClickListener {
+            val username: String = binding.inputLayoutUsername.editText?.text.toString()
+            val password: String = binding.inputLayoutPassword.editText?.text.toString()
+
+            if(!inputcheck()){
+                return@OnClickListener
+            }else{
+                Log.d("setLogin", "Start")
+                runBlocking{
+                    mUserViewModel.setLogin(username, password)
+                }
+                Log.d("setLogin", "End")
+                if(mUserViewModel.readLoginData?.value != null){
+                    savePreferences(username, password, mUserViewModel.readLoginData.value!!.id)
+                    sendNotification1(username)
+                    sendNotification2(username)
+                    val moveHome = Intent(this@LoginActivity, Home::class.java)
+                    startActivity(moveHome)
+                }else{
+                    Snackbar.make(view, "User not found!", Snackbar.LENGTH_LONG).show()
+                }
+            }
+            return@OnClickListener
+        })
+    }
+    private fun validation(){
         binding.inputLayoutUsername.editText?.doAfterTextChanged{
             if (binding.inputLayoutUsername.editText?.text.toString().isEmpty()) {
                 binding.inputLayoutUsername.setError("Required")
@@ -85,80 +98,49 @@ class MainActivity : AppCompatActivity() {
                 binding.inputLayoutPassword.setError(null)
             }
         }
-
-        //Login
-        binding.btnLogin.setOnClickListener(View.OnClickListener {
-            var loginCheck = true
-            val username: String = binding.inputLayoutUsername.editText?.text.toString()
-            val password: String = binding.inputLayoutPassword.editText?.text.toString()
-
-            if (username.isEmpty()) {
-                binding.inputLayoutUsername.setError("Required")
-                loginCheck = false
-            }
-
-            if (password.isEmpty()) {
-                binding.inputLayoutPassword.setError("Required")
-                loginCheck = false
-            }
-
-            if(!loginCheck)return@OnClickListener
-
-            CoroutineScope(Dispatchers.Main).launch {
-                val users = db.userDao().getUsernamePassword(username, password)
-                if (users != null){
-                    //insert to Preferences for next login
-                    val editor: SharedPreferences.Editor = sharedPreferences!!.edit()
-                    editor.putString(usernameKey,username)
-                    editor.putString(passwordKey, password)
-                    editor.apply()
-
-                    sendNotification1(username)
-                    sendNotification2(username)
-
-                    val moveHome = Intent(this@MainActivity, Home::class.java)
-                    val mBundleL = Bundle()
-                    mBundleL.putInt("user_id", users.id)
-                    moveHome.putExtra("login", mBundleL)
-                    startActivity(moveHome)
-                }else{
-                    Snackbar.make(layoutMain, "User not found!", Snackbar.LENGTH_LONG).show()
-                }
-            }
-            return@OnClickListener
-        })
     }
-
-    fun getBundle(){
-        mBundle = intent.getBundleExtra("register")!!
-        if(!mBundle.isEmpty){
-            binding.inputLayoutUsername.editText?.setText(mBundle.getString("username")!!)
-            binding.inputLayoutPassword.editText?.setText("")
+    private fun inputcheck(): Boolean{
+        return (
+            binding.inputLayoutUsername.error == null &&
+            binding.inputLayoutPassword.error == null
+            )
+    }
+    private fun loadPreferences(){
+        val spLogin: SharedPreferences = getSharedPreferences(loginPrefKey, Context.MODE_PRIVATE)
+        if(spLogin!!.contains(usernameKey)){
+            binding.inputLayoutUsername.editText?.setText(spLogin!!.getString(usernameKey,""))
+        }
+        if(spLogin!!.contains(passwordKey)){
+            binding.inputLayoutPassword.editText?.setText(spLogin!!.getString(passwordKey,""))
         }
     }
-
+    private fun savePreferences(username: String, password: String, id: Int){
+        val spLogin: SharedPreferences = getSharedPreferences(loginPrefKey, Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = spLogin!!.edit()
+        editor.putString(usernameKey,username)
+        editor.putString(passwordKey, password)
+        editor.putInt(idKey, id)
+        editor.apply()
+    }
     private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Notification Title"
-            val descriptionText = "Notification Description"
+        val name = "Notification Title"
+        val descriptionText = "Notification Description"
 
-            val channel1 = NotificationChannel(CHANNEL_ID_1,name,
-                NotificationManager.IMPORTANCE_DEFAULT).apply {
-                description = descriptionText
-            }
-
-            val channel2 = NotificationChannel(CHANNEL_ID_2,name,
-                NotificationManager.IMPORTANCE_DEFAULT).apply {
-                description = descriptionText
-            }
-
-            val notificationManager: NotificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel1)
-            notificationManager.createNotificationChannel(channel2)
+        val channel1 = NotificationChannel(CHANNEL_ID_1,name,
+            NotificationManager.IMPORTANCE_DEFAULT).apply {
+            description = descriptionText
         }
-    }
 
+        val channel2 = NotificationChannel(CHANNEL_ID_2,name,
+            NotificationManager.IMPORTANCE_DEFAULT).apply {
+            description = descriptionText
+        }
+
+        val notificationManager: NotificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel1)
+        notificationManager.createNotificationChannel(channel2)
+    }
     private fun sendNotification1(vUsername: String){
         val intent : Intent = Intent()
         val mBundleL = Bundle()
@@ -191,7 +173,6 @@ class MainActivity : AppCompatActivity() {
             notify(notification1, builder.build())
         }
     }
-
     private fun sendNotification2(vUsername: String){
         val intent : Intent = Intent()
         val mBundleL = Bundle()
