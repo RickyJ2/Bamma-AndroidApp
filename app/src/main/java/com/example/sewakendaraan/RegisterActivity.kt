@@ -26,6 +26,8 @@ import com.example.sewakendaraan.room.userRoom.User
 import com.example.sewakendaraan.viewModel.UserViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
+import com.innowisegroup.reelpicker.datetime.LocalDate
+import com.innowisegroup.reelpicker.picker.ReelPicker
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -149,20 +151,21 @@ class RegisterActivity : AppCompatActivity() {
         editor.apply()
     }
     private fun datePicker(){
-        val datePicker =
-            MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Select your birth of date")
-                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-                .build()
+        ReelPicker.createDateDialog(
+            initialLocalDate = LocalDate.now().plusMonths(11).minusYears(1)
+        )
+            .setOkClickCallback(object : ReelPicker.OkClickCallback<LocalDate> {
+                override fun onOkClick(value: LocalDate) {
+                    binding.inputLayoutDateOfBirth.editText?.setText("${value.year}/${value.month}/${value.day}")
+                }
+            })
+            .setCancelClickCallback(object : ReelPicker.CancelClickCallback{
+                override fun onCancelClick() {
+                    //do whatever you want
+                }
+            })
+            .showDialog(supportFragmentManager)
 
-        if(!datePicker.isVisible)
-            datePicker.show(supportFragmentManager, datePicker.tag)
-
-        datePicker.addOnPositiveButtonClickListener {
-            val myFormat = "MM/dd/yyyy" // mention the format you need
-            val sdf = SimpleDateFormat(myFormat, Locale.US)
-            binding.inputLayoutDateOfBirth.editText?.setText(sdf.format(datePicker.selection))
-        }
     }
     private fun createNotificationChannel() {
         val name = "Notification Title"

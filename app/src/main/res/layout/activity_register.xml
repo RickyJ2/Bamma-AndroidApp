@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ru.noties.scrollable.ScrollableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/register"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:backgroundTint="@color/white"
+    app:scrollable_autoMaxScroll="true"
+    app:scrollable_defaultCloseUp="true"
     tools:context=".RegisterActivity"
     tools:ignore="HardcodedText">
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -200,4 +202,4 @@
             </LinearLayout>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</ru.noties.scrollable.ScrollableLayout>
