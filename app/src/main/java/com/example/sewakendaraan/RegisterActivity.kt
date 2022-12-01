@@ -11,6 +11,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
@@ -87,6 +88,8 @@ class RegisterActivity : AppCompatActivity() {
         binding.inputLayoutEmail.editText?.doAfterTextChanged {
             if(binding.inputLayoutEmail.editText?.text.toString().isEmpty()){
                 binding.inputLayoutEmail.error = "Email must be filled with text"
+            }else if(!Patterns.EMAIL_ADDRESS.matcher(binding.inputLayoutEmail.editText?.text.toString()).matches()){
+                binding.inputLayoutEmail.error = "Email Invalid"
             }else{
                 binding.inputLayoutEmail.error = null
             }
@@ -116,6 +119,36 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
     private fun inputCheck(): Boolean{
+        if(binding.inputLayoutUsername.editText?.text.toString().isEmpty()){
+            binding.inputLayoutUsername.error = "Username must be filled with text"
+        }else{
+            binding.inputLayoutUsername.error = null
+        }
+        if(binding.inputLayoutEmail.editText?.text.toString().isEmpty()){
+            binding.inputLayoutEmail.error = "Email must be filled with text"
+        }else if(!Patterns.EMAIL_ADDRESS.matcher(binding.inputLayoutEmail.editText?.text.toString()).matches()){
+            binding.inputLayoutEmail.error = "Email Invalid"
+        }else{
+            binding.inputLayoutEmail.error = null
+        }
+        if(binding.inputLayoutPassword.editText?.text.toString().isEmpty()){
+            binding.inputLayoutPassword.error = "Password must be filled with text"
+        }else if(binding.inputLayoutPassword.editText?.text.toString().length < 8){
+            binding.inputLayoutPassword.error = "Password must at least 8 characters"
+        }else{
+            binding.inputLayoutPassword.error = null
+        }
+        if(binding.inputLayoutHandphone.editText?.text.toString().isEmpty()){
+            binding.inputLayoutHandphone.error = "Handphone must be filled"
+        }else{
+            binding.inputLayoutHandphone.error = null
+        }
+        if(binding.inputLayoutDateOfBirth.editText?.text.toString().isEmpty()){
+            binding.inputLayoutDateOfBirth.error = "Date of Birth must be filled"
+        }else{
+            binding.inputLayoutDateOfBirth.error = null
+        }
+
         return (
             binding.inputLayoutUsername.error == null &&
             binding.inputLayoutPassword.error == null &&
