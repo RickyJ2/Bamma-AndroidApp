@@ -11,6 +11,8 @@ import com.example.sewakendaraan.room.kendaraanRoom.Kendaraan
 import com.example.sewakendaraan.room.Constant
 import com.example.sewakendaraan.viewModel.DaftarMobilViewModel
 import kotlinx.android.synthetic.main.fragment_edit_kendaraan.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 
 class EditKendaraanFragment : Fragment() {
 

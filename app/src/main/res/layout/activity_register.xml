@@ -9,6 +9,7 @@
     tools:context=".RegisterActivity"
     tools:ignore="HardcodedText">
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/registerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
