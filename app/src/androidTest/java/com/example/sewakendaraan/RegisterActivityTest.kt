@@ -157,7 +157,7 @@ class RegisterActivityTest {
             )
         )
         textInputEditText9.perform(click())
-        onView(isRoot()).perform(waitFor(3000))
+        onView(isRoot()).perform(waitFor(2000))
 
         val materialButton3 = onView(
             allOf(
@@ -176,7 +176,7 @@ class RegisterActivityTest {
             )
         )
         materialButton3.perform(click())
-        onView(isRoot()).perform(waitFor(3000))
+        onView(isRoot()).perform(waitFor(2000))
 
         val materialButton4 = onView(
             allOf(
@@ -292,7 +292,7 @@ class RegisterActivityTest {
             }
         }
     }
-    private fun waitFor(delay: Long): ViewAction?{
+    private fun waitFor(delay: Long): ViewAction{
         return object : ViewAction {
             override fun getConstraints(): Matcher<View> {
                 return isRoot()
