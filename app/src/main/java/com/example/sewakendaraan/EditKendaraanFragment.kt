@@ -55,18 +55,26 @@ class EditKendaraanFragment : Fragment() {
     }
     private fun setupListener(){
         button_save.setOnClickListener {
-            mDaftarMobilViewModel.addDaftarMobil(
-                Kendaraan(0,edit_namaMobil.text.toString(),
-                    edit_Alamat.text.toString(), Integer.parseInt(edit_harga.text.toString()))
-            )
-            replaceFragment(HomeFragment())
+            validation()
+            if(validate()){
+                mDaftarMobilViewModel.addDaftarMobil(
+                    Kendaraan(0,edit_namaMobil.text.toString(),
+                        edit_Alamat.text.toString(), Integer.parseInt(edit_harga.text.toString()))
+                )
+                replaceFragment(HomeFragment())
+            }
         }
         button_update.setOnClickListener {
-            mDaftarMobilViewModel.updateDaftarMobil(
-                Kendaraan(kendaraanId,edit_namaMobil.text.toString(),
-                    edit_Alamat.text.toString(), Integer.parseInt(edit_harga.text.toString()))
-            )
-            replaceFragment(HomeFragment())
+            validation()
+            if(validate()) {
+                mDaftarMobilViewModel.updateDaftarMobil(
+                    Kendaraan(
+                        kendaraanId, edit_namaMobil.text.toString(),
+                        edit_Alamat.text.toString(), Integer.parseInt(edit_harga.text.toString())
+                    )
+                )
+                replaceFragment(HomeFragment())
+            }
         }
     }
     fun getKendaraan(){
@@ -76,6 +84,28 @@ class EditKendaraanFragment : Fragment() {
             edit_Alamat.setText(mDaftarMobilViewModel.daftarMobilSelected.value?.alamat)
             edit_harga.setText(mDaftarMobilViewModel.daftarMobilSelected.value?.harga.toString())
         })
+    }
+    private fun validate(): Boolean{
+        return (!edit_namaMobil.text.toString().isEmpty()) &&
+                (!edit_Alamat.text.toString().isEmpty()) &&
+                (!edit_harga.text.toString().isEmpty())
+    }
+    private fun validation(){
+        if(edit_namaMobil.text.toString().isEmpty()){
+            edit_namaMobil.error = "Tidak Boleh Kosong"
+        }else{
+            edit_namaMobil.error = null
+        }
+        if(edit_Alamat.text.toString().isEmpty()){
+            edit_Alamat.error = "Tidak Boleh Kosong"
+        }else{
+            edit_Alamat.error = null
+        }
+        if(edit_harga.text.toString().isEmpty()){
+            edit_harga.error = "Tidak Boleh Kosong"
+        }else{
+            edit_harga.error = null
+        }
     }
     private fun  replaceFragment(fragment: Fragment){
         val context = context as Home
