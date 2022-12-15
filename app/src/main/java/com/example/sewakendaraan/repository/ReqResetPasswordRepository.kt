@@ -10,7 +10,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RegisterRepository {
+class ReqResetPasswordRepository {
     private val _code = MutableLiveData<Int>()
     private val _msg = MutableLiveData<String>()
     private val _error = MutableLiveData<User>()
@@ -29,15 +29,9 @@ class RegisterRepository {
         _msg.value = ""
         _error.value = null
     }
-    fun setCode(code: Int){
-        _code.value = code
-    }
-    fun setMsg(msg: String){
-        _msg.value = msg
-    }
-    fun register(user: User){
+    fun reqResetPassword(username: String){
         resetVal()
-        RClient.instances.register(user.username, user.email, user.password, user.dateOfBirth, user.handphone).enqueue(
+        RClient.instances.reqResetPassword(username).enqueue(
             object: Callback<CreateResponse> {
                 override fun onResponse(call: Call<CreateResponse>, response: Response<CreateResponse>) {
                     if(response.isSuccessful){
@@ -51,10 +45,10 @@ class RegisterRepository {
                             _error.value = User(
                                 0,
                                 if(jsonError.has("username")) jsonError.getJSONArray("username")[0].toString() else "",
-                                if(jsonError.has("email")) jsonError.getJSONArray("email")[0].toString() else "",
-                                if(jsonError.has("password")) jsonError.getJSONArray("password")[0].toString() else "",
-                                if(jsonError.has("dateOfBirth")) jsonError.getJSONArray("dateOfBirth")[0].toString() else "",
-                                if(jsonError.has("handphone")) jsonError.getJSONArray("handphone")[0].toString() else ""
+                                "",
+                                "",
+                                "",
+                                ""
                             )
                         }else {
                             _msg.value = jsonObj.getString("message")

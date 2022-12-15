@@ -1,5 +1,6 @@
 package com.example.sewakendaraan
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -9,27 +10,22 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.widget.doAfterTextChanged
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.sewakendaraan.api.RClient
 import com.example.sewakendaraan.databinding.ActivityLoginBinding
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.idKey
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.loginPrefKey
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.passwordKey
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.usernameKey
 import com.example.sewakendaraan.notification.NotificationReceiver
-import com.example.sewakendaraan.viewModel.UserViewModel
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.runBlocking
+import com.example.sewakendaraan.viewModel.LoginViewModel
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var  binding: ActivityLoginBinding
-    private lateinit var mUserViewModel: UserViewModel
-
+    private lateinit var mLoginViewModel: LoginViewModel
     private val CHANNEL_ID_1 = "channel_notification_01"
     private val notification1 = 101
     private val CHANNEL_ID_2 = "channel_notification_02"
@@ -37,90 +33,74 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(R.layout.activity_login)
         title = "Login"
 
-        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+        //databinding
+        mLoginViewModel = ViewModelProvider(this)[LoginViewModel::class.java]
+        DataBindingUtil.setContentView<ActivityLoginBinding>(
+            this, R.layout.activity_login
+        ).apply{
+            this.lifecycleOwner = this@LoginActivity
+            this.viewmodel = mLoginViewModel
+        }
 
         createNotificationChannel()
 
         //SharedPreferences akun login terakhir kali atau dari register
         loadPreferences()
-
-        //register button
-        binding.registerNavBtn.setOnClickListener(View.OnClickListener {
+        //Observe Msg
+        mLoginViewModel.msg.observe(this@LoginActivity){
+            if(mLoginViewModel.msg.value != ""){
+                Toast.makeText(this@LoginActivity, mLoginViewModel.msg.value.toString(), Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    fun moveRegister(view: View){
+        if(view == findViewById(R.id.registerNavBtn)){
             val moveRegisterActivity = Intent(this@LoginActivity, RegisterActivity::class.java)
             startActivity(moveRegisterActivity)
-        })
-
-        //Validate
-        validation()
-        //Login
-        binding.btnLogin.setOnClickListener(View.OnClickListener {
-            val username: String = binding.inputLayoutUsername.editText?.text.toString()
-            val password: String = binding.inputLayoutPassword.editText?.text.toString()
-
-            if(!inputcheck()){
-                return@OnClickListener
-            }else{
-                Log.d("Login", "Start")
-                mUserViewModel.setLogin(username, password)
-                mUserViewModel.loadState.observe(this@LoginActivity) {
-                    if(it == "SUCCESS"){
-                        if(mUserViewModel.readLoginData?.value != null){
-                            savePreferences(username, password, mUserViewModel.readLoginData.value!!.id)
-                            sendNotification1(username)
-                            sendNotification2(username)
-                            val moveHome = Intent(this@LoginActivity, Home::class.java)
-                            startActivity(moveHome)
-                        }else{
-                            Snackbar.make(view, "User not found!", Snackbar.LENGTH_LONG).show()
-                        }
-                        Log.d("Login", "Done")
-                    }else{
-                        Log.d("Login", it)
-                    }
+        }
+    }
+    fun moveReqResetPassword(view: View){
+        if(view == findViewById(R.id.forgotPasswordBtn)){
+            val moveReqResetPasswordActivity = Intent(this@LoginActivity, ReqResetPasswordActivity::class.java)
+            startActivity(moveReqResetPasswordActivity)
+        }
+    }
+    fun login(view: View){
+        if(view == findViewById(R.id.btnLogin)){
+            mLoginViewModel.setProgressBar(View.VISIBLE)
+            mLoginViewModel.login()
+            mLoginViewModel.code.observe(this@LoginActivity){
+                if(it == 200){
+                    savePreferences(
+                        mLoginViewModel.loginForm.value!!.username,
+                        mLoginViewModel.loginForm.value!!.password,
+                        mLoginViewModel.readLoginData.value!!.id)
+                    sendNotification1(mLoginViewModel.loginForm.value!!.username)
+                    sendNotification2(mLoginViewModel.loginForm.value!!.username)
+                    val moveHome = Intent(this@LoginActivity, Home::class.java)
+                    startActivity(moveHome)
+                }
+                if(it != null){
+                    mLoginViewModel.setProgressBar(View.INVISIBLE)
                 }
             }
-            return@OnClickListener
-        })
-    }
-    private fun validation(){
-        binding.inputLayoutUsername.editText?.doAfterTextChanged{
-            if (binding.inputLayoutUsername.editText?.text.toString().isEmpty()) {
-                binding.inputLayoutUsername.setError("Required")
-            }else{
-                binding.inputLayoutUsername.setError(null)
-            }
         }
-        binding.inputLayoutPassword.editText?.doAfterTextChanged{
-            if (binding.inputLayoutPassword.editText?.text.toString().isEmpty()) {
-                binding.inputLayoutPassword.setError("Required")
-            }else{
-                binding.inputLayoutPassword.setError(null)
-            }
-        }
-    }
-    private fun inputcheck(): Boolean{
-        return (
-            binding.inputLayoutUsername.error == null &&
-            binding.inputLayoutPassword.error == null
-            )
     }
     private fun loadPreferences(){
         val spLogin: SharedPreferences = getSharedPreferences(loginPrefKey, Context.MODE_PRIVATE)
-        if(spLogin!!.contains(usernameKey)){
-            binding.inputLayoutUsername.editText?.setText(spLogin!!.getString(usernameKey,""))
+        if(spLogin.contains(usernameKey)){
+            spLogin.getString(usernameKey, "")?.let { mLoginViewModel.setUsernameForm(it) }
         }
-        if(spLogin!!.contains(passwordKey)){
-            binding.inputLayoutPassword.editText?.setText(spLogin!!.getString(passwordKey,""))
+        if(spLogin.contains(passwordKey)){
+            spLogin.getString(passwordKey,"")?.let { mLoginViewModel.setPasswordForm(it) }
         }
     }
     private fun savePreferences(username: String, password: String, id: Int){
         val spLogin: SharedPreferences = getSharedPreferences(loginPrefKey, Context.MODE_PRIVATE)
-        val editor: SharedPreferences.Editor = spLogin!!.edit()
+        val editor: SharedPreferences.Editor = spLogin.edit()
         editor.putString(usernameKey,username)
         editor.putString(passwordKey, password)
         editor.putInt(idKey, id)
@@ -145,14 +125,15 @@ class LoginActivity : AppCompatActivity() {
         notificationManager.createNotificationChannel(channel1)
         notificationManager.createNotificationChannel(channel2)
     }
+    @SuppressLint("UnspecifiedImmutableFlag")
     private fun sendNotification1(vUsername: String){
-        val intent : Intent = Intent()
+        val intent = Intent()
         val mBundleL = Bundle()
         intent.putExtra("login", mBundleL)
 
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
 
-        val broadcastIntent : Intent = Intent(this, NotificationReceiver::class.java)
+        val broadcastIntent = Intent(this, NotificationReceiver::class.java)
         broadcastIntent.putExtra("toastMessage", vUsername)
         val actionIntent = PendingIntent.getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
@@ -177,14 +158,15 @@ class LoginActivity : AppCompatActivity() {
             notify(notification1, builder.build())
         }
     }
+    @SuppressLint("UnspecifiedImmutableFlag")
     private fun sendNotification2(vUsername: String){
-        val intent : Intent = Intent()
+        val intent = Intent()
         val mBundleL = Bundle()
         intent.putExtra("login", mBundleL)
 
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
 
-        val broadcastIntent : Intent = Intent(this, NotificationReceiver::class.java)
+        val broadcastIntent = Intent(this, NotificationReceiver::class.java)
         broadcastIntent.putExtra("toastMessage", vUsername)
         val actionIntent = PendingIntent.getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 

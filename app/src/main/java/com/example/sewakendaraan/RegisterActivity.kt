@@ -39,6 +39,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register)
         title = "Register"
 
+        //databinding
         mRegisterViewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
         DataBindingUtil.setContentView<ActivityRegisterBinding>(
             this, R.layout.activity_register

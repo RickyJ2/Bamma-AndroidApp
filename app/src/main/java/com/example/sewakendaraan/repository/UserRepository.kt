@@ -89,7 +89,6 @@ class UserRepository {
             override fun onResponse(call: Call<ResponseDataUser>, response: Response<ResponseDataUser>) {
                 if(response.isSuccessful){
                     response.body().also { _readLoginData.value = it?.data
-                        Log.d("Login", it?.data.toString())
                         _loadState.value = "SUCCESS"
                     }
                 }else{
