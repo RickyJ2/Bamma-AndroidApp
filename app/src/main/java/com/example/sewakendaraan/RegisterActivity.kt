@@ -11,7 +11,6 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
@@ -59,33 +58,37 @@ class RegisterActivity : AppCompatActivity() {
         }
         //Observe Msg
         mRegisterViewModel.msg.observe(this@RegisterActivity){
-            Log.d("Register", "msg: " + mRegisterViewModel.msg.value.toString())
             if(mRegisterViewModel.msg.value != ""){
                 Toast.makeText(this@RegisterActivity, mRegisterViewModel.msg.value.toString(), Toast.LENGTH_SHORT).show()
             }
         }
     }
+    //onClick loginNavBtn
     fun moveLogin(view : View){
         if(view == findViewById(R.id.loginNavBtn)){
             val moveLogin = Intent(this@RegisterActivity, LoginActivity::class.java)
             startActivity(moveLogin)
         }
     }
+    //onClick RegisterBtn
     fun register(view: View){
         if(view == findViewById(R.id.registerBtn)){
-            Log.d("Register", "Start Loading")
+            mRegisterViewModel.setProgressBar(View.VISIBLE)
             mRegisterViewModel.register()
             mRegisterViewModel.code.observe(this@RegisterActivity) {
                 if (it == 200 || it == 405) {
                     val moveLogin = Intent(this@RegisterActivity, LoginActivity::class.java)
-                    sendNotification(mRegisterViewModel.registerForm.value?.username.toString())
+                    sendNotification(mRegisterViewModel.registerForm.value?.username.toString(), mRegisterViewModel.msg.value.toString())
                     savePreferences(mRegisterViewModel.registerForm.value?.username.toString())
                     startActivity(moveLogin)
-                    Log.d("Register", "Done")
+                }
+                if(it != null){
+                    mRegisterViewModel.setProgressBar(View.INVISIBLE)
                 }
             }
         }
     }
+    //savePreference for Login Page
     private fun savePreferences(username: String){
         val spLogin: SharedPreferences = getSharedPreferences(loginPrefKey, Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = spLogin.edit()
@@ -93,6 +96,7 @@ class RegisterActivity : AppCompatActivity() {
         editor.putString(passwordKey, "")
         editor.apply()
     }
+    //datePicker
     fun datePicker(view: View){
         if(view == findViewById(R.id.inputLayoutDateOfBirth)){
             val datePicker =
@@ -125,7 +129,7 @@ class RegisterActivity : AppCompatActivity() {
         notificationManager.createNotificationChannel(channel)
     }
     @SuppressLint("UnspecifiedImmutableFlag")
-    private fun sendNotification(vUsername: String){
+    private fun sendNotification(vUsername: String, msg: String){
         val intent = Intent()
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
 
@@ -136,8 +140,8 @@ class RegisterActivity : AppCompatActivity() {
 
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_baseline_check_circle_24)
-            .setContentTitle(vUsername)
-            .setContentText("Berhasil Register")
+            .setContentTitle("Welcome, $vUsername!")
+            .setContentText(msg)
             .setLargeIcon(picture)
             .setStyle(
                 NotificationCompat.BigPictureStyle()

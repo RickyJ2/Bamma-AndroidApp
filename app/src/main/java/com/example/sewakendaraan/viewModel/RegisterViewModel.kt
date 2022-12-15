@@ -1,7 +1,7 @@
 package com.example.sewakendaraan.viewModel
 
 import android.app.Application
-import android.util.Log
+import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,16 +19,17 @@ class RegisterViewModel(application: Application): AndroidViewModel(application)
 
     val registerFormMutableLiveData = MutableLiveData<User>()
     val toogleBtnMutableLiveData = MutableLiveData<Boolean>()
+    val progressBarMutableLiveData = MutableLiveData<Int>()
     val registerForm: LiveData<User>
         get() = registerFormMutableLiveData
 
     init{
         registerFormMutableLiveData.value = User(0,"","", "","","")
         toogleBtnMutableLiveData.value = false
+        progressBarMutableLiveData.value = View.INVISIBLE
     }
 
     fun register(){
-        Log.d("Register", toogleBtnMutableLiveData.value.toString())
         if(!toogleBtnMutableLiveData.value!!){
             repository.setCode(0)
             repository.setMsg("You must check the agreement")
@@ -44,5 +45,8 @@ class RegisterViewModel(application: Application): AndroidViewModel(application)
             registerForm.value!!.password,
             date,
             registerForm.value!!.handphone)
+    }
+    fun setProgressBar(isLoading: Int){
+        progressBarMutableLiveData.value = isLoading
     }
 }

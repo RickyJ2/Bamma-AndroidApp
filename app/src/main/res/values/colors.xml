@@ -11,4 +11,5 @@
     <color name="BlackGray_Bamma">#2C2C2C</color>
     <color name="GrayHelperText_Bamma">#757575</color>
     <color name="Red_Bamma">#FA7070</color>
+    <color name="Transparant">#E6FFFFFF</color>
 </resources>

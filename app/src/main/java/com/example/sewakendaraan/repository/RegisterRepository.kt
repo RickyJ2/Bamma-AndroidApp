@@ -41,8 +41,8 @@ class RegisterRepository {
             object: Callback<CreateResponse> {
                 override fun onResponse(call: Call<CreateResponse>, response: Response<CreateResponse>) {
                     if(response.isSuccessful){
-                        _code.value = response.code()
                         _msg.value = response.body()?.msg.toString()
+                        _code.value = response.code()
                     }else{
                         val jsonObj = JSONObject(response.errorBody()!!.charStream().readText())
                         _code.value = response.code()
