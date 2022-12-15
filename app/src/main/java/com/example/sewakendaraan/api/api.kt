@@ -14,8 +14,8 @@ interface api {
         @Field("password") password: String?):
             Call<ResponseDataUser>
     @FormUrlEncoded
-    @POST("user/addUser")
-    fun addUser(
+    @POST("user/register")
+    fun register(
         @Field("username") username:String?,
         @Field("email") email:String?,
         @Field("password") password:String?,
@@ -32,4 +32,14 @@ interface api {
         @Field("dateOfBirth") dateofbirth:String?,
         @Field("handphone") handphone:String?,
     ):Call<ResponseDataUser>
+    @FormUrlEncoded
+    @POST("user/reqResetPassword")
+    fun reqResetPassword(
+        @Field("username") username:String?
+    ):Call<CreateResponse>
+    @FormUrlEncoded
+    @POST("user/updateProfile/{id}")
+    fun updateProfile(
+        @Field("image") image:String?
+    ):Call<CreateResponse>
 }

@@ -1,203 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/register"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:backgroundTint="@color/white"
     tools:context=".RegisterActivity"
     tools:ignore="HardcodedText">
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.example.sewakendaraan.viewModel.RegisterViewModel" />
+    </data>
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/registerJudul"
-            style="@style/TextAppearance.MaterialComponents.Headline4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="30dp"
-            android:fontFamily="@font/inter_black"
-            android:text="Register"
-            android:textColor="@color/BlackGray_Bamma"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:id="@+id/registerCaption"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="You must at least 18 years old to register"
-            android:fontFamily="@font/inter_light"
-            android:textColor="@color/BlackGray_Bamma"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/registerJudul"
-            app:layout_constraintStart_toStartOf="@+id/registerJudul" />
-
-        <LinearLayout
-            android:id="@+id/registerForm"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/register"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            app:layout_constraintTop_toBottomOf="@+id/registerCaption"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:orientation="vertical">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayoutUsername"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColorHint="@color/GrayHelperText_Bamma"
-                android:hint="Username"
-                app:errorEnabled="true"
-                app:helperTextEnabled="false"
-                app:startIconDrawable="@drawable/ic_baseline_person_24">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayoutEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:hint="Email"
-                android:textColorHint="@color/GrayHelperText_Bamma"
-                app:errorEnabled="true"
-                app:startIconDrawable="@drawable/ic_baseline_email_24"
-                android:layout_marginBottom="0dp">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter"
-                    android:inputType="text"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayoutPassword"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:textColorHint="@color/GrayHelperText_Bamma"
-                android:hint="Password"
-                app:errorEnabled="true"
-                app:helperText="Password should at least 8 character"
-                app:passwordToggleEnabled="true"
-                app:startIconDrawable="@drawable/ic_lock_24">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayoutHandphone"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColorHint="@color/GrayHelperText_Bamma"
-                android:hint="Handphone"
-                app:errorEnabled="true"
-                app:startIconDrawable="@drawable/ic_baseline_call_24">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter"
-                    android:inputType="phone" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayoutDateOfBirth"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:textColorHint="@color/GrayHelperText_Bamma"
-                android:hint="Date of Birth"
-                app:errorEnabled="true"
-                app:startIconDrawable="@drawable/ic_baseline_calendar_today_24"
-                android:layout_marginBottom="0dp">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textInputDateOfBirth"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter"
-                    android:inputType="date"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <LinearLayout
-                android:id="@+id/checkTerm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/registerForm"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                android:orientation="horizontal">
-
-                <ToggleButton
-                    android:id="@+id/checkToggle"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/check_toggle"
-                    android:textOff=""
-                    android:textOn="" />
-
-                <TextView
-                    android:id="@+id/checkText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="8dp"
-                    android:fontFamily="@font/inter"
-                    android:text="@string/agreement" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/registerBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="16dp"
-                android:paddingTop="16dp"
-                app:cornerRadius="10dp"
-                android:text="Sign Up"
-                android:fontFamily="@font/inter_bold"
-                android:backgroundTint="@color/Purple_Bamma"
-                style="@style/Widget.MaterialComponents.Button" />
-            <LinearLayout
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/registerJudul"
+                style="@style/TextAppearance.MaterialComponents.Headline4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="30dp"
+                android:fontFamily="@font/inter_black"
+                android:text="Register"
+                android:textColor="@color/BlackGray_Bamma"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/registerCaption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You must at least 18 years old to register"
+                android:fontFamily="@font/inter_light"
+                android:textColor="@color/BlackGray_Bamma"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/registerJudul"
+                app:layout_constraintStart_toStartOf="@+id/registerJudul" />
+
+            <LinearLayout
+                android:id="@+id/registerForm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintTop_toBottomOf="@+id/registerCaption"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputLayoutUsername"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter"
-                    android:text="Already have Account?"/>
+                    android:textColorHint="@color/GrayHelperText_Bamma"
+                    android:hint="Username"
+                    app:errorEnabled="true"
+                    app:error="@{viewmodel.error.username}"
+                    app:helperTextEnabled="false"
+                    app:startIconDrawable="@drawable/ic_baseline_person_24">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter"
+                        android:inputType="text"
+                        android:text="@={viewmodel.registerFormMutableLiveData.username}"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputLayoutEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:hint="Email"
+                    android:textColorHint="@color/GrayHelperText_Bamma"
+                    app:errorEnabled="true"
+                    app:error="@{viewmodel.error.email}"
+                    app:startIconDrawable="@drawable/ic_baseline_email_24"
+                    android:layout_marginBottom="0dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter"
+                        android:inputType="text"
+                        android:text="@={viewmodel.registerFormMutableLiveData.email}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputLayoutPassword"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:textColorHint="@color/GrayHelperText_Bamma"
+                    android:hint="Password"
+                    app:errorEnabled="true"
+                    app:error="@{viewmodel.error.password}"
+                    app:helperText="Password should at least 8 character"
+                    app:passwordToggleEnabled="true"
+                    app:startIconDrawable="@drawable/ic_lock_24">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter"
+                        android:inputType="text"
+                        android:text="@={viewmodel.registerFormMutableLiveData.password}"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputLayoutHandphone"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/GrayHelperText_Bamma"
+                    app:error="@{viewmodel.error.handphone}"
+                    android:hint="Handphone"
+                    app:errorEnabled="true"
+                    app:startIconDrawable="@drawable/ic_baseline_call_24">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter"
+                        android:inputType="phone"
+                        android:text="@={viewmodel.registerFormMutableLiveData.handphone}"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputLayoutDateOfBirth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:textColorHint="@color/GrayHelperText_Bamma"
+                    android:hint="Date of Birth"
+                    app:error="@{viewmodel.error.dateOfBirth}"
+                    app:errorEnabled="true"
+                    app:startIconDrawable="@drawable/ic_baseline_calendar_today_24"
+                    android:layout_marginBottom="0dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/textInputDateOfBirth"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter"
+                        android:inputType="date"
+                        android:text="@={viewmodel.registerFormMutableLiveData.dateOfBirth}"
+                        android:onClick="datePicker" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:id="@+id/checkTerm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/registerForm"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:orientation="horizontal">
+
+                    <ToggleButton
+                        android:id="@+id/checkToggle"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/check_toggle"
+                        android:textOff=""
+                        android:textOn=""
+                        android:checked="@={viewmodel.toogleBtnMutableLiveData}"/>
+
+                    <TextView
+                        android:id="@+id/checkText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        android:fontFamily="@font/inter"
+                        android:text="@string/agreement" />
+                </LinearLayout>
 
                 <Button
-                    android:id="@+id/loginNavBtn"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:id="@+id/registerBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="16dp"
+                    android:paddingTop="16dp"
+                    app:cornerRadius="10dp"
+                    android:text="Sign Up"
+                    android:fontFamily="@font/inter_bold"
+                    android:backgroundTint="@color/Purple_Bamma"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:onClick="register"/>
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter_semibold"
-                    android:text="@string/login"
-                    android:textColor="@color/Purple_Bamma"
-                    android:textAllCaps="false"/>
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter"
+                        android:text="Already have Account?"/>
+
+                    <Button
+                        android:id="@+id/loginNavBtn"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_semibold"
+                        android:text="@string/login"
+                        android:textColor="@color/Purple_Bamma"
+                        android:textAllCaps="false"
+                        android:onClick="moveLogin"/>
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

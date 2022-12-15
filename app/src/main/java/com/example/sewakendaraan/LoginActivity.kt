@@ -65,19 +65,23 @@ class LoginActivity : AppCompatActivity() {
             if(!inputcheck()){
                 return@OnClickListener
             }else{
-                Log.d("setLogin", "Start")
-                runBlocking{
-                    mUserViewModel.setLogin(username, password)
-                }
-                Log.d("setLogin", "End")
-                if(mUserViewModel.readLoginData?.value != null){
-                    savePreferences(username, password, mUserViewModel.readLoginData.value!!.id)
-                    sendNotification1(username)
-                    sendNotification2(username)
-                    val moveHome = Intent(this@LoginActivity, Home::class.java)
-                    startActivity(moveHome)
-                }else{
-                    Snackbar.make(view, "User not found!", Snackbar.LENGTH_LONG).show()
+                Log.d("Login", "Start")
+                mUserViewModel.setLogin(username, password)
+                mUserViewModel.loadState.observe(this@LoginActivity) {
+                    if(it == "SUCCESS"){
+                        if(mUserViewModel.readLoginData?.value != null){
+                            savePreferences(username, password, mUserViewModel.readLoginData.value!!.id)
+                            sendNotification1(username)
+                            sendNotification2(username)
+                            val moveHome = Intent(this@LoginActivity, Home::class.java)
+                            startActivity(moveHome)
+                        }else{
+                            Snackbar.make(view, "User not found!", Snackbar.LENGTH_LONG).show()
+                        }
+                        Log.d("Login", "Done")
+                    }else{
+                        Log.d("Login", it)
+                    }
                 }
             }
             return@OnClickListener

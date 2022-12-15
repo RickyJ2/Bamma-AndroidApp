@@ -14,35 +14,44 @@ import retrofit2.Response
 
 class UserRepository {
     private val _readLoginData = MutableLiveData<User>()
+    private val _loadState = MutableLiveData<String>()
     val readLoginData: LiveData<User>
         get() = _readLoginData
+    val loadState: LiveData<String>
+        get() = _loadState
 
     init {
         _readLoginData.value = null
+        _loadState.value = ""
     }
     fun setReadLoginData(user: User?){
         _readLoginData.value = user
     }
+    fun setLoadState(state: String){
+        _loadState.value = state
+    }
     fun addUser(user: User){
-        //userDao.addUser(user)
-        RClient.instances.addUser(user.username, user.email, user.password, user.dateOfBirth, user.handphone).enqueue(
+        RClient.instances.register(user.username, user.email, user.password, user.dateOfBirth, user.handphone).enqueue(
             object: Callback<CreateResponse> {
                 override fun onResponse(call: Call<CreateResponse>, response: Response<CreateResponse>) {
                     if(response.isSuccessful){
                         Log.d("addUser", response.body()?.msg.toString())
+
+                        _loadState.value = "SUCCESS"
                     }else{
                         val jsonObj = JSONObject(response.errorBody()!!.charStream().readText())
                         Log.d("addUser", jsonObj.getString("message"))
+                        _loadState.value = "FAILED"
                     }
                 }
 
                 override fun onFailure(call: Call<CreateResponse>, t: Throwable) {
                     Log.d("addUser",  t.toString())
+                    _loadState.value = "FAILED"
                 }
             })
     }
     fun updateUser(user: User){
-        //userDao.updateUser(user)
         RClient.instances.updateUser(user.id, user.username, user.email, user.password, user.dateOfBirth, user.handphone).enqueue(
             object: Callback<ResponseDataUser> {
                 override fun onResponse(call: Call<ResponseDataUser>, response: Response<ResponseDataUser>) {
@@ -59,7 +68,6 @@ class UserRepository {
         })
     }
     fun userData(userId: Int){
-        //return userDao.userData(userId)
         RClient.instances.userData(userId).enqueue(object:
             Callback<ResponseDataUser> {
             override fun onResponse(call: Call<ResponseDataUser>, response: Response<ResponseDataUser>) {
@@ -76,19 +84,22 @@ class UserRepository {
         })
     }
     fun setLogin(username: String, password: String){
-        //return userDao.login(username, password)
         RClient.instances.login(username, password).enqueue(object:
             Callback<ResponseDataUser> {
             override fun onResponse(call: Call<ResponseDataUser>, response: Response<ResponseDataUser>) {
                 if(response.isSuccessful){
                     response.body().also { _readLoginData.value = it?.data
-                        Log.d("setLogin", it?.data.toString())
+                        Log.d("Login", it?.data.toString())
+                        _loadState.value = "SUCCESS"
                     }
+                }else{
+                    _loadState.value = "FAILED"
                 }
             }
             override fun onFailure(call: Call<ResponseDataUser>, t: Throwable) {
                 null.also { _readLoginData.value = it }
-                Log.d("setLogin", t.toString())
+                Log.d("Login", t.toString())
+                _loadState.value = "FAILED"
             }
         })
     }

@@ -1,5 +1,6 @@
 package com.example.sewakendaraan
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -15,153 +16,99 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.widget.doAfterTextChanged
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.sewakendaraan.databinding.ActivityRegisterBinding
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.loginPrefKey
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.passwordKey
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.usernameKey
 import com.example.sewakendaraan.notification.NotificationReceiver
-import com.example.sewakendaraan.room.userRoom.User
-import com.example.sewakendaraan.viewModel.UserViewModel
+import com.example.sewakendaraan.viewModel.RegisterViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputLayout
 import java.text.SimpleDateFormat
 import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
-    private lateinit var  binding: ActivityRegisterBinding
-    private lateinit var mUserViewModel: UserViewModel
+    private lateinit var mRegisterViewModel: RegisterViewModel
     private val CHANNEL_ID = "channel_notification_register"
     private val notification = 101
+    private lateinit var inputLayoutDateOfBirth: TextInputLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRegisterBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(R.layout.activity_register)
         title = "Register"
 
-        mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        mRegisterViewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
+        DataBindingUtil.setContentView<ActivityRegisterBinding>(
+            this, R.layout.activity_register
+        ).apply{
+            this.lifecycleOwner = this@RegisterActivity
+            this.viewmodel = mRegisterViewModel
+        }
 
         createNotificationChannel()
+
         //datepicker
-        binding.inputLayoutDateOfBirth.editText?.setOnFocusChangeListener { _, hasFocus ->
+        inputLayoutDateOfBirth = findViewById(R.id.inputLayoutDateOfBirth)
+        inputLayoutDateOfBirth.editText?.setOnFocusChangeListener { _, hasFocus ->
             if(hasFocus){
-                datePicker()
+                datePicker(inputLayoutDateOfBirth)
             }
         }
-        binding.inputLayoutDateOfBirth.editText?.setOnClickListener{
-            datePicker()
+        //Observe Msg
+        mRegisterViewModel.msg.observe(this@RegisterActivity){
+            Log.d("Register", "msg: " + mRegisterViewModel.msg.value.toString())
+            if(mRegisterViewModel.msg.value != ""){
+                Toast.makeText(this@RegisterActivity, mRegisterViewModel.msg.value.toString(), Toast.LENGTH_SHORT).show()
+            }
         }
-        //Move to Login Activity
-        binding.loginNavBtn.setOnClickListener{
+    }
+    fun moveLogin(view : View){
+        if(view == findViewById(R.id.loginNavBtn)){
             val moveLogin = Intent(this@RegisterActivity, LoginActivity::class.java)
             startActivity(moveLogin)
         }
-        //validationWhileInputing
-        validation()
-        //Register
-        binding.registerBtn.setOnClickListener(View.OnClickListener {
-            if(!binding.checkToggle.isChecked){
-                Snackbar.make(binding.register, "You must check the agreement", Snackbar.LENGTH_LONG).show()
-            }else if(!inputCheck()){
-                return@OnClickListener
-            }else{
-                registerUser()
-                val moveLogin = Intent(this@RegisterActivity, LoginActivity::class.java)
-                sendNotification(binding.inputLayoutUsername.editText?.text.toString())
-                savePreferences(binding.inputLayoutUsername.editText?.text.toString())
-                startActivity(moveLogin)
-            }
-        })
     }
-    private fun validation(){
-        binding.inputLayoutUsername.editText?.doAfterTextChanged {
-            if(binding.inputLayoutUsername.editText?.text.toString().isEmpty()){
-                binding.inputLayoutUsername.error = "Username must be filled with text"
-            }else{
-                binding.inputLayoutUsername.error = null
+    fun register(view: View){
+        if(view == findViewById(R.id.registerBtn)){
+            Log.d("Register", "Start Loading")
+            mRegisterViewModel.register()
+            mRegisterViewModel.code.observe(this@RegisterActivity) {
+                if (it == 200 || it == 405) {
+                    val moveLogin = Intent(this@RegisterActivity, LoginActivity::class.java)
+                    sendNotification(mRegisterViewModel.registerForm.value?.username.toString())
+                    savePreferences(mRegisterViewModel.registerForm.value?.username.toString())
+                    startActivity(moveLogin)
+                    Log.d("Register", "Done")
+                }
             }
         }
-        binding.inputLayoutEmail.editText?.doAfterTextChanged {
-            if(binding.inputLayoutEmail.editText?.text.toString().isEmpty()){
-                binding.inputLayoutEmail.error = "Email must be filled with text"
-            }else{
-                binding.inputLayoutEmail.error = null
-            }
-        }
-        binding.inputLayoutPassword.editText?.doAfterTextChanged {
-            if(binding.inputLayoutPassword.editText?.text.toString().isEmpty()){
-                binding.inputLayoutPassword.error = "Password must be filled with text"
-            }else if(binding.inputLayoutPassword.editText?.text.toString().length < 8){
-                binding.inputLayoutPassword.error = "Password must at least 8 characters"
-            }else{
-                binding.inputLayoutPassword.error = null
-            }
-        }
-        binding.inputLayoutHandphone.editText?.doAfterTextChanged{
-            if(binding.inputLayoutHandphone.editText?.text.toString().isEmpty()){
-                binding.inputLayoutHandphone.error = "Handphone must be filled"
-            }else{
-                binding.inputLayoutHandphone.error = null
-            }
-        }
-        binding.inputLayoutDateOfBirth.editText?.doAfterTextChanged{
-            if(binding.inputLayoutDateOfBirth.editText?.text.toString().isEmpty()){
-                binding.inputLayoutDateOfBirth.error = "Date of Birth must be filled"
-            }else{
-                binding.inputLayoutDateOfBirth.error = null
-            }
-        }
-    }
-    private fun inputCheck(): Boolean{
-        return (
-            binding.inputLayoutUsername.error == null &&
-            binding.inputLayoutPassword.error == null &&
-            binding.inputLayoutEmail.error == null &&
-            binding.inputLayoutHandphone.error == null &&
-            binding.inputLayoutDateOfBirth.error == null
-            )
-    }
-    private fun registerUser(){
-        val username: String = binding.inputLayoutUsername.editText?.text.toString()
-        val email: String = binding.inputLayoutEmail.editText?.text.toString()
-        val password: String = binding.inputLayoutPassword.editText?.text.toString()
-        val handphone: String = binding.inputLayoutHandphone.editText?.text.toString()
-        val dateOfBirth: String = binding.inputLayoutDateOfBirth.editText?.text.toString()
-
-        val user = User(
-            0,
-            username,
-            email,
-            password,
-            dateOfBirth,
-            handphone
-        )
-        mUserViewModel.addUser(user)
     }
     private fun savePreferences(username: String){
         val spLogin: SharedPreferences = getSharedPreferences(loginPrefKey, Context.MODE_PRIVATE)
-        val editor: SharedPreferences.Editor = spLogin!!.edit()
+        val editor: SharedPreferences.Editor = spLogin.edit()
         editor.putString(usernameKey,username)
         editor.putString(passwordKey, "")
         editor.apply()
     }
-    private fun datePicker(){
-        val datePicker =
-            MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Select your birth of date")
-                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
-                .build()
+    fun datePicker(view: View){
+        if(view == findViewById(R.id.inputLayoutDateOfBirth)){
+            val datePicker =
+                MaterialDatePicker.Builder.datePicker()
+                    .setTitleText("Select your birth of date")
+                    .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                    .build()
 
-        if(!datePicker.isVisible)
-            datePicker.show(supportFragmentManager, datePicker.tag)
+            if(!datePicker.isVisible)
+                datePicker.show(supportFragmentManager, datePicker.tag)
 
-        datePicker.addOnPositiveButtonClickListener {
-            val myFormat = "MM/dd/yyyy" // mention the format you need
-            val sdf = SimpleDateFormat(myFormat, Locale.US)
-            binding.inputLayoutDateOfBirth.editText?.setText(sdf.format(datePicker.selection))
+            datePicker.addOnPositiveButtonClickListener {
+                val myFormat = "MM/dd/yyyy" // mention the format you need
+                val sdf = SimpleDateFormat(myFormat, Locale.US)
+                mRegisterViewModel.setDatePicker(sdf.format(datePicker.selection))
+            }
         }
     }
     private fun createNotificationChannel() {
@@ -177,11 +124,12 @@ class RegisterActivity : AppCompatActivity() {
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
     }
+    @SuppressLint("UnspecifiedImmutableFlag")
     private fun sendNotification(vUsername: String){
         val intent = Intent()
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
 
-        val broadcastIntent : Intent = Intent(this, NotificationReceiver::class.java)
+        val broadcastIntent = Intent(this, NotificationReceiver::class.java)
         broadcastIntent.putExtra("toastMessage", vUsername)
         val actionIntent = PendingIntent.getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT)
         val picture = BitmapFactory.decodeResource(resources, R.drawable.welcome)
