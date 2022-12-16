@@ -36,7 +36,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val context = context as Home
-        binding.tvWelcome.text = "Welcome, ${context.mUserViewModel.readLoginData?.value?.username.toString()}"
+        binding.tvWelcome.text = "Welcome, ${context.mHomeViewModel.readLoginData?.value?.username.toString()}"
 
         binding.imageView3.setOnClickListener{
             replaceFragment(MapLocationFragment())

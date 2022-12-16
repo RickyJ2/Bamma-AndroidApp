@@ -1,4 +1,4 @@
-package com.example.sewakendaraan
+package com.example.sewakendaraan.activity
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.example.sewakendaraan.R
 import com.example.sewakendaraan.entity.sharedPreferencesKey
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.firstTimePrefKey
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.installKey
@@ -24,7 +25,7 @@ class SplashScreenActivity : AppCompatActivity() {
         val firstTime: String = spFirstTime!!.getString(installKey,"").toString()
 
         val spLogin: SharedPreferences = getSharedPreferences(sharedPreferencesKey.loginPrefKey, Context.MODE_PRIVATE)
-        val editorLogin: SharedPreferences.Editor = spLogin!!.edit()
+        val editorLogin: SharedPreferences.Editor = spLogin.edit()
         editorLogin.putInt(sharedPreferencesKey.idKey, -1)
         editorLogin.apply()
 

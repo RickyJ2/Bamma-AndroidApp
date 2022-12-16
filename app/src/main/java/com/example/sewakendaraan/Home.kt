@@ -8,17 +8,18 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.sewakendaraan.activity.LoginActivity
+import com.example.sewakendaraan.activity.profile.ProfileActivity
 import com.example.sewakendaraan.databinding.ActivityHomeBinding
 import com.example.sewakendaraan.entity.sharedPreferencesKey
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.idKey
 import com.example.sewakendaraan.room.Constant
-import com.example.sewakendaraan.viewModel.UserViewModel
-import kotlinx.coroutines.runBlocking
+import com.example.sewakendaraan.viewModel.HomeViewModel
 
 class Home : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
-    lateinit var mUserViewModel: UserViewModel
+    lateinit var mHomeViewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +27,7 @@ class Home : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+        mHomeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         loginSetup()
         replaceFragment(HomeFragment())
 
@@ -46,23 +47,24 @@ class Home : AppCompatActivity() {
                 R.id.home -> replaceFragment(HomeFragment())
                 R.id.settings -> replaceFragment(SettingFragment())
                 else -> {
-
                 }
             }
             true
         }
     }
+    fun moveProfile(){
+        val moveProfile = Intent(this@Home, ProfileActivity::class.java)
+        startActivity(moveProfile)
+    }
     private fun loginSetup(){
         val spLogin: SharedPreferences = getSharedPreferences(sharedPreferencesKey.loginPrefKey, Context.MODE_PRIVATE)
-        val id = spLogin!!.getInt(idKey, -1)
+        val id = spLogin.getInt(idKey, -1)
         if(id == -1){
             val moveLogin = Intent(this@Home, LoginActivity::class.java)
             Toast.makeText(this@Home, "Login Failed", Toast.LENGTH_SHORT).show()
             startActivity(moveLogin)
         }else{
-            runBlocking {
-                mUserViewModel.setUserData(id)
-            }
+            mHomeViewModel.userData(id)
         }
     }
     private fun  replaceFragment(fragment: Fragment){

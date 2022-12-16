@@ -8,8 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import com.example.sewakendaraan.activity.profile.EditProfileFragment
 import com.example.sewakendaraan.databinding.FragmentCameraBinding
-import com.example.sewakendaraan.databinding.FragmentEditKendaraanBinding
 
 class CameraFragment : Fragment() {
     private var binding: FragmentCameraBinding? = null
@@ -47,7 +47,7 @@ class CameraFragment : Fragment() {
                 e.printStackTrace();
             }
             mCamera?.release()
-            replaceFragment(ProfileFragment())
+            replaceFragment(EditProfileFragment())
         }
         binding?.cameraSwitchBtn?.setOnClickListener{
             changeCamera()

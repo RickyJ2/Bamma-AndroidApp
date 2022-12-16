@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sewakendaraan.activity.LoginActivity
+import com.example.sewakendaraan.activity.profile.EditProfileFragment
 import com.example.sewakendaraan.databinding.FragmentSettingBinding
 import com.example.sewakendaraan.entity.SettingItem
 import com.example.sewakendaraan.entity.sharedPreferencesKey
@@ -66,11 +68,11 @@ class SettingFragment : Fragment() {
                 }).show()
         }
 
-        binding.tvUsername.text = context.mUserViewModel.readLoginData?.value?.username.toString()
-        binding.tvEmail.text = context.mUserViewModel.readLoginData?.value?.email.toString()
+        binding.tvUsername.text = context.mHomeViewModel.readLoginData?.value?.username.toString()
+        binding.tvEmail.text = context.mHomeViewModel.readLoginData?.value?.email.toString()
 
         binding.editIcon.setOnClickListener{
-            replaceFragment(ProfileFragment())
+            (activity as Home).moveProfile()
         }
     }
     private fun  replaceFragment(fragment: Fragment){

@@ -1,4 +1,4 @@
-package com.example.sewakendaraan
+package com.example.sewakendaraan.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.sewakendaraan.R
 import com.example.sewakendaraan.databinding.ActivityReqResetPasswordBinding
 import com.example.sewakendaraan.viewModel.ReqResetPasswordViewModel
 

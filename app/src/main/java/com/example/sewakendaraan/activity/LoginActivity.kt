@@ -1,4 +1,4 @@
-package com.example.sewakendaraan
+package com.example.sewakendaraan.activity
 
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
@@ -16,6 +16,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.sewakendaraan.Home
+import com.example.sewakendaraan.R
 import com.example.sewakendaraan.databinding.ActivityLoginBinding
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.idKey
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.loginPrefKey

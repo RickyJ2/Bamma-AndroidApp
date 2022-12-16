@@ -1,137 +1,186 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ProfileFragment">
-    <androidx.constraintlayout.widget.ConstraintLayout
+    tools:context=".activity.profile.ProfileFragment"
+    tools:ignore="HardcodedText">
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.example.sewakendaraan.viewModel.ProfileUserViewModel" />
+        <variable
+            name="profileFragment"
+            type="com.example.sewakendaraan.activity.profile.ProfileFragment" />
+    </data>
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/profileJudul"
-            style="@style/TextAppearance.MaterialComponents.Headline4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:text="Profile"
-            android:textColor="#2C2C2C"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/profileFoto"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profileJudul"
-            app:shapeAppearanceOverlay="@style/ImageView.Circle"
-            app:srcCompat="@drawable/ic_baseline_directions_car_24"/>
-        <ImageView
-            android:id="@+id/editProfilePictureButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/bg_circle"
-            android:padding="8dp"
-            android:src="@drawable/ic_baseline_edit_24"
-            app:layout_constraintBottom_toBottomOf="@id/profileFoto"
-            app:layout_constraintEnd_toEndOf="@id/profileFoto"
-            app:tint="@color/white"/>
-        <LinearLayout
-            android:id="@+id/profileForm"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/profileFoto"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:orientation="vertical">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayoutUsername"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp">
+            <TextView
+                android:id="@+id/profileJudul"
+                style="@style/TextAppearance.MaterialComponents.Headline5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Username"
-                app:errorEnabled="true"
-                app:helperTextEnabled="false"
-                app:startIconDrawable="@drawable/ic_baseline_person_24">
+                android:fontFamily="@font/inter_semibold"
+                android:text="My Profile"
+                android:textColor="@color/BlackGray_Bamma"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayoutEmail"
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profileFoto"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profileJudul"
+                app:shapeAppearanceOverlay="@style/ImageView.Circle"
+                app:srcCompat="@drawable/ic_baseline_directions_car_24" />
+            <ImageView
+                android:id="@+id/editProfilePictureButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/bg_circle"
+                android:padding="8dp"
+                android:src="@drawable/ic_baseline_edit_24"
+                app:layout_constraintBottom_toBottomOf="@id/profileFoto"
+                app:layout_constraintEnd_toEndOf="@id/profileFoto"
+                app:tint="@color/white"
+                android:contentDescription="editProfile" />
+            <TextView
+                android:id="@+id/tvUsername"
+                style="@style/TextAppearance.MaterialComponents.Headline4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:hint="Email"
-                app:errorEnabled="true"
-                app:startIconDrawable="@drawable/ic_baseline_email_24"
-                android:layout_marginBottom="0dp">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayoutHandphone"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/profileFoto"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@{viewmodel.readLoginData.username}"
+                android:textColor="@color/Purple_Bamma"
+                android:textStyle="bold"
+                android:textAlignment="center"/>
+            <LinearLayout
+                android:id="@+id/profileForm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Handphone"
-                app:errorEnabled="true"
-                app:startIconDrawable="@drawable/ic_baseline_call_24">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvUsername"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="50dp"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="phone" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayoutDateOfBirth"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:hint="Date of Birth"
-                app:errorEnabled="true"
-                app:startIconDrawable="@drawable/ic_baseline_calendar_today_24"
-                android:layout_marginBottom="0dp"
-                app:endIconMode="custom"
-                app:endIconDrawable="@drawable/ic_baseline_info_24"
-                app:errorIconDrawable="@null"
-                >
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
+                    android:layout_marginEnd="10dp"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_email_24"
+                        app:tint="@color/Purple_Bamma"
+                        android:layout_marginBottom="20dp"
+                        android:contentDescription="mailIcon" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_calendar_today_24"
+                        app:tint="@color/Purple_Bamma"
+                        android:layout_marginBottom="20dp"
+                        android:contentDescription="calenderIcon" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_call_24"
+                        app:tint="@color/Purple_Bamma"
+                        android:layout_marginBottom="15dp"
+                        android:contentDescription="callIcon" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="date"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
+                    android:layout_marginEnd="25dp"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/TextAppearance.MaterialComponents.Headline6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email"
+                        android:fontFamily="@font/inter_semibold"
+                        android:layout_marginBottom="15dp"/>
+                    <TextView
+                        style="@style/TextAppearance.MaterialComponents.Headline6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Date Of Birth "
+                        android:fontFamily="@font/inter_semibold"
+                        android:layout_marginBottom="15dp"/>
+                    <TextView
+                        style="@style/TextAppearance.MaterialComponents.Headline6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Handphone"
+                        android:fontFamily="@font/inter_semibold"
+                        android:layout_marginBottom="15dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/TextAppearance.MaterialComponents.Body1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewmodel.readLoginData.email}"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/inter_light"
+                        android:layout_marginBottom="15dp"/>
+                    <TextView
+                        style="@style/TextAppearance.MaterialComponents.Body1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewmodel.readLoginData.dateOfBirth}"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/inter_light"
+                        android:layout_marginBottom="15dp"/>
+                    <TextView
+                        style="@style/TextAppearance.MaterialComponents.Body1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewmodel.readLoginData.handphone}"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/inter_light"
+                        android:layout_marginBottom="15dp"/>
+                </LinearLayout>
+            </LinearLayout>
             <Button
-                android:id="@+id/updateProfileBtn"
-                android:layout_width="match_parent"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="16dp"
-                android:paddingTop="16dp"
-                android:text="Save"
-                android:backgroundTint="#7B70FA"
-                style="@style/Widget.MaterialComponents.Button" />
-        </LinearLayout>
+                android:fontFamily="@font/inter_bold"
+                android:text="Edit Profile"
+                app:icon = "@drawable/ic_baseline_edit_24"
+                app:layout_constraintTop_toBottomOf="@+id/profileForm"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingTop="10dp"
+                android:paddingBottom="8dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                app:cornerRadius="10dp"
+                android:textColor="@color/Purple_Bamma"
+                app:strokeColor="@color/Purple_Bamma"
+                app:strokeWidth = "1.5dp"
+                android:onClick="@{() -> profileFragment.moveUpdateProfile()}"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</FrameLayout>
+    </FrameLayout>
+</layout>
