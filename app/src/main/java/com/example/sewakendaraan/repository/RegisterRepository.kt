@@ -2,9 +2,9 @@ package com.example.sewakendaraan.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.sewakendaraan.api.CreateResponse
+import com.example.sewakendaraan.api.response.CreateResponse
 import com.example.sewakendaraan.api.RClient
-import com.example.sewakendaraan.room.userRoom.User
+import com.example.sewakendaraan.data.User
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback

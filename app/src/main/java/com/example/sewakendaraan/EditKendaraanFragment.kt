@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.sewakendaraan.room.kendaraanRoom.Kendaraan
+import com.example.sewakendaraan.data.DaftarMobil
 import com.example.sewakendaraan.room.kendaraanRoom.KendaraanDB
-import com.example.sewakendaraan.room.Constant
+import com.example.sewakendaraan.entity.Constant
 import kotlinx.android.synthetic.main.fragment_edit_kendaraan.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -57,7 +57,7 @@ class EditKendaraanFragment : Fragment() {
         button_save.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 db.kendaraanDao().addKendaraan(
-                    Kendaraan(0,edit_namaPemilik.text.toString(),
+                    DaftarMobil(0,edit_namaPemilik.text.toString(),
                         edit_jenisKendaraan.text.toString())
                 )
                 replaceFragment(HomeFragment())
@@ -66,7 +66,7 @@ class EditKendaraanFragment : Fragment() {
         button_update.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 db.kendaraanDao().updateKendaraan(
-                    Kendaraan(kendaraanId, edit_namaPemilik.text.toString(),
+                    DaftarMobil(kendaraanId, edit_namaPemilik.text.toString(),
                         edit_jenisKendaraan.text.toString())
                 )
                 replaceFragment(HomeFragment())

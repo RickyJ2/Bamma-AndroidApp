@@ -6,7 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.sewakendaraan.repository.ReqResetPasswordRepository
-import com.example.sewakendaraan.room.userRoom.User
+import com.example.sewakendaraan.data.User
 
 class ReqResetPasswordViewModel(application: Application): AndroidViewModel(application) {
     private val repository: ReqResetPasswordRepository = ReqResetPasswordRepository()

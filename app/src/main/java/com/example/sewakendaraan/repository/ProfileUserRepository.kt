@@ -3,8 +3,9 @@ package com.example.sewakendaraan.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.sewakendaraan.api.RClient
-import com.example.sewakendaraan.api.ResponseDataUser
-import com.example.sewakendaraan.room.userRoom.User
+import com.example.sewakendaraan.api.response.ResponseDataUser
+import com.example.sewakendaraan.data.User
+import okhttp3.MultipartBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -92,6 +93,38 @@ class ProfileUserRepository {
                         }else {
                             _msg.value = jsonObj.getString("message")
                         }
+                    }
+                }
+                override fun onFailure(call: Call<ResponseDataUser>, t: Throwable) {
+                    _code.value = 0
+                }
+            })
+    }
+    fun updateProfile(image: MultipartBody.Part){
+        resetVal()
+        RClient.instances.updateProfile(image).enqueue(
+            object: Callback<ResponseDataUser> {
+                override fun onResponse(call: Call<ResponseDataUser>, response: Response<ResponseDataUser>) {
+                    if(response.isSuccessful){
+                        _msg.value = response.body()?.msg.toString()
+                        response.body().also {
+                            if (it != null) {
+                                _readLoginData.value = User(
+                                    it.data.id,
+                                    it.data.username,
+                                    it.data.email,
+                                    it.data.password,
+                                    it.data.dateOfBirth,
+                                    it.data.handphone,
+                                    RClient.imageBaseUrl() + it.data.image
+                                )
+                            }
+                        }
+                        _code.value = response.code()
+                    }else {
+                        val jsonObj = JSONObject(response.errorBody()!!.charStream().readText())
+                        _code.value = response.code()
+                        _msg.value = jsonObj.getString("message")
                     }
                 }
                 override fun onFailure(call: Call<ResponseDataUser>, t: Throwable) {

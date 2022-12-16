@@ -1,6 +1,7 @@
 package com.example.sewakendaraan.room.userRoom
 
 import androidx.room.*
+import com.example.sewakendaraan.data.User
 
 @Dao
 interface UserDao {

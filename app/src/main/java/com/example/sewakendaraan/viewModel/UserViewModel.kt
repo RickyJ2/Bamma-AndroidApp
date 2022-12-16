@@ -1,11 +1,10 @@
 package com.example.sewakendaraan.viewModel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.sewakendaraan.repository.UserRepository
-import com.example.sewakendaraan.room.userRoom.User
+import com.example.sewakendaraan.data.User
 
 class UserViewModel(application: Application): AndroidViewModel(application) {
     private val repository: UserRepository = UserRepository()

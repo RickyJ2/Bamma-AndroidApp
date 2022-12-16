@@ -1,12 +1,14 @@
 package com.example.sewakendaraan.viewModel
 
 import android.app.Application
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.sewakendaraan.repository.ProfileUserRepository
-import com.example.sewakendaraan.room.userRoom.User
+import com.example.sewakendaraan.data.User
+import okhttp3.MultipartBody
 
 class ProfileUserViewModel (application: Application): AndroidViewModel(application) {
     private val repository: ProfileUserRepository = ProfileUserRepository()
@@ -33,6 +35,10 @@ class ProfileUserViewModel (application: Application): AndroidViewModel(applicat
     }
     fun userData(id: Int){
         repository.userData(id)
+    }
+    fun updateProfile(image: MultipartBody.Part){
+        Log.d("profile", "masuk vm")
+        repository.updateProfile(image)
     }
     fun setupEditForm(){
         updateFormMutableLiveData.value = readLoginData.value

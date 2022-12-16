@@ -9,9 +9,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sewakendaraan.databinding.FragmentHomeBinding
-import com.example.sewakendaraan.room.kendaraanRoom.Kendaraan
+import com.example.sewakendaraan.data.DaftarMobil
 import com.example.sewakendaraan.room.kendaraanRoom.KendaraanDB
-import com.example.sewakendaraan.room.Constant
+import com.example.sewakendaraan.entity.Constant
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -46,14 +46,14 @@ class HomeFragment : Fragment() {
     private fun setupRecyclerView(){
         val context = context as Home
         kendaraanAdapter = RVKendaraanAdapter(arrayListOf(), object : RVKendaraanAdapter.OnAdapterListener{
-            override fun onClick(kendaraan: Kendaraan){
-                argEdit(kendaraan.id, Constant.TYPE_READ)
+            override fun onClick(daftarMobil: DaftarMobil){
+                argEdit(daftarMobil.id, Constant.TYPE_READ)
             }
-            override fun onUpdate(kendaraan: Kendaraan){
-                argEdit(kendaraan.id, Constant.TYPE_UPDATE)
+            override fun onUpdate(daftarMobil: DaftarMobil){
+                argEdit(daftarMobil.id, Constant.TYPE_UPDATE)
             }
-            override fun onDelete(kendaraan: Kendaraan) {
-                deleteDialog(kendaraan)
+            override fun onDelete(daftarMobil: DaftarMobil) {
+                deleteDialog(daftarMobil)
             }
         })
         rvKendaraan.apply{
@@ -62,13 +62,13 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun deleteDialog(kendaraan: Kendaraan){
+    private fun deleteDialog(daftarMobil: DaftarMobil){
         val context = context as Home
         val db by lazy { KendaraanDB(context) }
         val alertDialog = AlertDialog.Builder(context)
         alertDialog.apply {
             setTitle("Confirmation")
-            setMessage("Are you sure to delete this data from ${kendaraan.jenisKendaraan}?")
+            setMessage("Are you sure to delete this data from ${daftarMobil.jenisKendaraan}?")
             setNegativeButton("Cancel", DialogInterface.OnClickListener{
                 dialogInterface, i ->
                     dialogInterface.dismiss()
@@ -77,7 +77,7 @@ class HomeFragment : Fragment() {
                 dialogInterface, i ->
                     dialogInterface.dismiss()
                     CoroutineScope(Dispatchers.IO).launch {
-                        db.kendaraanDao().deleteKendaraan(kendaraan)
+                        db.kendaraanDao().deleteKendaraan(daftarMobil)
                         loadData()
                     }
             })

@@ -55,7 +55,8 @@
                 app:layout_constraintBottom_toBottomOf="@id/profileFoto"
                 app:layout_constraintEnd_toEndOf="@id/profileFoto"
                 app:tint="@color/white"
-                android:contentDescription="editProfile" />
+                android:contentDescription="editProfile"
+                android:onClick="@{() -> profileFragment.pickImage()}"/>
             <TextView
                 android:id="@+id/tvUsername"
                 style="@style/TextAppearance.MaterialComponents.Headline4"

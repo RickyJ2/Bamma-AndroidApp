@@ -13,7 +13,7 @@ import com.example.sewakendaraan.activity.profile.ProfileActivity
 import com.example.sewakendaraan.databinding.ActivityHomeBinding
 import com.example.sewakendaraan.entity.sharedPreferencesKey
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.idKey
-import com.example.sewakendaraan.room.Constant
+import com.example.sewakendaraan.entity.Constant
 import com.example.sewakendaraan.viewModel.HomeViewModel
 
 class Home : AppCompatActivity() {

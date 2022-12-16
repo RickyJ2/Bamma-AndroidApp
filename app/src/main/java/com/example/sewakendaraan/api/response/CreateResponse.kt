@@ -1,4 +1,4 @@
-package com.example.sewakendaraan.api
+package com.example.sewakendaraan.api.response
 
 import com.google.gson.annotations.SerializedName
 

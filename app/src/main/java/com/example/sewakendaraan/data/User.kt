@@ -1,4 +1,4 @@
-package com.example.sewakendaraan.room.userRoom
+package com.example.sewakendaraan.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

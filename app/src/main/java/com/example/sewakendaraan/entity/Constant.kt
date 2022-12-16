@@ -1,4 +1,4 @@
-package com.example.sewakendaraan.room
+package com.example.sewakendaraan.entity
 
 class Constant {
     companion object{
