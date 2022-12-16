@@ -41,7 +41,19 @@ class ProfileUserRepository {
             override fun onResponse(call: Call<ResponseDataUser>, response: Response<ResponseDataUser>) {
                 if(response.isSuccessful){
                     _msg.value = response.body()?.msg.toString()
-                    response.body().also { _readLoginData.value = it?.data }
+                    response.body().also {
+                        if(it != null){
+                            _readLoginData.value = User(
+                                it.data.id,
+                                it.data.username,
+                                it.data.email,
+                                it.data.password,
+                                it.data.dateOfBirth,
+                                it.data.handphone,
+                                RClient.imageBaseUrl() + it.data.image
+                            )
+                        }
+                    }
                     _code.value = response.code()
                 }else{
                     val jsonObj = JSONObject(response.errorBody()!!.charStream().readText())
@@ -74,7 +86,8 @@ class ProfileUserRepository {
                                 if(jsonError.has("email")) jsonError.getJSONArray("email")[0].toString() else "",
                                 if(jsonError.has("password")) jsonError.getJSONArray("password")[0].toString() else "",
                                 if(jsonError.has("dateOfBirth")) jsonError.getJSONArray("dateOfBirth")[0].toString() else "",
-                                if(jsonError.has("handphone")) jsonError.getJSONArray("handphone")[0].toString() else ""
+                                if(jsonError.has("handphone")) jsonError.getJSONArray("handphone")[0].toString() else "",
+                            ""
                             )
                         }else {
                             _msg.value = jsonObj.getString("message")

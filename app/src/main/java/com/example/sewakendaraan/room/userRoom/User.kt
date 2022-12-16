@@ -11,5 +11,6 @@ data class User (
     var email: String,
     var password: String,
     var dateOfBirth: String,
-    var handphone: String
+    var handphone: String,
+    var image: String
 )

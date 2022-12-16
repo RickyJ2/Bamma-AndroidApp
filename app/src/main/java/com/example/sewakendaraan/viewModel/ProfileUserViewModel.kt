@@ -25,7 +25,7 @@ class ProfileUserViewModel (application: Application): AndroidViewModel(applicat
         get() = updateFormMutableLiveData
 
     init{
-        updateFormMutableLiveData.value = User(0,"","", "","","")
+        updateFormMutableLiveData.value = User(0,"","", "","","","")
         progressBarMutableLiveData.value = View.INVISIBLE
     }
     fun updateUser(){
@@ -44,7 +44,9 @@ class ProfileUserViewModel (application: Application): AndroidViewModel(applicat
             updateForm.value!!.email,
             updateForm.value!!.password,
             date,
-            updateForm.value!!.handphone)
+            updateForm.value!!.handphone,
+            updateForm.value!!.image
+        )
     }
     fun setProgressBar(isLoading: Int){
         progressBarMutableLiveData.value = isLoading

@@ -26,7 +26,7 @@ class LoginViewModel (application: Application): AndroidViewModel(application) {
         get() = loginFormMutableLiveData
 
     init {
-        loginFormMutableLiveData.value = User(0, "", "", "", "", "")
+        loginFormMutableLiveData.value = User(0, "", "", "", "", "","")
         progressBarMutableLiveData.value = View.INVISIBLE
     }
     fun login(){
@@ -39,6 +39,7 @@ class LoginViewModel (application: Application): AndroidViewModel(application) {
             "",
             loginForm.value!!.password,
             "",
+            "",
             "")
     }
     fun setPasswordForm(password: String){
@@ -48,7 +49,8 @@ class LoginViewModel (application: Application): AndroidViewModel(application) {
             "",
             password,
             "",
-            "")
+            "",
+        "")
     }
     fun setProgressBar(isLoading: Int){
         progressBarMutableLiveData.value = isLoading

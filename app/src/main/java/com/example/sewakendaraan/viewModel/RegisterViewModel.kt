@@ -24,7 +24,7 @@ class RegisterViewModel(application: Application): AndroidViewModel(application)
         get() = registerFormMutableLiveData
 
     init{
-        registerFormMutableLiveData.value = User(0,"","", "","","")
+        registerFormMutableLiveData.value = User(0,"","", "","","", "")
         toogleBtnMutableLiveData.value = false
         progressBarMutableLiveData.value = View.INVISIBLE
     }
@@ -44,7 +44,8 @@ class RegisterViewModel(application: Application): AndroidViewModel(application)
             registerForm.value!!.email,
             registerForm.value!!.password,
             date,
-            registerForm.value!!.handphone)
+            registerForm.value!!.handphone,
+        "")
     }
     fun setProgressBar(isLoading: Int){
         progressBarMutableLiveData.value = isLoading

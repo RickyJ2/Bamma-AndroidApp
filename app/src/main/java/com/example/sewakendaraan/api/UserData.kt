@@ -8,5 +8,6 @@ data class UserData(
     @SerializedName("email") val email:String,
     @SerializedName("password") val password:String,
     @SerializedName("dateofbirth") val dateofbirth:String,
-    @SerializedName("handphone") val handphone:String
+    @SerializedName("handphone") val handphone:String,
+    @SerializedName("image") val image:String
 )

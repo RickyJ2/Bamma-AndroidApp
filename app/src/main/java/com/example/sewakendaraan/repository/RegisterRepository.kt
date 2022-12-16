@@ -54,7 +54,8 @@ class RegisterRepository {
                                 if(jsonError.has("email")) jsonError.getJSONArray("email")[0].toString() else "",
                                 if(jsonError.has("password")) jsonError.getJSONArray("password")[0].toString() else "",
                                 if(jsonError.has("dateOfBirth")) jsonError.getJSONArray("dateOfBirth")[0].toString() else "",
-                                if(jsonError.has("handphone")) jsonError.getJSONArray("handphone")[0].toString() else ""
+                                if(jsonError.has("handphone")) jsonError.getJSONArray("handphone")[0].toString() else "",
+                                ""
                             )
                         }else {
                             _msg.value = jsonObj.getString("message")

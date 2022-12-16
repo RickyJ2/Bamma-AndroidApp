@@ -5,12 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.example.sewakendaraan.R
 import com.example.sewakendaraan.databinding.FragmentProfileBinding
+import com.google.android.material.imageview.ShapeableImageView
 
 class ProfileFragment : Fragment() {
     private var binding: FragmentProfileBinding? = null
-
+    private lateinit var profileImageView: ShapeableImageView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,6 +30,15 @@ class ProfileFragment : Fragment() {
             profileFragment = this@ProfileFragment
         }
         (activity as ProfileActivity).loginSetup()
+
+        profileImageView = (activity as ProfileActivity).findViewById(R.id.profileFoto)
+        (activity as ProfileActivity).mProfileUserViewModel.readLoginData.observe(viewLifecycleOwner){
+            if(it != null){
+                Glide.with(profileImageView)
+                    .load(it.image)
+                    .into(profileImageView)
+            }
+        }
     }
     fun moveUpdateProfile(){
         val fragmentManager = (activity as ProfileActivity).supportFragmentManager
