@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sewakendaraan.KritiKSaranFragment
-import com.example.sewakendaraan.MapLocationFragment
 import com.example.sewakendaraan.R
 import com.example.sewakendaraan.RVItemSetting
 import com.example.sewakendaraan.activity.LoginActivity
@@ -47,7 +46,7 @@ class SettingFragment : Fragment() {
         rvSetting = (activity as HomeActivity).findViewById(R.id.rvSetting)
         val adapter = RVItemSetting(SettingItem.listSettingItem){
             when(it.title){
-                "Tentang kami" -> (activity as HomeActivity).replaceFragment(MapLocationFragment())
+                "Tentang kami" -> (activity as HomeActivity).moveTentangkami()
                 "Kritik dan Saran" -> (activity as HomeActivity).replaceFragment(KritiKSaranFragment())
                 else -> {
                 }

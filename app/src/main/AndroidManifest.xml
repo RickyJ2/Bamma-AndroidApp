@@ -28,7 +28,7 @@
         android:theme="@style/Theme.SewaKendaraan"
         tools:targetApi="31">
         <activity
-            android:name=".TentangKamiActivity"
+            android:name=".activity.TentangKamiActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
