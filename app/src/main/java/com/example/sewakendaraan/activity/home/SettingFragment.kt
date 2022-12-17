@@ -12,9 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sewakendaraan.KritiKSaranFragment
 import com.example.sewakendaraan.R
-import com.example.sewakendaraan.RVItemSetting
+import com.example.sewakendaraan.rv.RVItemSetting
 import com.example.sewakendaraan.activity.LoginActivity
 import com.example.sewakendaraan.databinding.FragmentSettingBinding
 import com.example.sewakendaraan.entity.SettingItem
@@ -47,7 +46,7 @@ class SettingFragment : Fragment() {
         val adapter = RVItemSetting(SettingItem.listSettingItem){
             when(it.title){
                 "Tentang kami" -> (activity as HomeActivity).moveTentangkami()
-                "Kritik dan Saran" -> (activity as HomeActivity).replaceFragment(KritiKSaranFragment())
+                "Kritik dan Saran" -> (activity as HomeActivity).moveKritikSaran()
                 else -> {
                 }
             }
@@ -64,8 +63,12 @@ class SettingFragment : Fragment() {
     }
     fun logout(){
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity as HomeActivity)
-        builder.setMessage("Are you sure want to logout?")
-            .setPositiveButton("YES") { _, _ ->
+        builder.apply{
+            setMessage("Are you sure want to logout?")
+            setNegativeButton("NO") { dialogInterface, _ ->
+                dialogInterface.dismiss()
+            }
+            setPositiveButton("YES") { _, _ ->
                 val logout = Intent((activity as HomeActivity), LoginActivity::class.java)
 
                 val spLogin: SharedPreferences = (activity as HomeActivity).getSharedPreferences(
@@ -79,7 +82,8 @@ class SettingFragment : Fragment() {
                 startActivity(logout)
                 (activity as HomeActivity).finishAndRemoveTask()
             }
-            .show()
+        }
+        builder.show()
     }
     fun moveProfile(){
         (activity as HomeActivity).moveProfile()

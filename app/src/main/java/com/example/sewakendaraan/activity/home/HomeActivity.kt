@@ -15,6 +15,7 @@ import com.example.sewakendaraan.HomeFragment
 import com.example.sewakendaraan.R
 import com.example.sewakendaraan.activity.LoginActivity
 import com.example.sewakendaraan.activity.TentangKamiActivity
+import com.example.sewakendaraan.activity.kritikSaran.KritikSaranActivity
 import com.example.sewakendaraan.activity.profile.ProfileActivity
 import com.example.sewakendaraan.databinding.ActivityHomeBinding
 import com.example.sewakendaraan.entity.sharedPreferencesKey
@@ -85,6 +86,10 @@ class HomeActivity : AppCompatActivity() {
     fun moveTentangkami(){
         val moveTentangKami = Intent(this@HomeActivity, TentangKamiActivity::class.java)
         startActivity(moveTentangKami)
+    }
+    fun moveKritikSaran(){
+        val moveKritikSaran = Intent(this@HomeActivity, KritikSaranActivity::class.java)
+        startActivity(moveKritikSaran)
     }
     private fun loginSetup(){
         mHomeViewModel.setProgressBar(View.VISIBLE)

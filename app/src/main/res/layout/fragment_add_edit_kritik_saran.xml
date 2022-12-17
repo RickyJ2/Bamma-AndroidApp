@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.kritikSaran.AddEditKritikSaranFragment"
+    tools:ignore="HardcodedText">
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.example.sewakendaraan.viewModel.KritikSaranViewModel" />
+        <variable
+            name="addEditKritikSaranFragment"
+            type="com.example.sewakendaraan.activity.kritikSaran.AddEditKritikSaranFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp">
+        <TextView
+            android:id="@+id/profileJudul"
+            style="@style/TextAppearance.MaterialComponents.Headline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_bold"
+            android:text="@{addEditKritikSaranFragment.titleAddEdit}"
+            android:textColor="@color/BlackGray_Bamma"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:id="@+id/profileForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/profileJudul"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutUsername"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Kritik Saran"
+                app:error="@{viewmodel.error.content}"
+                app:errorEnabled="true"
+                app:helperTextEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:text="@={viewmodel.kritikSaranFormMutableLiveData.content}"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/updateProfileBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp"
+                android:text="Save"
+                android:backgroundTint="@color/Purple_Bamma"
+                style="@style/Widget.MaterialComponents.Button"
+                android:onClick="@{() -> addEditKritikSaranFragment.addEdit()}"/>
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp"
+                android:text="Cancel"
+                app:strokeColor="@color/Purple_Bamma"
+                app:strokeWidth = "1.5dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:onClick="@{() -> addEditKritikSaranFragment.moveKritikSaran()}"/>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

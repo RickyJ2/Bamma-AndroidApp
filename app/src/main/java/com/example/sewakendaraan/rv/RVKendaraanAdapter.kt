@@ -1,16 +1,17 @@
-package com.example.sewakendaraan
+package com.example.sewakendaraan.rv
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sewakendaraan.R
 import com.example.sewakendaraan.data.DaftarMobil
 import kotlinx.android.synthetic.main.rv_item_kendaraan.view.*
 
 class RVKendaraanAdapter(private val data: ArrayList<DaftarMobil>, private val listener: OnAdapterListener): RecyclerView.Adapter<RVKendaraanAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder{
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.rv_item_kendaraan, parent, false)
         return ViewHolder(itemView)
     }

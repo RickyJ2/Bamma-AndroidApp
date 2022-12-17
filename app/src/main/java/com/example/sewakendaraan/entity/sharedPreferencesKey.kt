@@ -9,5 +9,9 @@ class sharedPreferencesKey {
 
         const val firstTimePrefKey = "FTKey"
         const val installKey = "firstTimeKey"
+
+        //Bundle Key
+        const val argsTypeKey = "arg_type"
+        const val argsIdKey = "arg_id"
     }
 }

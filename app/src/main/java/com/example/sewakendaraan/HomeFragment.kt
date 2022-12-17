@@ -1,13 +1,11 @@
 package com.example.sewakendaraan
 
-import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.sewakendaraan.rv.RVKendaraanAdapter
 import com.example.sewakendaraan.activity.home.HomeActivity
 import com.example.sewakendaraan.databinding.FragmentHomeBinding
 

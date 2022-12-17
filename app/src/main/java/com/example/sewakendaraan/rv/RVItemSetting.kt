@@ -1,11 +1,11 @@
-package com.example.sewakendaraan
+package com.example.sewakendaraan.rv
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sewakendaraan.R
 import com.example.sewakendaraan.entity.SettingItem
 
 class RVItemSetting(private val data:Array<SettingItem>,
