@@ -34,8 +34,8 @@ class ProfileActivity : AppCompatActivity() {
 
         //Observe Msg
         mProfileUserViewModel.msg.observe(this@ProfileActivity){
-            if(mProfileUserViewModel.msg.value != ""){
-                Toast.makeText(this@ProfileActivity, mProfileUserViewModel.msg.value.toString(), Toast.LENGTH_SHORT).show()
+            if(it != ""){
+                Toast.makeText(this@ProfileActivity, it, Toast.LENGTH_SHORT).show()
             }
         }
     }

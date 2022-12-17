@@ -9,5 +9,5 @@ data class ResponseDataCabang(
     @SerializedName("error") val e:Boolean,
     @SerializedName("message") val msg:String,
     val totalData: Int,
-    val data: Cabang
+    val data: List<Cabang>
 )

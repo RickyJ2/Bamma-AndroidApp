@@ -16,7 +16,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.sewakendaraan.Home
+import com.example.sewakendaraan.activity.home.HomeActivity
 import com.example.sewakendaraan.R
 import com.example.sewakendaraan.databinding.ActivityLoginBinding
 import com.example.sewakendaraan.entity.sharedPreferencesKey.Companion.idKey
@@ -82,8 +82,8 @@ class LoginActivity : AppCompatActivity() {
                         mLoginViewModel.readLoginData.value!!.id)
                     sendNotification1(mLoginViewModel.loginForm.value!!.username)
                     sendNotification2(mLoginViewModel.loginForm.value!!.username)
-                    val moveHome = Intent(this@LoginActivity, Home::class.java)
-                    startActivity(moveHome)
+                    val moveHomeActivity = Intent(this@LoginActivity, HomeActivity::class.java)
+                    startActivity(moveHomeActivity)
                 }
                 if(it != null){
                     mLoginViewModel.setProgressBar(View.INVISIBLE)

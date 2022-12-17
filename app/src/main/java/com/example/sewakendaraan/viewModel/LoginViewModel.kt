@@ -5,11 +5,11 @@ import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.sewakendaraan.repository.LoginRepository
 import com.example.sewakendaraan.data.User
+import com.example.sewakendaraan.repository.UserRepository
 
 class LoginViewModel (application: Application): AndroidViewModel(application) {
-    private val repository: LoginRepository = LoginRepository()
+    private val repository: UserRepository = UserRepository()
     val code: LiveData<Int>
         get() = repository.code
     val msg: LiveData<String>

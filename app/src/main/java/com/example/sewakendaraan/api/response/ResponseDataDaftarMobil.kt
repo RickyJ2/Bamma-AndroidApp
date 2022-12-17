@@ -8,5 +8,5 @@ data class ResponseDataDaftarMobil(
     @SerializedName("error") val e:Boolean,
     @SerializedName("message") val msg:String,
     val totalData: Int,
-    val data: DaftarMobil
+    val data: List<DaftarMobil>
 )

@@ -9,5 +9,5 @@ data class ResponseDataPemesanan(
     @SerializedName("error") val e:Boolean,
     @SerializedName("message") val msg:String,
     val totalData: Int,
-    val data: Pemesanan
+    val data: List<Pemesanan>
 )

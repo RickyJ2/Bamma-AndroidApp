@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import com.example.sewakendaraan.activity.home.HomeActivity
 import com.example.sewakendaraan.activity.profile.EditProfileFragment
 import com.example.sewakendaraan.databinding.FragmentCameraBinding
 
@@ -27,7 +28,7 @@ class CameraFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val context = context as Home
+        val context = context as HomeActivity
 
         try{
             mCamera = Camera.open()
@@ -54,7 +55,7 @@ class CameraFragment : Fragment() {
         }
     }
     fun changeCamera(){
-        val context = context as Home
+        val context = context as HomeActivity
         try {
             mCamera?.stopPreview()
         } catch (e: Exception){
@@ -79,7 +80,7 @@ class CameraFragment : Fragment() {
         }
     }
     private fun  replaceFragment(fragment: Fragment){
-        val context = context as Home
+        val context = context as HomeActivity
         val fragmentManager = context.supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frameLayout,fragment)

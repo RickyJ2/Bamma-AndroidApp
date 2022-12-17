@@ -1,6 +1,5 @@
 package com.example.sewakendaraan
 
-import android.content.Context
 import android.os.Bundle
 import android.preference.PreferenceManager
 import androidx.fragment.app.Fragment
@@ -9,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.Toast
+import com.example.sewakendaraan.activity.home.HomeActivity
 import kotlinx.android.synthetic.main.fragment_map_location.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -36,7 +36,7 @@ class MapLocationFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val context = context as Home
+        val context = context as HomeActivity
 
         val imageClose: ImageButton = context.findViewById(R.id.closeBtn)
         imageClose.setOnClickListener{
@@ -59,7 +59,7 @@ class MapLocationFragment : Fragment() {
     }
     private fun getLocationMarker(){
         try{
-            val context = context as Home
+            val context = context as HomeActivity
             val stream = context.assets.open("sample_maps.json")
             val size = stream.available()
             val buffer = ByteArray(size)
@@ -135,7 +135,7 @@ class MapLocationFragment : Fragment() {
         }
     }
     private fun  replaceFragment(fragment: Fragment){
-        val context = context as Home
+        val context = context as HomeActivity
         val fragmentManager = context.supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frameLayout,fragment)

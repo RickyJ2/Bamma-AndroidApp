@@ -4,9 +4,10 @@ import android.hardware.Camera
 import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import com.example.sewakendaraan.activity.home.HomeActivity
 import java.io.IOException
 
-class CameraView(context: Home, private val mCamera: Camera) : SurfaceView(context), SurfaceHolder.Callback {
+class CameraView(context: HomeActivity, private val mCamera: Camera) : SurfaceView(context), SurfaceHolder.Callback {
     private val mHolder: SurfaceHolder
 
     init{

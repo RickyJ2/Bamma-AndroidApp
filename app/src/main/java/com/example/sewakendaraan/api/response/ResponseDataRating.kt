@@ -8,5 +8,5 @@ data class ResponseDataRating(
     @SerializedName("error") val e:Boolean,
     @SerializedName("message") val msg:String,
     val totalData: Int,
-    val data: Rating
+    val data: List<Rating>
 )

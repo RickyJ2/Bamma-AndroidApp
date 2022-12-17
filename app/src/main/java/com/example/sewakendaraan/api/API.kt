@@ -73,7 +73,7 @@ interface API {
         @Field("id_user") id_user:Int?,
         @Field("durasi") durasi:String?,
         @Field("tgl_peminjaman") tgl_peminjaman:String?,
-    ):Call<CreateResponse>
+    ):Call<ResponseDataPemesanan>
     @FormUrlEncoded
     @PUT("pemesanan/{id}")
     fun updatePemesanan(
@@ -93,7 +93,7 @@ interface API {
     fun addKritikSaran(
         @Field("id_user") id_user:Int?,
         @Field("content") content:String?,
-    ):Call<CreateResponse>
+    ):Call<ResponseDataKritikSaran>
     @FormUrlEncoded
     @PUT("kritikSaran/{id}")
     fun updateKritikSaran(
@@ -115,7 +115,7 @@ interface API {
         @Field("id_user") id_user:Int?,
         @Field("id_mobil") id_mobil:Int?,
         @Field("rating") rating:Int?,
-    ):Call<CreateResponse>
+    ):Call<ResponseDataRating>
     @FormUrlEncoded
     @PUT("rating/{id}")
     fun updateRating(
