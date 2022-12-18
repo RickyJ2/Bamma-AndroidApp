@@ -28,6 +28,13 @@
         android:theme="@style/Theme.SewaKendaraan"
         tools:targetApi="31">
         <activity
+            android:name=".activity.pemesanan.SelectCarActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".activity.pemesanan.PemesananActivity"
             android:exported="false">
             <meta-data

@@ -17,6 +17,7 @@ import com.example.sewakendaraan.activity.LoginActivity
 import com.example.sewakendaraan.activity.PemesananListActivity
 import com.example.sewakendaraan.activity.TentangKamiActivity
 import com.example.sewakendaraan.activity.kritikSaran.KritikSaranActivity
+import com.example.sewakendaraan.activity.pemesanan.PemesananActivity
 import com.example.sewakendaraan.activity.profile.ProfileActivity
 import com.example.sewakendaraan.databinding.ActivityHomeBinding
 import com.example.sewakendaraan.entity.sharedPreferencesKey
@@ -69,16 +70,10 @@ class HomeActivity : AppCompatActivity() {
         }
     }
     fun moveAddPesanan(view: View){
-//        if(view == findViewById(R.id.addFB)){
-//            val fragment: Fragment = EditKendaraanFragment()
-//            val args = Bundle()
-//            args.putInt("arg_type", Constant.TYPE_CREATE)
-//            fragment.arguments = args
-//            val fragmentManager = supportFragmentManager
-//            val fragmentTransaction = fragmentManager.beginTransaction()
-//            fragmentTransaction.replace(R.id.frameLayout,fragment)
-//            fragmentTransaction.commit()
-//        }
+        if(view == findViewById(R.id.addFB)){
+            val moveAddPesanan = Intent(this@HomeActivity, PemesananActivity::class.java)
+            startActivity(moveAddPesanan)
+        }
     }
     fun moveProfile(){
         val moveProfile = Intent(this@HomeActivity, ProfileActivity::class.java)

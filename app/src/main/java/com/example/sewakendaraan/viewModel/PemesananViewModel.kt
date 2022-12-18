@@ -37,7 +37,7 @@ class PemesananViewModel (application: Application): AndroidViewModel(applicatio
     init{
         pemesananFormMutableLiveData.value = Pemesanan(0,0,0, "","",0)
         progressBarMutableLiveData.value = View.INVISIBLE
-        cardSelectedMutableLiveData.value = View.INVISIBLE
+        cardSelectedMutableLiveData.value = View.GONE
         pickCarMutableLiveData.value = View.VISIBLE
     }
     fun addPemesanan(id_mobil: Int, id_user: Int){
@@ -81,7 +81,7 @@ class PemesananViewModel (application: Application): AndroidViewModel(applicatio
     fun setCardSelected(isView: Int){
         if(isView == View.VISIBLE){
             cardSelectedMutableLiveData.value = isView
-            pickCarMutableLiveData.value = View.INVISIBLE
+            pickCarMutableLiveData.value = View.GONE
         }else{
             cardSelectedMutableLiveData.value = isView
             pickCarMutableLiveData.value = View.VISIBLE

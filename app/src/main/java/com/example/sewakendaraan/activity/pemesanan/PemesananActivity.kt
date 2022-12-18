@@ -92,6 +92,18 @@ class PemesananActivity : AppCompatActivity() {
             startActivity(moveHome)
         }
     }
+    fun cancelSelected(view: View){
+        if(view == findViewById(R.id.cancelSelect)){
+            kendaraanId = null
+            mPemesananViewModel.setCardSelected(View.GONE)
+        }
+    }
+    fun selectCar(view: View){
+        if(view == findViewById(R.id.selectBtn)){
+            val moveSelectCar = Intent(this@PemesananActivity, SelectCarActivity::class.java)
+            startActivity(moveSelectCar)
+        }
+    }
     //datePicker
     fun datePicker(view: View){
         if(view == findViewById(R.id.inputLayoutTanggal)){
@@ -125,7 +137,7 @@ class PemesananActivity : AppCompatActivity() {
             getDaftarMobil()
             mPemesananViewModel.setCardSelected(View.VISIBLE)
         }else{
-            mPemesananViewModel.setCardSelected(View.INVISIBLE)
+            mPemesananViewModel.setCardSelected(View.GONE)
         }
     }
     private fun getDaftarMobil(){
