@@ -1,9 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.pemesanan.PemesananActivity">
+    tools:context=".activity.pemesanan.PemesananActivity"
+    tools:ignore="HardcodedText">
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.example.sewakendaraan.viewModel.PemesananViewModel" />
+    </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/pemesananJudul"
+                style="@style/TextAppearance.MaterialComponents.Headline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="30dp"
+                android:fontFamily="@font/inter_black"
+                android:text="Pemesanan"
+                android:textColor="@color/BlackGray_Bamma"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:id="@+id/pemesananForm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintTop_toBottomOf="@+id/pemesananJudul"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputLayoutTanggal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:textColorHint="@color/GrayHelperText_Bamma"
+                    android:hint="Tanggal Peminjaman"
+                    app:error="@{viewmodel.errorPemesanan.tgl_peminjaman}"
+                    app:errorEnabled="true"
+                    app:startIconDrawable="@drawable/ic_baseline_calendar_today_24"
+                    android:layout_marginBottom="0dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter"
+                        android:inputType="date"
+                        android:text="@={viewmodel.pemesananForm.tgl_peminjaman}"
+                        android:onClick="datePicker" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputLayoutDurasi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:textColorHint="@color/GrayHelperText_Bamma"
+                    android:hint="Date of Birth"
+                    app:error="@{viewmodel.errorPemesanan.durasi}"
+                    app:errorEnabled="true"
+                    app:startIconDrawable="@drawable/ic_baseline_access_time_24"
+                    android:layout_marginBottom="0dp">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter"
+                        android:inputType="date"
+                        android:text="@={viewmodel.pemesananForm.durasi}"
+                        android:onClick="timePicker" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textColor="@color/BlackGray_Bamma"
+                    android:textSize="24sp"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="Selected Car"
+                    android:layout_marginBottom="10dp"/>
+                <Button
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:text="Select Car..."
+                    android:visibility="@{viewmodel.pickCarMutableLiveData}"
+                    app:strokeColor="@color/Purple_Bamma"
+                    app:strokeWidth = "2dp" />
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="3dp"
+                    android:clickable="true"
+                    android:foreground="?selectableItemBackground"
+                    tools:ignore="HardcodedText"
+                    android:visibility="@{viewmodel.cardSelectedMutableLiveData}">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <ImageView
+                            android:id="@+id/gambarMobil"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:src="@drawable/welcome"
+                            android:scaleType="centerCrop"
+                            android:contentDescription="gambarMobil" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="15dp"
+                            android:baselineAligned="false">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_gravity="start"
+                                android:layout_weight="1">
+                                <TextView
+                                    android:id="@+id/tvModel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="22sp"
+                                    android:fontFamily="@font/inter_bold"
+                                    android:text="@{viewmodel.daftarMobil.model}"
+                                    android:textColor="@color/BlackGray_Bamma"/>
+                                <TextView
+                                    android:id="@+id/tvTipeKapasitas"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="14sp"
+                                    android:fontFamily="@font/inter"
+                                    android:text="@{viewmodel.daftarMobil.tipe + `-` + Integer.toString(viewmodel.daftarMobil.kapasitas)}"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="1"
+                                android:gravity="end">
+                                <TextView
+                                    android:id="@+id/tvHarga"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="16sp"
+                                    android:fontFamily="@font/inter_bold"
+                                    android:text="@{`Rp ` + viewmodel.daftarMobil.harga}"
+                                    android:textColor="@color/BlackGray_Bamma"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"
+                                    android:fontFamily="@font/inter"
+                                    android:text="per Hari"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <Button
+                    android:id="@+id/pesanBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:paddingBottom="16dp"
+                    android:paddingTop="16dp"
+                    app:cornerRadius="10dp"
+                    android:text="Book Now"
+                    android:fontFamily="@font/inter_bold"
+                    android:backgroundTint="@color/Purple_Bamma"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:onClick="pesan"/>
+                <Button
+                    android:id="@+id/cancelBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="16dp"
+                    android:paddingTop="16dp"
+                    app:cornerRadius="10dp"
+                    android:text="Cancel"
+                    android:textColor="@color/Purple_Bamma"
+                    android:fontFamily="@font/inter_bold"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    app:strokeColor="@color/Purple_Bamma"
+                    app:strokeWidth = "1.5dp"
+                    android:onClick="cancel"/>
+            </LinearLayout>
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:indeterminate="true"
+                android:background="@drawable/bg_rounded_square"
+                android:backgroundTint="@color/Transparant"
+                android:indeterminateTint="@color/Purple_Bamma"
+                android:visibility="@{viewmodel.progressBarMutableLiveData}"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

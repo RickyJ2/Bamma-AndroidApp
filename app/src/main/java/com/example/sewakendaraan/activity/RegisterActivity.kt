@@ -60,8 +60,8 @@ class RegisterActivity : AppCompatActivity() {
         }
         //Observe Msg
         mRegisterViewModel.msg.observe(this@RegisterActivity){
-            if(mRegisterViewModel.msg.value != ""){
-                Toast.makeText(this@RegisterActivity, mRegisterViewModel.msg.value.toString(), Toast.LENGTH_SHORT).show()
+            if(it != ""){
+                Toast.makeText(this@RegisterActivity, it, Toast.LENGTH_SHORT).show()
             }
         }
     }
