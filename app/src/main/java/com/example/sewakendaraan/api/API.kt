@@ -52,7 +52,7 @@ interface API {
             Call<ResponseDataDaftarMobil>
     @GET("daftarMobil/{id}")
     fun getDaftarMobilAt(@Path("id") id:Int? = null):
-            Call<ResponseDataDaftarMobil>
+            Call<ResponseDataMobil>
 
     //Cabang
     @GET("cabang/show")
@@ -106,20 +106,15 @@ interface API {
             Call<ResponseDataKritikSaran>
 
     //Rating
-    @GET("rating/{id_user}")
-    fun getRating(@Path("id_user") id_user:Int? = null):
+    @FormUrlEncoded
+    @POST("rating/get/{id_user}")
+    fun getRating(
+        @Path("id_user") id_user:Int? = null,
+        @Field("id_mobil") id_mobil:Int? = null):
             Call<ResponseDataRating>
     @FormUrlEncoded
-    @POST("rating/add")
-    fun addRating(
-        @Field("id_user") id_user:Int?,
-        @Field("id_mobil") id_mobil:Int?,
-        @Field("rating") rating:Int?,
-    ):Call<ResponseDataRating>
-    @FormUrlEncoded
-    @PUT("rating/{id}")
-    fun updateRating(
-        @Path("id") id:Int?,
+    @POST("rating/addupdate")
+    fun addupdateRating(
         @Field("id_user") id_user:Int?,
         @Field("id_mobil") id_mobil:Int?,
         @Field("rating") rating:Int?,

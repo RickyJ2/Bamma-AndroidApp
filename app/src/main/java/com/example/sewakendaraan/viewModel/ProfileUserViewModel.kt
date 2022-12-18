@@ -1,7 +1,6 @@
 package com.example.sewakendaraan.viewModel
 
 import android.app.Application
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -37,7 +36,6 @@ class ProfileUserViewModel (application: Application): AndroidViewModel(applicat
         repository.userData(id)
     }
     fun updateProfile(image: MultipartBody.Part){
-        Log.d("profile", "masuk vm")
         repository.updateProfile(image)
     }
     fun setupEditForm(){

@@ -13,5 +13,7 @@ class sharedPreferencesKey {
         //Bundle Key
         const val argsTypeKey = "arg_type"
         const val argsIdKey = "arg_id"
+
+        const val otherIdKey = "otherIdKey"
     }
 }

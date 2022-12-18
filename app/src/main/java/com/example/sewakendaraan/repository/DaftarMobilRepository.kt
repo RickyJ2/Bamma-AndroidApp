@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.sewakendaraan.api.RClient
 import com.example.sewakendaraan.api.response.ResponseDataDaftarMobil
+import com.example.sewakendaraan.api.response.ResponseDataMobil
 import com.example.sewakendaraan.data.DaftarMobil
 import org.json.JSONObject
 import retrofit2.Call
@@ -36,6 +37,7 @@ class DaftarMobilRepository {
     }
 
     fun getDaftarMobil(){
+        resetVal()
         RClient.instances.getDaftarMobil().enqueue(object:
             Callback<ResponseDataDaftarMobil> {
             override fun onResponse(call: Call<ResponseDataDaftarMobil>, response: Response<ResponseDataDaftarMobil>) {
@@ -55,12 +57,13 @@ class DaftarMobilRepository {
         })
     }
     fun getDaftarMobilAt(id: Int){
+        resetVal()
         RClient.instances.getDaftarMobilAt(id).enqueue(object:
-            Callback<ResponseDataDaftarMobil> {
-            override fun onResponse(call: Call<ResponseDataDaftarMobil>, response: Response<ResponseDataDaftarMobil>) {
+            Callback<ResponseDataMobil> {
+            override fun onResponse(call: Call<ResponseDataMobil>, response: Response<ResponseDataMobil>) {
                 if(response.isSuccessful){
                     _msg.value = response.body()?.msg.toString()
-                    response.body().also { _daftarMobil.value = it!!.data[0] }
+                    response.body().also { _daftarMobil.value = it!!.data }
                     _code.value = response.code()
                 }else{
                     val jsonObj = JSONObject(response.errorBody()!!.charStream().readText())
@@ -68,7 +71,7 @@ class DaftarMobilRepository {
                     _msg.value = jsonObj.getString("message")
                 }
             }
-            override fun onFailure(call: Call<ResponseDataDaftarMobil>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseDataMobil>, t: Throwable) {
                 _code.value = 0
             }
         })

@@ -86,4 +86,5 @@ android {
         implementation 'com.github.librepdf:openpdf:1.3.29'
 
         implementation("androidx.cardview:cardview:1.0.0")
+
     }

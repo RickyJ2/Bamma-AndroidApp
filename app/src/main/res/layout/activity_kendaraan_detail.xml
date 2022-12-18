@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.KendaraanDetailActivity"
+    tools:ignore="HardcodedText" >
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.example.sewakendaraan.viewModel.KendaraanDetailViewModel" />
+    </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="36sp"
+                    android:fontFamily="@font/inter_black"
+                    android:textColor="@color/BlackGray_Bamma"
+                    android:text="@{viewmodel.daftarMobil.model}"
+                    android:layout_marginBottom="15dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="20dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="22sp"
+                        android:fontFamily="@font/inter_bold"
+                        android:layout_weight="1"
+                        android:text="@{viewmodel.daftarMobil.tipe}"
+                        app:drawableStartCompat="@drawable/ic_baseline_directions_car_24" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="22sp"
+                        android:fontFamily="@font/inter_bold"
+                        android:text="@{Integer.toString(viewmodel.daftarMobil.kapasitas)}"
+                        app:drawableStartCompat="@drawable/ic_baseline_people_24" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="22sp"
+                        android:fontFamily="@font/inter_bold"
+                        android:text="@{`Rp ` + viewmodel.daftarMobil.harga}"
+                        app:drawableStartCompat="@drawable/ic_baseline_monetization_on_24" />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/inter"
+                    android:text="@{viewmodel.daftarMobil.deskripsi}"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:fontFamily="@font/inter_black"
+                    android:textColor="@color/BlackGray_Bamma"
+                    android:text="Photo"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="10dp" />
+                <ImageView
+                    android:id="@+id/gambarMobil"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:src="@drawable/welcome"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="Image" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:fontFamily="@font/inter_black"
+                    android:textColor="@color/BlackGray_Bamma"
+                    android:text="My Rating"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="10dp"/>
+                <RatingBar
+                    android:id="@+id/rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:stepSize="1"
+                    android:rating="@{viewmodel.rating.rating}"
+                    android:numStars="5"
+                    android:theme="@style/RatingBar"
+                    android:layout_gravity="center_horizontal"/>
+                <Button
+                    android:id="@+id/BookThisCarBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:paddingBottom="16dp"
+                    android:paddingTop="16dp"
+                    android:text="Book this car"
+                    android:backgroundTint="@color/Purple_Bamma"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:onClick="moveAddPesanan"/>
+            </LinearLayout>
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:indeterminate="true"
+                android:background="@drawable/bg_rounded_square"
+                android:backgroundTint="@color/Transparant"
+                android:indeterminateTint="@color/Purple_Bamma"
+                android:visibility="@{viewmodel.progressBarMutableLiveData}"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>
+

@@ -11,9 +11,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 //import com.example.sewakendaraan.EditKendaraanFragment
-import com.example.sewakendaraan.HomeFragment
 import com.example.sewakendaraan.R
+import com.example.sewakendaraan.activity.KendaraanDetailActivity
 import com.example.sewakendaraan.activity.LoginActivity
+import com.example.sewakendaraan.activity.PemesananListActivity
 import com.example.sewakendaraan.activity.TentangKamiActivity
 import com.example.sewakendaraan.activity.kritikSaran.KritikSaranActivity
 import com.example.sewakendaraan.activity.profile.ProfileActivity
@@ -55,7 +56,7 @@ class HomeActivity : AppCompatActivity() {
             }
         }
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
-        //binding.bottomNavigationView.background = null
+        bottomNavigationView.background = null
 
         bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
@@ -90,6 +91,15 @@ class HomeActivity : AppCompatActivity() {
     fun moveKritikSaran(){
         val moveKritikSaran = Intent(this@HomeActivity, KritikSaranActivity::class.java)
         startActivity(moveKritikSaran)
+    }
+    fun movePemesananList(){
+        val movePemesananList = Intent(this@HomeActivity, PemesananListActivity::class.java)
+        startActivity(movePemesananList)
+    }
+    fun moveKendaraanDetail(id: Int){
+        val moveKendaraanDetail = Intent(this@HomeActivity, KendaraanDetailActivity::class.java)
+        moveKendaraanDetail.putExtra(sharedPreferencesKey.otherIdKey, id)
+        startActivity(moveKendaraanDetail)
     }
     private fun loginSetup(){
         mHomeViewModel.setProgressBar(View.VISIBLE)

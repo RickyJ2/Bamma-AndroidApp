@@ -21,7 +21,7 @@ class KritikSaranViewModel (application: Application): AndroidViewModel(applicat
 
     val kritikSaranFormMutableLiveData = MutableLiveData<KritikSaran>()
     val progressBarMutableLiveData = MutableLiveData<Int>()
-    val kritikSaranForm: LiveData<KritikSaran>
+    private val kritikSaranForm: LiveData<KritikSaran>
         get() = kritikSaranFormMutableLiveData
 
     init {
