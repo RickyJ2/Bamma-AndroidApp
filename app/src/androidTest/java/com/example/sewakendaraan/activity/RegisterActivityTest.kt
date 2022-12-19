@@ -4,7 +4,6 @@ package com.example.sewakendaraan.activity
 import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.*
@@ -52,7 +51,7 @@ class RegisterActivityTest {
             )
         )
         materialButton.perform(scrollTo(), click())
-        onView(isRoot()).perform(waitFor(2000))
+        onView(isRoot()).perform(waitFor(3000))
 
         val appCompatToggleButton = onView(
             allOf(
@@ -115,7 +114,7 @@ class RegisterActivityTest {
                 isDisplayed()
             )
         )
-        textInputEditText2.perform(replaceText("UnitTesting"), closeSoftKeyboard())
+        textInputEditText2.perform(replaceText("adminNew"), closeSoftKeyboard())
 
         val textInputEditText3 = onView(
             allOf(
@@ -159,6 +158,21 @@ class RegisterActivityTest {
         )
         textInputEditText5.perform(replaceText("123"), closeSoftKeyboard())
 
+        val textInputEditText14 = onView(
+            allOf(
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.inputLayoutDateOfBirth),
+                        0
+                    ),
+                    0
+                ),
+                isDisplayed()
+            )
+        )
+        textInputEditText14.perform(click())
+        onView(isRoot()).perform(waitFor(3000))
+
         val materialButton3 = onView(
             allOf(
                 withId(com.google.android.material.R.id.confirm_button), withText("OK"),
@@ -176,6 +190,7 @@ class RegisterActivityTest {
             )
         )
         materialButton3.perform(click())
+        onView(isRoot()).perform(waitFor(2000))
 
         val materialButton4 = onView(
             allOf(
@@ -197,10 +212,10 @@ class RegisterActivityTest {
 
         val textInputEditText6 = onView(
             allOf(
-                withText("mail"),
+                withText("adminNew"),
                 childAtPosition(
                     childAtPosition(
-                        withId(R.id.inputLayoutEmail),
+                        withId(R.id.inputLayoutUsername),
                         0
                     ),
                     0
@@ -208,14 +223,14 @@ class RegisterActivityTest {
                 isDisplayed()
             )
         )
-        textInputEditText6.perform(replaceText("mail"))
+        textInputEditText6.perform(replaceText("UnitTesting"))
 
         val textInputEditText7 = onView(
             allOf(
-                withText("mail"),
+                withText("UnitTesting"),
                 childAtPosition(
                     childAtPosition(
-                        withId(R.id.inputLayoutEmail),
+                        withId(R.id.inputLayoutUsername),
                         0
                     ),
                     0
@@ -227,36 +242,6 @@ class RegisterActivityTest {
 
         val textInputEditText8 = onView(
             allOf(
-                withText("123"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.inputLayoutPassword),
-                        0
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        textInputEditText8.perform(replaceText("123@a"))
-
-        val textInputEditText9 = onView(
-            allOf(
-                withText("123@a"),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.inputLayoutPassword),
-                        0
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        textInputEditText9.perform(closeSoftKeyboard())
-
-        val textInputEditText10 = onView(
-            allOf(
                 withText("mail"),
                 childAtPosition(
                     childAtPosition(
@@ -268,9 +253,9 @@ class RegisterActivityTest {
                 isDisplayed()
             )
         )
-        textInputEditText10.perform(replaceText("mail@mail.com"))
+        textInputEditText8.perform(replaceText("mail@mail.com"))
 
-        val textInputEditText11 = onView(
+        val textInputEditText9 = onView(
             allOf(
                 withText("mail@mail.com"),
                 childAtPosition(
@@ -283,11 +268,11 @@ class RegisterActivityTest {
                 isDisplayed()
             )
         )
-        textInputEditText11.perform(closeSoftKeyboard())
+        textInputEditText9.perform(closeSoftKeyboard())
 
-        val textInputEditText12 = onView(
+        val textInputEditText10 = onView(
             allOf(
-                withText("123@a"),
+                withText("123"),
                 childAtPosition(
                     childAtPosition(
                         withId(R.id.inputLayoutPassword),
@@ -298,9 +283,9 @@ class RegisterActivityTest {
                 isDisplayed()
             )
         )
-        textInputEditText12.perform(replaceText("12345678"))
+        textInputEditText10.perform(replaceText("12345678"))
 
-        val textInputEditText13 = onView(
+        val textInputEditText11 = onView(
             allOf(
                 withText("12345678"),
                 childAtPosition(
@@ -313,9 +298,8 @@ class RegisterActivityTest {
                 isDisplayed()
             )
         )
-        textInputEditText13.perform(closeSoftKeyboard())
+        textInputEditText11.perform(closeSoftKeyboard())
 
-        pressBack()
 
         val materialButton5 = onView(
             allOf(
@@ -361,11 +345,12 @@ class RegisterActivityTest {
 
             override fun getDescription(): String {
                 return "wait for " + delay + "Miliseconds"
-             }
+            }
 
             override fun perform(uiController: UiController, view: View?) {
                 uiController.loopMainThreadForAtLeast(delay)
             }
         }
     }
+
 }

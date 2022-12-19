@@ -49,7 +49,7 @@ class ProfileUserViewModel (application: Application): AndroidViewModel(applicat
             updateForm.value!!.password,
             date,
             updateForm.value!!.handphone,
-            updateForm.value!!.image
+            ""
         )
     }
     fun setProgressBar(isLoading: Int){
