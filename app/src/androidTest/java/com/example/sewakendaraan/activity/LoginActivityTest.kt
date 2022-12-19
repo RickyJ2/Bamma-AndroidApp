@@ -4,7 +4,6 @@ package com.example.sewakendaraan.activity
 import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.*
@@ -96,8 +95,6 @@ class LoginActivityTest {
         )
         textInputEditText3.perform(replaceText("unitTesting"), closeSoftKeyboard())
 
-        pressBack()
-
         val materialButton2 = onView(
             allOf(
                 withId(R.id.btnLogin), withText("Login"),
@@ -145,8 +142,6 @@ class LoginActivityTest {
             )
         )
         textInputEditText7.perform(closeSoftKeyboard())
-
-        pressBack()
 
         val materialButton3 = onView(
             allOf(
