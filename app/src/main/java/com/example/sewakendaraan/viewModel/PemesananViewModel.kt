@@ -20,6 +20,8 @@ class PemesananViewModel (application: Application): AndroidViewModel(applicatio
         get() = repositoryDaftarMobil.msg
     val daftarMobil: LiveData<DaftarMobil>
         get() = repositoryDaftarMobil.daftarMobil
+    val daftarMobilList: LiveData<List<DaftarMobil>>
+        get() = repositoryDaftarMobil.daftarMobilList
 
     val codePemesanan: LiveData<Int>
         get() = repositoryPemesanan.code
@@ -46,31 +48,37 @@ class PemesananViewModel (application: Application): AndroidViewModel(applicatio
             0,
             id_mobil,
             id_user,
-            pemesananForm.value!!.durasi,
+            pemesananForm.value!!.tgl_pengembalian,
             pemesananForm.value!!.tgl_peminjaman,
             0
         )
         )
+    }
+    fun getDaftarMobilList(){
+        repositoryDaftarMobil.getDaftarMobil()
     }
     fun getDaftarMobilAt(id: Int){
         repositoryDaftarMobil.getDaftarMobilAt(id)
     }
-    fun setTimePicker(time: String){
+    fun setDaftarMobiltoNull(){
+        repositoryDaftarMobil.setDaftarMobiltoNull()
+    }
+    fun setDatePickerPengembalian(date: String){
         pemesananFormMutableLiveData.value = Pemesanan(
             0,
             0,
             0,
-            time,
+            date,
             pemesananForm.value!!.tgl_peminjaman,
             0
         )
     }
-    fun setDatePicker(date: String){
+    fun setDatePickerPeminjaman(date: String){
         pemesananFormMutableLiveData.value = Pemesanan(
             0,
             0,
             0,
-            pemesananForm.value!!.durasi,
+            pemesananForm.value!!.tgl_pengembalian,
             date,
             0
         )

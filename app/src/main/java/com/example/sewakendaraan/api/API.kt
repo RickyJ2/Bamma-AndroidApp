@@ -71,7 +71,7 @@ interface API {
     fun addPemesanan(
         @Field("id_mobil") id_mobil:Int?,
         @Field("id_user") id_user:Int?,
-        @Field("durasi") durasi:String?,
+        @Field("tgl_pengembalian") tgl_pengembalian:String?,
         @Field("tgl_peminjaman") tgl_peminjaman:String?,
     ):Call<ResponseDataPemesanan>
     @FormUrlEncoded
@@ -80,7 +80,7 @@ interface API {
         @Path("id") id:Int?,
         @Field("id_mobil") id_mobil:Int?,
         @Field("id_user") id_user:Int?,
-        @Field("durasi") durasi:String?,
+        @Field("tgl_pengembalian") tgl_pengembalian:String?,
         @Field("tgl_peminjaman") tgl_peminjaman:String?,
     ):Call<ResponseDataPemesanan>
 

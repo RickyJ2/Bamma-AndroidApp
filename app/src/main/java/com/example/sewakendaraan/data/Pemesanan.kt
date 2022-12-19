@@ -7,7 +7,7 @@ data class Pemesanan(
     val id: Int,
     val id_mobil: Int,
     val id_user: Int,
-    var durasi: String,
+    var tgl_pengembalian: String,
     var tgl_peminjaman: String,
     val status: Int,
 )

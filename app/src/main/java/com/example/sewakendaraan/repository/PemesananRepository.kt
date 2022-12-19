@@ -54,7 +54,7 @@ class PemesananRepository {
     }
     fun addPemesanan(pemesanan: Pemesanan){
         resetVal()
-        RClient.instances.addPemesanan(pemesanan.id_mobil, pemesanan.id_user, pemesanan.durasi, pemesanan.tgl_peminjaman).enqueue(
+        RClient.instances.addPemesanan(pemesanan.id_mobil, pemesanan.id_user, pemesanan.tgl_pengembalian, pemesanan.tgl_peminjaman).enqueue(
             object: Callback<ResponseDataPemesanan> {
                 override fun onResponse(call: Call<ResponseDataPemesanan>, response: Response<ResponseDataPemesanan>) {
                     if(response.isSuccessful){
@@ -70,7 +70,7 @@ class PemesananRepository {
                                 0,
                                 0,
                                 0,
-                                if(jsonError.has("durasi")) jsonError.getJSONArray("durasi")[0].toString() else "",
+                                if(jsonError.has("tgl_pengembalian")) jsonError.getJSONArray("tgl_pengembalian")[0].toString() else "",
                                 if(jsonError.has("tgl_peminjaman")) jsonError.getJSONArray("tgl_peminjaman")[0].toString() else "",
                                 0
                             )
@@ -86,7 +86,7 @@ class PemesananRepository {
     }
     fun updatePemesanan(pemesanan: Pemesanan){
         resetVal()
-        RClient.instances.updatePemesanan(pemesanan.id, pemesanan.id_mobil, pemesanan.id_user, pemesanan.durasi, pemesanan.tgl_peminjaman).enqueue(
+        RClient.instances.updatePemesanan(pemesanan.id, pemesanan.id_mobil, pemesanan.id_user, pemesanan.tgl_pengembalian, pemesanan.tgl_peminjaman).enqueue(
             object: Callback<ResponseDataPemesanan> {
                 override fun onResponse(call: Call<ResponseDataPemesanan>, response: Response<ResponseDataPemesanan>) {
                     if(response.isSuccessful){
@@ -102,7 +102,7 @@ class PemesananRepository {
                                 0,
                                 0,
                                 0,
-                                if(jsonError.has("durasi")) jsonError.getJSONArray("durasi")[0].toString() else "",
+                                if(jsonError.has("tgl_pengembalian")) jsonError.getJSONArray("tgl_pengembalian")[0].toString() else "",
                                 if(jsonError.has("tgl_peminjaman")) jsonError.getJSONArray("tgl_peminjaman")[0].toString() else "",
                                 0
                             )

@@ -35,7 +35,9 @@ class DaftarMobilRepository {
         _code.value = null
         _msg.value = ""
     }
-
+    fun setDaftarMobiltoNull(){
+        _daftarMobil.value = null
+    }
     fun getDaftarMobil(){
         resetVal()
         RClient.instances.getDaftarMobil().enqueue(object:

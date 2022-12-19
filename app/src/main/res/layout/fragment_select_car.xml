@@ -2,12 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activity.pemesanan.SelectCarActivity"
-    tools:ignore="HardcodedText">
+    tools:context=".activity.pemesanan.SelectCarFragment">
     <data>
         <variable
             name="viewmodel"
-            type="com.example.sewakendaraan.viewModel.SelectCarViewModel" />
+            type="com.example.sewakendaraan.viewModel.PemesananViewModel" />
+        <variable
+            name="selectCarFragment"
+            type="com.example.sewakendaraan.activity.pemesanan.SelectCarFragment" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -38,7 +40,7 @@
                 android:backgroundTint="@color/Purple_Bamma"
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_alignParentBottom="true"
-                android:onClick="moveCancel"/>
+                android:onClick="@{()->selectCarFragment.moveCancel()}"/>
         </RelativeLayout>
         <ProgressBar
             android:id="@+id/progressBar"
@@ -54,5 +56,4 @@
             android:indeterminateTint="@color/Purple_Bamma"
             android:visibility="@{viewmodel.progressBarMutableLiveData}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>
