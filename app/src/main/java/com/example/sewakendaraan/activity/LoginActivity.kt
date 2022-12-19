@@ -133,11 +133,11 @@ class LoginActivity : AppCompatActivity() {
         val mBundleL = Bundle()
         intent.putExtra("login", mBundleL)
 
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         val broadcastIntent = Intent(this, NotificationReceiver::class.java)
         broadcastIntent.putExtra("toastMessage", vUsername)
-        val actionIntent = PendingIntent.getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val actionIntent = PendingIntent.getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_IMMUTABLE)
 
         val builder = NotificationCompat.Builder(this, CHANNEL_ID_1)
             .setSmallIcon(R.drawable.ic_baseline_check_circle_24)
@@ -160,17 +160,17 @@ class LoginActivity : AppCompatActivity() {
             notify(notification1, builder.build())
         }
     }
-    @SuppressLint("UnspecifiedImmutableFlag")
+
     private fun sendNotification2(vUsername: String){
         val intent = Intent()
         val mBundleL = Bundle()
         intent.putExtra("login", mBundleL)
 
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         val broadcastIntent = Intent(this, NotificationReceiver::class.java)
         broadcastIntent.putExtra("toastMessage", vUsername)
-        val actionIntent = PendingIntent.getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val actionIntent = PendingIntent.getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_IMMUTABLE)
 
         val builder = NotificationCompat.Builder(this, CHANNEL_ID_1)
             .setSmallIcon(R.drawable.ic_baseline_check_circle_24)

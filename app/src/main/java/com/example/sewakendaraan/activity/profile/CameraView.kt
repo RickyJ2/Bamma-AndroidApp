@@ -1,13 +1,17 @@
-package com.example.sewakendaraan
+@file:Suppress("DEPRECATION")
 
+package com.example.sewakendaraan.activity.profile
+
+import android.annotation.SuppressLint
 import android.hardware.Camera
 import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import com.example.sewakendaraan.activity.home.HomeActivity
+import com.example.sewakendaraan.activity.profile.ProfileActivity
 import java.io.IOException
 
-class CameraView(context: HomeActivity, private val mCamera: Camera) : SurfaceView(context), SurfaceHolder.Callback {
+@SuppressLint("ViewConstructor")
+class CameraView(context: ProfileActivity, private val mCamera: Camera) : SurfaceView(context), SurfaceHolder.Callback {
     private val mHolder: SurfaceHolder
 
     init{

@@ -1,6 +1,5 @@
 package com.example.sewakendaraan.activity
 
-import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -130,14 +129,14 @@ class RegisterActivity : AppCompatActivity() {
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
     }
-    @SuppressLint("UnspecifiedImmutableFlag")
+
     private fun sendNotification(vUsername: String, msg: String){
         val intent = Intent()
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         val broadcastIntent = Intent(this, NotificationReceiver::class.java)
         broadcastIntent.putExtra("toastMessage", vUsername)
-        val actionIntent = PendingIntent.getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val actionIntent = PendingIntent.getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_IMMUTABLE)
         val picture = BitmapFactory.decodeResource(resources, R.drawable.welcome)
 
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)

@@ -1,15 +1,16 @@
-package com.example.sewakendaraan
+@file:Suppress("DEPRECATION")
+
+package com.example.sewakendaraan.activity.profile
 
 import android.hardware.Camera
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import com.example.sewakendaraan.activity.home.HomeActivity
-import com.example.sewakendaraan.activity.profile.EditProfileFragment
+import android.widget.Toast
+import com.example.sewakendaraan.R
 import com.example.sewakendaraan.databinding.FragmentCameraBinding
 
 class CameraFragment : Fragment() {
@@ -21,67 +22,64 @@ class CameraFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCameraBinding.inflate(inflater, container, false)
         return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val context = context as HomeActivity
 
         try{
             mCamera = Camera.open()
         }catch (e: Exception){
-            Log.d("Error", "Failed to get Camera" + e.message)
+            Toast.makeText((activity as ProfileActivity),"Failed to get Camera", Toast.LENGTH_SHORT).show()
         }
         if(mCamera != null){
-            mCameraView = CameraView(context, mCamera!!)
-            val camera_view = binding?.FLCamera as FrameLayout
-            camera_view.addView(mCameraView)
+            mCameraView = CameraView((activity as ProfileActivity), mCamera!!)
+            val cameraView = binding?.FLCamera as FrameLayout
+            cameraView.addView(mCameraView)
         }
 
         binding?.closeBtn?.setOnClickListener{
             try {
                 mCamera?.stopPreview()
             } catch (e: Exception){
-                e.printStackTrace();
+                e.printStackTrace()
             }
             mCamera?.release()
-            replaceFragment(EditProfileFragment())
+            replaceFragment(ProfileFragment())
         }
         binding?.cameraSwitchBtn?.setOnClickListener{
             changeCamera()
         }
     }
-    fun changeCamera(){
-        val context = context as HomeActivity
+    private fun changeCamera(){
         try {
             mCamera?.stopPreview()
         } catch (e: Exception){
-            e.printStackTrace();
+            e.printStackTrace()
         }
         mCamera?.release()
-        if(currentCameraId == Camera.CameraInfo.CAMERA_FACING_BACK){
-            currentCameraId = Camera.CameraInfo.CAMERA_FACING_FRONT
+        currentCameraId = if(currentCameraId == Camera.CameraInfo.CAMERA_FACING_BACK){
+            Camera.CameraInfo.CAMERA_FACING_FRONT
         }else{
-            currentCameraId = Camera.CameraInfo.CAMERA_FACING_BACK
+            Camera.CameraInfo.CAMERA_FACING_BACK
         }
 
         try{
             mCamera = Camera.open(currentCameraId)
         }catch (e: Exception){
-            Log.d("Error", "Failed to get Camera" + e.message)
+            Toast.makeText((activity as ProfileActivity), "Failed to get camera", Toast.LENGTH_SHORT).show()
         }
         if(mCamera != null){
-            mCameraView = CameraView(context, mCamera!!)
-            val camera_view = binding?.FLCamera as FrameLayout
-            camera_view.addView(mCameraView)
+            mCameraView = CameraView((activity as ProfileActivity), mCamera!!)
+            val cameraView = binding?.FLCamera as FrameLayout
+            cameraView.addView(mCameraView)
         }
     }
     private fun  replaceFragment(fragment: Fragment){
-        val context = context as HomeActivity
-        val fragmentManager = context.supportFragmentManager
+        val fragmentManager = (activity as ProfileActivity).supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frameLayout,fragment)
         fragmentTransaction.commit()
