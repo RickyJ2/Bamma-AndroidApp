@@ -1,19 +1,23 @@
-Skenario:
-Perusahaan Sewa Mobil, BAMMA di Yogyakarta menyediakan layanan
+<h1> Tugas Besar Pemprograman Berbasis Platform </h1>
+<h3> Tema: Sewa Kendaraan </h3>
+<h3> Language: Kotlin </h3>
+<h3>Skenario:</h3>
+<p>Perusahaan Sewa Mobil, BAMMA di Yogyakarta menyediakan layanan
 pemesanan booking online melalui aplikasinya di android. Perusahaan
 ini memiliki 4 outlet di Yogyakarta : Bantul, Kulon Progo, Sleman, dan
-Kota Yogyakarta
+Kota Yogyakarta. Aplikasi Android Bamma akan dipergunakan oleh konsumen untuk memesan mobil yang tersedia</p>
 
-Fitur:
-1. Splash Screen
-2. Register
-3. Login
-4. Halaman Profile
-5. Daftar Mobil tersedia
-6. Status pesanan yang sedang berjalan
-7. Fitur pesan cepat rekomendasi mobil tersedia
-8. Chat Call Center
-9. Riwayat Pemesanan
-10. Daftar Pesanan saat ini
-11. Ganti Profile
-12. Logout
+<h2>Fitur:</h3>
+<ul> 
+  <li> Splash Screen </li>
+  <li> Register </li>
+  <li> Login </li>
+  <li> Halaman Profile </li>
+  <li> Daftar Mobil tersedia </li>
+  <li> Status pesanan yang sedang berjalan </li>
+  <li> Fitur pesan cepat rekomendasi mobil tersedia </li>
+  <li> Riwayat Pemesanan </li>
+  <li> Daftar Pesanan saat ini </li>
+  <li> Ganti Profile </li>
+  <li> Logout </li>
+</ul>
