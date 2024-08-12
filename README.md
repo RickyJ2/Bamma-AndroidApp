@@ -8,6 +8,7 @@ ini memiliki 4 outlet di Yogyakarta : Bantul, Kulon Progo, Sleman, dan
 Kota Yogyakarta. Aplikasi Android Bamma akan dipergunakan oleh konsumen untuk memesan mobil yang tersedia</p>
 
 Repository Backend <a href="https://github.com/RickyJ2/Bamma-RestAPI-WebService"> disini </a>
+UI Design <a href="https://www.figma.com/proto/XyaRAgmtztMysDJ5xYrZro/Project1_SewaKendaraan_Kelompok4-(Copy)?node-id=0-1&t=g6ma9fyykD2wxYrh-1"> disini </a>
 
 <h2>Fitur:</h3>
 <ul> 
